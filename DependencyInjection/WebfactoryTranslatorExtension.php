@@ -13,10 +13,16 @@ use Symfony\Component\Config\FileLocator;
 class WebfactoryTranslatorExtension extends Extension
 {
 
+    /**
+     * Adds service definitions to the container.
+     *
+     * @param array(string) $config
+     * @param ContainerBuilder $container
+     */
     public function load(array $config, ContainerBuilder $container)
     {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
-        $loader->load('services.xml');
+        $loader->load('services.yml');
     }
 
 }
