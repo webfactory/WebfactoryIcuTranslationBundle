@@ -1,7 +1,7 @@
 {
     "name": "webfactory/icu-translator-bundle",
-    "description": "Enables ICU message formatting in Symfony 2 applications.",
-    "keywords": ["symfony", "translator", "pluralization", "icu", "formatting"],
+    "description": "Enables ICU message formatting for translations in Symfony 2 applications.",
+    "keywords": ["symfony", "translator", "translation", "pluralization", "icu", "formatting"],
     "license": "MIT",
     "authors": [
         {
