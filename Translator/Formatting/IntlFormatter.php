@@ -20,10 +20,12 @@ class IntlFormatter implements FormatterInterface
 
     /**
      * Creates the formatter.
+     *
+     * @param MessageParser $parser Used to parse translation messages.
      */
-    public function __construct()
+    public function __construct(MessageParser $parser)
     {
-        $this->parser = new MessageParser(new MessageLexer());
+        $this->parser = $parser;
     }
 
     /**

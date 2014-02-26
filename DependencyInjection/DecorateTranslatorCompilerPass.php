@@ -26,13 +26,14 @@ class DecorateTranslatorCompilerPass implements CompilerPassInterface
         }
 
         // Copy the existing service definition...
-        $container->setDefinition('translator.inner', $definition);
+        $container->setDefinition('webfactory_translator.inner_translator', $definition);
 
         // ... and replace with a decorated version.
         $decorated = new Definition(
             'Webfactory\TranslatorBundle\Translator\FormatterDecorator',
             array(
-                new Reference('translator.inner')
+                new Reference('webfactory_translator.inner_translator'),
+                new Reference('webfactory_translator.formatter.twig_parameter_normalizer')
             )
         );
         $container->setDefinition('translator', $decorated);

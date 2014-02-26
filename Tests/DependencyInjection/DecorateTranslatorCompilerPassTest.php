@@ -5,6 +5,7 @@ namespace Webfactory\WebsiteBundle\Tests\DependencyInjection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Webfactory\TranslatorBundle\DependencyInjection\DecorateTranslatorCompilerPass;
+use Webfactory\TranslatorBundle\DependencyInjection\WebfactoryTranslatorExtension;
 
 /**
  * Tests the compiler pass that decorates the translator.
@@ -29,7 +30,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->container    = new ContainerBuilder();
+        $this->container    = $this->createContainer();
         $this->compilerPass = new DecorateTranslatorCompilerPass();
     }
 
@@ -46,7 +47,8 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
      */
     public function testImplementsInterface()
     {
-        $this->assertInstanceOf('Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface', $this->compilerPass);
+        $expectedType = 'Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface';
+        $this->assertInstanceOf($expectedType, $this->compilerPass);
     }
 
     /**
@@ -87,6 +89,20 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
 
         $translator = $this->container->get('translator');
         $this->assertInstanceOf('Webfactory\TranslatorBundle\Translator\FormatterDecorator', $translator);
+    }
+
+    /**
+     * Creates the container that is used for testing.
+     *
+     * @return ContainerBuilder
+     */
+    protected function createContainer()
+    {
+        $container = new ContainerBuilder();
+        // Load the services that are provided by the bundle.
+        $extension = new WebfactoryTranslatorExtension();
+        $extension->load(array(), $container);
+        return $container;
     }
 
 }

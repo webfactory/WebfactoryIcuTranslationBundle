@@ -2,10 +2,8 @@
 
 namespace Webfactory\TranslatorBundle\Translator;
 
-use Webfactory\TranslatorBundle\Translator\Formatting\IntlFormatter;
 use Webfactory\TranslatorBundle\Translator\Formatting\FormatterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Webfactory\TranslatorBundle\Translator\Formatting\TwigParameterNormalizer;
 
 /**
  * Decorates a Symfony translator and adds support for message formatting.
@@ -33,10 +31,10 @@ class FormatterDecorator implements TranslatorInterface
      * @param \Symfony\Component\Translation\TranslatorInterface $translator
      * @param \Webfactory\TranslatorBundle\Translator\Formatting\FormatterInterface The formatter that is used.
      */
-    public function __construct(TranslatorInterface $translator, FormatterInterface $formatter = null)
+    public function __construct(TranslatorInterface $translator, FormatterInterface $formatter)
     {
         $this->translator = $translator;
-        $this->formatter  = ($formatter === null) ? new TwigParameterNormalizer(new IntlFormatter()) : $formatter;
+        $this->formatter  = $formatter;
     }
 
     /**

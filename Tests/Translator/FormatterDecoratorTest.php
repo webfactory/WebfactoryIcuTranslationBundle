@@ -3,6 +3,10 @@
 namespace Webfactory\TranslatorBundle\Tests\Translator;
 
 use Webfactory\TranslatorBundle\Translator\FormatterDecorator;
+use Webfactory\TranslatorBundle\Translator\Formatting\IntlFormatter;
+use Webfactory\TranslatorBundle\Translator\Formatting\MessageLexer;
+use Webfactory\TranslatorBundle\Translator\Formatting\MessageParser;
+use Webfactory\TranslatorBundle\Translator\Formatting\TwigParameterNormalizer;
 
 /**
  * Tests the formatter decorator for translators.
@@ -28,7 +32,10 @@ class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
-        $this->decorator  = new FormatterDecorator($this->translator);
+        $this->decorator  = new FormatterDecorator(
+            $this->translator,
+            new TwigParameterNormalizer(new IntlFormatter(new MessageParser(new MessageLexer())))
+        );
     }
 
     protected function tearDown()
