@@ -1,6 +1,6 @@
 <?php
 
-namespace Webfactory\TranslationBundle\Translator\Formatting\Exception;
+namespace Webfactory\IcuTranslationBundle\Translator\Formatting\Exception;
 
 /**
  * Base exception for formatting errors.

@@ -1,20 +1,20 @@
 <?php
 
-namespace Webfactory\TranslationBundle\Tests\DependencyInjection;
+namespace Webfactory\IcuTranslationBundle\Tests\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Webfactory\TranslationBundle\DependencyInjection\WebfactoryTranslationExtension;
+use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslationExtension;
 
 /**
  * Tests the bundle extension.
  */
-class WebfactoryTranslationExtensionTest extends \PHPUnit_Framework_TestCase
+class WebfactoryIcuTranslationExtensionTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
      * System under test.
      *
-     * @var \Webfactory\TranslationBundle\DependencyInjection\WebfactoryTranslationExtension
+     * @var \Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslationExtension
      */
     protected $extension = null;
 
@@ -24,7 +24,7 @@ class WebfactoryTranslationExtensionTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->extension = new WebfactoryTranslationExtension();
+        $this->extension = new WebfactoryIcuTranslationExtension();
     }
 
     /**

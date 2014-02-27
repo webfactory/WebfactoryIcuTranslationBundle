@@ -1,11 +1,11 @@
 <?php
 
-namespace Webfactory\TranslationBundle\Tests\DependencyInjection;
+namespace Webfactory\IcuTranslationBundle\Tests\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Webfactory\TranslationBundle\DependencyInjection\DecorateTranslatorCompilerPass;
-use Webfactory\TranslationBundle\DependencyInjection\WebfactoryTranslationExtension;
+use Webfactory\IcuTranslationBundle\DependencyInjection\DecorateTranslatorCompilerPass;
+use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslationExtension;
 
 /**
  * Tests the compiler pass that decorates the translator.
@@ -16,7 +16,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
     /**
      * System under test.
      *
-     * @var \Webfactory\TranslationBundle\DependencyInjection\DecorateTranslatorCompilerPass
+     * @var \Webfactory\IcuTranslationBundle\DependencyInjection\DecorateTranslatorCompilerPass
      */
     protected $compilerPass = null;
 
@@ -77,7 +77,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
         $this->compilerPass->process($this->container);
 
         $translator = $this->container->get('translator');
-        $this->assertInstanceOf('Webfactory\TranslationBundle\Translator\FormatterDecorator', $translator);
+        $this->assertInstanceOf('Webfactory\IcuTranslationBundle\Translator\FormatterDecorator', $translator);
     }
 
     /**
@@ -93,7 +93,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
         $this->compilerPass->process($this->container);
 
         $translator = $this->container->get('translator');
-        $this->assertInstanceOf('Webfactory\TranslationBundle\Translator\FormatterDecorator', $translator);
+        $this->assertInstanceOf('Webfactory\IcuTranslationBundle\Translator\FormatterDecorator', $translator);
     }
 
     /**
@@ -105,7 +105,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
         // Load the services that are provided by the bundle.
-        $extension = new WebfactoryTranslationExtension();
+        $extension = new WebfactoryIcuTranslationExtension();
         $extension->load(array(), $container);
         return $container;
     }

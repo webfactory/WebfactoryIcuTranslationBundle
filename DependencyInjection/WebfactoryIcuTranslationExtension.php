@@ -1,6 +1,6 @@
 <?php
 
-namespace Webfactory\TranslationBundle\DependencyInjection;
+namespace Webfactory\IcuTranslationBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 /**
  * Loads the definitions for translation related services.
  */
-class WebfactoryTranslationExtension extends Extension
+class WebfactoryIcuTranslationExtension extends Extension
 {
 
     /**

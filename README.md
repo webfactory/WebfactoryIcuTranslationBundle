@@ -23,7 +23,7 @@ Enable the bundle in your kernel:
     {
         $bundles = array(
             // ...
-            new \Webfactory\TranslationBundle\WebfactoryTranslatorBundle()
+            new \Webfactory\IcuTranslationBundle\WebfactoryIcuTranslationBundle()
         );
     }
 

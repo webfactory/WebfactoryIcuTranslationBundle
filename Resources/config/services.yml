@@ -1,15 +1,15 @@
 services:
-    webfactory_translation.message.lexer:
-        class: Webfactory\TranslationBundle\Translator\Formatting\MessageLexer
+    webfactory_icutranslation.message.lexer:
+        class: Webfactory\IcuTranslationBundle\Translator\Formatting\MessageLexer
 
-    webfactory_translation.message.parser:
-        class: Webfactory\TranslationBundle\Translator\Formatting\MessageParser
-        arguments: ["@webfactory_translation.message.lexer"]
+    webfactory_icutranslation.message.parser:
+        class: Webfactory\IcuTranslationBundle\Translator\Formatting\MessageParser
+        arguments: ["@webfactory_icutranslation.message.lexer"]
 
-    webfactory_translation.formatter.intl_formatter:
-        class: Webfactory\TranslationBundle\Translator\Formatting\IntlFormatter
-        arguments: ["@webfactory_translation.message.parser"]
+    webfactory_icutranslation.formatter.intl_formatter:
+        class: Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter
+        arguments: ["@webfactory_icutranslation.message.parser"]
 
-    webfactory_translation.formatter.twig_parameter_normalizer:
-        class: Webfactory\TranslationBundle\Translator\Formatting\TwigParameterNormalizer
-        arguments: ["@webfactory_translation.formatter.intl_formatter"]
+    webfactory_icutranslation.formatter.twig_parameter_normalizer:
+        class: Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalizer
+        arguments: ["@webfactory_icutranslation.formatter.intl_formatter"]

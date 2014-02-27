@@ -1,6 +1,6 @@
 <?php
 
-namespace Webfactory\TranslationBundle\DependencyInjection;
+namespace Webfactory\IcuTranslationBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -26,14 +26,14 @@ class DecorateTranslatorCompilerPass implements CompilerPassInterface
         }
 
         // Copy the existing service definition...
-        $container->setDefinition('webfactory_translation.inner_translator', $definition);
+        $container->setDefinition('webfactory_icutranslation.inner_translator', $definition);
 
         // ... and replace with a decorated version.
         $decorated = new Definition(
-            'Webfactory\TranslationBundle\Translator\FormatterDecorator',
+            'Webfactory\IcuTranslationBundle\Translator\FormatterDecorator',
             array(
-                new Reference('webfactory_translation.inner_translator'),
-                new Reference('webfactory_translation.formatter.twig_parameter_normalizer')
+                new Reference('webfactory_icutranslation.inner_translator'),
+                new Reference('webfactory_icutranslation.formatter.twig_parameter_normalizer')
             )
         );
         $container->setDefinition('translator', $decorated);

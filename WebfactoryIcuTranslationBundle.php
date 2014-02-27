@@ -1,15 +1,15 @@
 <?php
 
-namespace Webfactory\TranslationBundle;
+namespace Webfactory\IcuTranslationBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Webfactory\TranslationBundle\DependencyInjection\DecorateTranslatorCompilerPass;
+use Webfactory\IcuTranslationBundle\DependencyInjection\DecorateTranslatorCompilerPass;
 
 /**
  * Initializes the translator bundle.
  */
-class WebfactoryTranslationBundle extends Bundle
+class WebfactoryIcuTranslationBundle extends Bundle
 {
 
     /**

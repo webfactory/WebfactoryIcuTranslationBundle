@@ -1,6 +1,6 @@
 <?php
 
-namespace Webfactory\TranslationBundle\Translator\Formatting;
+namespace Webfactory\IcuTranslationBundle\Translator\Formatting;
 
 use JMS\Parser\AbstractLexer;
 

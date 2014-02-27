@@ -21,7 +21,7 @@
         "satooshi/php-coveralls": "~0.6"
     },
     "autoload": {
-        "psr-0": { "Webfactory\\TranslationBundle": "" }
+        "psr-0": { "Webfactory\\IcuTranslationBundle": "" }
     },
-    "target-dir": "Webfactory/TranslationBundle"
+    "target-dir": "Webfactory/IcuTranslationBundle"
 }
