@@ -1,7 +1,7 @@
 # ICU Translation Bundle #
 
-[![Build Status](https://travis-ci.org/webfactory/icu-translations-bundle.png?branch=master)](https://travis-ci.org/webfactory/icu-translations-bundle)
-[![Coverage Status](https://coveralls.io/repos/webfactory/icu-translations-bundle/badge.png?branch=master)](https://coveralls.io/r/webfactory/icu-translations-bundle?branch=master)
+[![Build Status](https://travis-ci.org/webfactory/icu-translation-bundle.png?branch=master)](https://travis-ci.org/webfactory/icu-translation-bundle)
+[![Coverage Status](https://coveralls.io/repos/webfactory/icu-translation-bundle/badge.png?branch=master)](https://coveralls.io/r/webfactory/icu-translation-bundle?branch=master)
 
 This bundle enables [ICU message formatting](http://userguide.icu-project.org/formatparse) in Symfony 2 translations.
 
