@@ -2,10 +2,6 @@
 New Translation Features
 ========================
 
-
-What's new?
------------
-
 Messages become more powerful and provide features like translations
 depending on certain conditions.
 
@@ -90,11 +86,8 @@ by the curly braces:
     }
 
 
-Further Features
-----------------
-
 Variable Replacement and Formatting
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------------------
 
 Variable names are placed within curly braces and are replaced by concrete values during translation:
 
@@ -128,7 +121,7 @@ Formatting in de_DE: "Born on 04.02.86."
 
 
 Plural Formatting
-~~~~~~~~~~~~~~~~~
+-----------------
 
 Various plural rules can be applied via "plural" condition:
 
