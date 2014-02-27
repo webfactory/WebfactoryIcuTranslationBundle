@@ -54,8 +54,12 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormatterThrowsExceptionIfParametersAreNotValid()
     {
-        $expected = '\Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\CannotFormatException';
-        $this->setExpectedException($expected);
+        if (version_compare(PHP_VERSION, '5.5', '<')) {
+            // TODO PHP 5.5 does not substitute missing parameters. We should decide how to handle
+            // this case for prior versions. It might be useful to simulate 5.5 behavior.
+            $expected = '\Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\CannotFormatException';
+            $this->setExpectedException($expected);
+        }
         // The required parameter is missing.
         $this->formatter->format('en', 'Hello {0}!', array());
     }
