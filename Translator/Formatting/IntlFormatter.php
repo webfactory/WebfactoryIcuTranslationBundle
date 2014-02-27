@@ -12,23 +12,6 @@ class IntlFormatter implements FormatterInterface
 {
 
     /**
-     * The message parser that is used internally.
-     *
-     * @var \Webfactory\TranslationBundle\Translator\Formatting\MessageParser
-     */
-    protected $parser = null;
-
-    /**
-     * Creates the formatter.
-     *
-     * @param MessageParser $parser Used to parse translation messages.
-     */
-    public function __construct(MessageParser $parser)
-    {
-        $this->parser = $parser;
-    }
-
-    /**
      * Formats the message with the help of php intl extension.
      * 
      * @param string $locale
@@ -40,13 +23,7 @@ class IntlFormatter implements FormatterInterface
      */
     public function format($locale, $message, array $parameters)
     {
-        $result = $this->parser->parse($message);
-        $intlParameters = array();
-        foreach ($result->mapping as $name => $index) {
-            $intlParameters[$index] = isset($parameters[$name]) ? $parameters[$name] : null;
-        }
-
-        $formatter = new \MessageFormatter($locale, $result->message);
+        $formatter = new \MessageFormatter($locale, $message);
         if (!$formatter) {
             throw new CannotInstantiateFormatterException(
                 intl_get_error_message(),
@@ -54,7 +31,7 @@ class IntlFormatter implements FormatterInterface
             );
         }
 
-        $result = $formatter->format($intlParameters);
+        $result = $formatter->format($parameters);
         if ($result === false) {
             throw new CannotFormatException(
                 $formatter->getErrorMessage(),
