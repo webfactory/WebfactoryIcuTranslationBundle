@@ -115,7 +115,7 @@ class NamedToPositionalParameterDecoratorTest extends \PHPUnit_Framework_TestCas
     {
         $params = array('name' => 'Matthias', 'location' => 'Bonn');
 
-        $this->assertFormatterReceives($this->anything(), array_keys($params));
+        $this->assertFormatterReceives($this->anything(), array_values($params));
 
         $this->decorator->format('de', 'Hello {name} from {location}!', $params);
     }
