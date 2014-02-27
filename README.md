@@ -7,7 +7,8 @@ While the [Symfony2 translation component](http://symfony.com/doc/current/compon
 great job in most cases, it can become difficult to use if you need conditions other than numbers (e.g. gender) or
 nested conditions. This is where the ICU Translation Bundle steps in. Using the [International Components for Unicode
 project](http://site.icu-project.org/)'s standard message format, it enhances the Symfony component with arbitrary and
-nested conditions, as well as easy-to-use localized number and date formatting.
+nested conditions, as well as easy-to-use localized number and date formatting. The enhancement is non-invasive, i.e.
+you don't have to touch your former messages, they'll still work as usual.
 
 ## Installation ##
 
@@ -34,8 +35,6 @@ As usual, enable the bundle in your kernel:
     }
 
 ## Usage ##
-
-Formatting is optional: If no formatting is needed, then simple messages can be used.
 
 Formatted messages use a special syntax that defines how to translate the message
 depending on provided translation parameters.
