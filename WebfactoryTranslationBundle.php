@@ -9,7 +9,7 @@ use Webfactory\TranslationBundle\DependencyInjection\DecorateTranslatorCompilerP
 /**
  * Initializes the translator bundle.
  */
-class WebfactoryTranslatorBundle extends Bundle
+class WebfactoryTranslationBundle extends Bundle
 {
 
     /**
