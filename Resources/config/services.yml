@@ -11,5 +11,5 @@ services:
         arguments: ["@webfactory_translation.message.parser"]
 
     webfactory_translation.formatter.twig_parameter_normalizer:
-        class: \Webfactory\TranslationBundle\Translator\Formatting\TwigParameterNormalizer
+        class: Webfactory\TranslationBundle\Translator\Formatting\TwigParameterNormalizer
         arguments: ["@webfactory_translation.formatter.intl_formatter"]
