@@ -1,6 +1,6 @@
 <?php
 
-namespace Webfactory\WebsiteBundle\Tests\DependencyInjection;
+namespace Webfactory\TranslationBundle\Tests\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
