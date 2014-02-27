@@ -23,6 +23,11 @@ class IntlFormatter implements FormatterInterface
      */
     public function format($locale, $message, array $parameters)
     {
+        if (empty($message)) {
+            // Empty strings are not accepted as message pattern by the \MessageFormatter.
+            return $message;
+        }
+
         $formatter = new \MessageFormatter($locale, $message);
         if (!$formatter) {
             throw new CannotInstantiateFormatterException(
