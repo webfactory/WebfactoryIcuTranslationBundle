@@ -35,6 +35,22 @@ depending on provided translation parameters.
 
 The following examples show translation messages for several common use cases.
 
+### Placeholder Substitution ###
+
+Message placeholders are enclosed by curly braces and will be substituted during formatting:
+
+    Hello {name}!
+
+Things get more interesting when parameter type are involved, which require
+a special treatment depending on the locale.
+
+The following message uses correct thousands separators depending on the locale:
+
+    In this course, {number_of_participants, number} are participating.
+
+This means, that the value 1024 would be shown as "1,024" for the locale "en", whereas
+in german ("de") "1.024" is used as representation.
+
 ### Gender Specific Translations ###
 
 Conditions can be used to realize gender specific translations.
