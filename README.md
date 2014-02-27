@@ -11,11 +11,15 @@ nested conditions, as well as easy-to-use localized number and date formatting.
 
 ## Installation ##
 
-Install the bundle via composer:
+Assuming you've already [enabled and configured the Symfony2 translation component](http://symfony.com/doc/current/book/translation.html#book-translation-configuration),
+all you have to do is to install the bundle via [composer](https://getcomposer.org) with something like this:
 
-    php composer.phar require webfactory/icu-translation-bundle *
+    php composer.phar require webfactory/icu-translation-bundle
 
-Enable the bundle in your kernel:
+(We use [Semantic Versioning](http://semver.org/), so as soon as a version tagged 1.0.0 is available, you'll probably
+want to use something like ~1.0 as the version string.)
+
+As usual, enable the bundle in your kernel:
 
     <?php
     // app/AppKernel.php
@@ -26,9 +30,8 @@ Enable the bundle in your kernel:
             // ...
             new \Webfactory\IcuTranslationBundle\WebfactoryIcuTranslationBundle()
         );
+        // ...
     }
-
-Message formatting is now supported for all translations.
 
 ## Usage ##
 
