@@ -2,6 +2,8 @@
 
 namespace Webfactory\TranslationBundle\Tests\Translator\Formatting;
 
+use Webfactory\TranslationBundle\Translator\Formatting\MessageLexer;
+use Webfactory\TranslationBundle\Translator\Formatting\MessageParser;
 use Webfactory\TranslationBundle\Translator\Formatting\NamedToPositionalParameterDecorator;
 
 /**
@@ -31,7 +33,10 @@ class NamedToPositionalParameterDecoratorTest extends \PHPUnit_Framework_TestCas
     {
         parent::setUp();
         $this->innerFormatter = $this->getMock('\Webfactory\TranslationBundle\Translator\Formatting\FormatterInterface');
-        $this->decorator      = new NamedToPositionalParameterDecorator($this->innerFormatter);
+        $this->decorator      = new NamedToPositionalParameterDecorator(
+            $this->innerFormatter,
+            new MessageParser(new MessageLexer())
+        );
     }
 
     /**
