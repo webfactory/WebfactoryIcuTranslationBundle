@@ -6,6 +6,7 @@ use Webfactory\IcuTranslationBundle\Translator\FormatterDecorator;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\MessageLexer;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\MessageParser;
+use Webfactory\IcuTranslationBundle\Translator\Formatting\NamedToPositionalParameterDecorator;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalizer;
 
 /**
@@ -37,7 +38,12 @@ class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
         $this->translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
         $this->decorator  = new FormatterDecorator(
             $this->translator,
-            new TwigParameterNormalizer(new IntlFormatter(new MessageParser(new MessageLexer())))
+            new TwigParameterNormalizer(
+                new NamedToPositionalParameterDecorator(
+                    new IntlFormatter(),
+                    new MessageParser(new MessageLexer())
+                )
+            )
         );
     }
 
