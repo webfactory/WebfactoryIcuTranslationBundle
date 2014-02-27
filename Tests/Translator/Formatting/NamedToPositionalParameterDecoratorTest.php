@@ -116,6 +116,18 @@ class NamedToPositionalParameterDecoratorTest extends \PHPUnit_Framework_TestCas
     }
 
     /**
+     * Checks if the decorator returns the result from the inner formatter.
+     */
+    public function testDecoratorReturnsResultFromInnerFormatter()
+    {
+        $this->innerFormatter->expects($this->once())
+                             ->method('format')
+                             ->will($this->returnValue('test'));
+
+        $this->assertEquals('test', $this->decorator->format('de', 'hello', array()));
+    }
+
+    /**
      * Asserts that the inner formatter receives the provided message and the
      * given parameters.
      *
