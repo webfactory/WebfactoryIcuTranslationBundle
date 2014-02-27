@@ -22,6 +22,9 @@ class AbstractFormatterDecoratorTest extends \PHPUnit_Framework_TestCase
      */
     protected $innerFormatter = null;
 
+    /**
+     * Initializes the test environment.
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -31,6 +34,9 @@ class AbstractFormatterDecoratorTest extends \PHPUnit_Framework_TestCase
         $this->decorator = $this->getMockForAbstractClass($decoratorClass, array($this->innerFormatter));
     }
 
+    /**
+     * Cleans up the test environment.
+     */
     protected function tearDown()
     {
         $this->decorator      = null;

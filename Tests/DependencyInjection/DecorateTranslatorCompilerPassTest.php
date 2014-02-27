@@ -27,6 +27,9 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
      */
     protected $container = null;
 
+    /**
+     * Initializes the test environment.
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -34,13 +37,15 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
         $this->compilerPass = new DecorateTranslatorCompilerPass();
     }
 
+    /**
+     * Cleans up the test environment.
+     */
     protected function tearDown()
     {
         $this->compilerPass = null;
         $this->container    = null;
         parent::tearDown();
     }
-
 
     /**
      * Checks if the class implements the necessary CompilerPass interface.

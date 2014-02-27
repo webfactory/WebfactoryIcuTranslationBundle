@@ -24,6 +24,9 @@ class FormattingExceptionTest extends \PHPUnit_Framework_TestCase
      */
     protected $innerException = null;
 
+    /**
+     * Initializes the test environment.
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -39,6 +42,9 @@ class FormattingExceptionTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Cleans up the test environment.
+     */
     protected function tearDown()
     {
         $this->exception      = null;

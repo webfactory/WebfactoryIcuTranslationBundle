@@ -28,6 +28,9 @@ class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
      */
     protected $translator = null;
 
+    /**
+     * Initializes the test environment.
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -38,6 +41,9 @@ class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Cleans up the test environment.
+     */
     protected function tearDown()
     {
         $this->decorator  = null;
