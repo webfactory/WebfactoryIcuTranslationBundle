@@ -1,6 +1,6 @@
 <?php
 
-namespace Webfactory\TranslatorBundle\Translator\Formatting;
+namespace Webfactory\TranslationBundle\Translator\Formatting;
 
 use JMS\Parser\AbstractParser;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webfactory\TranslatorBundle\DependencyInjection;
+namespace Webfactory\TranslationBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -30,7 +30,7 @@ class DecorateTranslatorCompilerPass implements CompilerPassInterface
 
         // ... and replace with a decorated version.
         $decorated = new Definition(
-            'Webfactory\TranslatorBundle\Translator\FormatterDecorator',
+            'Webfactory\TranslationBundle\Translator\FormatterDecorator',
             array(
                 new Reference('webfactory_translator.inner_translator'),
                 new Reference('webfactory_translator.formatter.twig_parameter_normalizer')

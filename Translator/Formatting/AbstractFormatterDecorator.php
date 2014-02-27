@@ -1,6 +1,6 @@
 <?php
 
-namespace Webfactory\TranslatorBundle\Translator\Formatting;
+namespace Webfactory\TranslationBundle\Translator\Formatting;
 
 /**
  * Base class for formatter decorators.
@@ -11,14 +11,14 @@ abstract class AbstractFormatterDecorator implements FormatterInterface
     /**
      * The inner formatter.
      *
-     * @var \Webfactory\TranslatorBundle\Translator\Formatting\FormatterInterface
+     * @var \Webfactory\TranslationBundle\Translator\Formatting\FormatterInterface
      */
     protected $innerFormatter = null;
 
     /**
      * Creates a decorator for the provided formatter.
      *
-     * @param \Webfactory\TranslatorBundle\Translator\Formatting\FormatterInterface $innerFormatter
+     * @param \Webfactory\TranslationBundle\Translator\Formatting\FormatterInterface $innerFormatter
      */
     public function __construct(FormatterInterface $innerFormatter)
     {

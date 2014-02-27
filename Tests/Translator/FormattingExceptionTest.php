@@ -1,8 +1,8 @@
 <?php
 
-namespace Webfactory\TranslatorBundle\Tests\Translator;
+namespace Webfactory\TranslationBundle\Tests\Translator;
 
-use Webfactory\TranslatorBundle\Translator\FormattingException;
+use Webfactory\TranslationBundle\Translator\FormattingException;
 
 /**
  * Tests the formatting exception.
@@ -13,7 +13,7 @@ class FormattingExceptionTest extends \PHPUnit_Framework_TestCase
     /**
      * System under test.
      *
-     * @var \Webfactory\TranslatorBundle\Translator\FormattingException
+     * @var \Webfactory\TranslationBundle\Translator\FormattingException
      */
     protected $exception = null;
 

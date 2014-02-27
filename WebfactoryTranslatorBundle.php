@@ -1,10 +1,10 @@
 <?php
 
-namespace Webfactory\TranslatorBundle;
+namespace Webfactory\TranslationBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Webfactory\TranslatorBundle\DependencyInjection\DecorateTranslatorCompilerPass;
+use Webfactory\TranslationBundle\DependencyInjection\DecorateTranslatorCompilerPass;
 
 /**
  * Initializes the translator bundle.

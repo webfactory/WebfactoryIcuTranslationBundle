@@ -1,6 +1,6 @@
 <?php
 
-namespace Webfactory\TranslatorBundle\Translator;
+namespace Webfactory\TranslationBundle\Translator;
 
 /**
  * Exception that wraps formatting exceptions and adds some information about the message.

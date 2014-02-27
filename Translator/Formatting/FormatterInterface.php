@@ -1,6 +1,6 @@
 <?php
 
-namespace Webfactory\TranslatorBundle\Translator\Formatting;
+namespace Webfactory\TranslationBundle\Translator\Formatting;
 
 /**
  * Interface for classes that are used to format a translation message.

@@ -1,8 +1,8 @@
 <?php
 
-namespace Webfactory\TranslatorBundle\Translator;
+namespace Webfactory\TranslationBundle\Translator;
 
-use Webfactory\TranslatorBundle\Translator\Formatting\FormatterInterface;
+use Webfactory\TranslationBundle\Translator\Formatting\FormatterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 /**
@@ -21,7 +21,7 @@ class FormatterDecorator implements TranslatorInterface
     /**
      * The formatter that is used to apply message transformations.
      *
-     * @var \Webfactory\TranslatorBundle\Translator\Formatting\IntlFormatter
+     * @var \Webfactory\TranslationBundle\Translator\Formatting\IntlFormatter
      */
     protected $formatter = null;
 
@@ -29,7 +29,7 @@ class FormatterDecorator implements TranslatorInterface
      * Creates a decorator for the provided translator.
      *
      * @param \Symfony\Component\Translation\TranslatorInterface $translator
-     * @param \Webfactory\TranslatorBundle\Translator\Formatting\FormatterInterface The formatter that is used.
+     * @param \Webfactory\TranslationBundle\Translator\Formatting\FormatterInterface The formatter that is used.
      */
     public function __construct(TranslatorInterface $translator, FormatterInterface $formatter)
     {
@@ -96,7 +96,7 @@ class FormatterDecorator implements TranslatorInterface
      * @param array(mixed) $parameters
      * @param string|null $locale
      * @return string The formatted message.
-     * @throws \Webfactory\TranslatorBundle\Translator\FormattingException If formatting fails.
+     * @throws \Webfactory\TranslationBundle\Translator\FormattingException If formatting fails.
      */
     protected function handleFormatting($id, $message, array $parameters, $locale)
     {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Webfactory\TranslatorBundle\Tests\Translator\Formatting;
+namespace Webfactory\TranslationBundle\Tests\Translator\Formatting;
 
-use Webfactory\TranslatorBundle\Translator\Formatting\TwigParameterNormalizer;
+use Webfactory\TranslationBundle\Translator\Formatting\TwigParameterNormalizer;
 
 /**
  * Tests the Twig parameter normalizer.
@@ -13,7 +13,7 @@ class TwigParameterNormalizerTest extends \PHPUnit_Framework_TestCase
     /**
      * System under test.
      *
-     * @var \Webfactory\TranslatorBundle\Translator\Formatting\TwigParameterNormalizer
+     * @var \Webfactory\TranslationBundle\Translator\Formatting\TwigParameterNormalizer
      */
     protected $formatter = null;
 
@@ -30,7 +30,7 @@ class TwigParameterNormalizerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->innerFormatter = $this->getMock('\Webfactory\TranslatorBundle\Translator\Formatting\FormatterInterface');
+        $this->innerFormatter = $this->getMock('\Webfactory\TranslationBundle\Translator\Formatting\FormatterInterface');
         $this->formatter      = new TwigParameterNormalizer($this->innerFormatter);
     }
 

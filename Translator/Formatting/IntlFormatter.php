@@ -1,9 +1,9 @@
 <?php
 
-namespace Webfactory\TranslatorBundle\Translator\Formatting;
+namespace Webfactory\TranslationBundle\Translator\Formatting;
 
-use Webfactory\TranslatorBundle\Translator\Formatting\Exception\CannotInstantiateFormatterException;
-use Webfactory\TranslatorBundle\Translator\Formatting\Exception\CannotFormatException;
+use Webfactory\TranslationBundle\Translator\Formatting\Exception\CannotInstantiateFormatterException;
+use Webfactory\TranslationBundle\Translator\Formatting\Exception\CannotFormatException;
 
 /**
  * Formatter that uses the Intl extension to format messages.
@@ -14,7 +14,7 @@ class IntlFormatter implements FormatterInterface
     /**
      * The message parser that is used internally.
      *
-     * @var \Webfactory\TranslatorBundle\Translator\Formatting\MessageParser
+     * @var \Webfactory\TranslationBundle\Translator\Formatting\MessageParser
      */
     protected $parser = null;
 

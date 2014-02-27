@@ -1,12 +1,12 @@
 <?php
 
-namespace Webfactory\TranslatorBundle\Tests\Translator;
+namespace Webfactory\TranslationBundle\Tests\Translator;
 
-use Webfactory\TranslatorBundle\Translator\FormatterDecorator;
-use Webfactory\TranslatorBundle\Translator\Formatting\IntlFormatter;
-use Webfactory\TranslatorBundle\Translator\Formatting\MessageLexer;
-use Webfactory\TranslatorBundle\Translator\Formatting\MessageParser;
-use Webfactory\TranslatorBundle\Translator\Formatting\TwigParameterNormalizer;
+use Webfactory\TranslationBundle\Translator\FormatterDecorator;
+use Webfactory\TranslationBundle\Translator\Formatting\IntlFormatter;
+use Webfactory\TranslationBundle\Translator\Formatting\MessageLexer;
+use Webfactory\TranslationBundle\Translator\Formatting\MessageParser;
+use Webfactory\TranslationBundle\Translator\Formatting\TwigParameterNormalizer;
 
 /**
  * Tests the formatter decorator for translators.
@@ -17,7 +17,7 @@ class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
     /**
      * System under test.
      *
-     * @var \Webfactory\TranslatorBundle\Translator\FormatterDecorator
+     * @var \Webfactory\TranslationBundle\Translator\FormatterDecorator
      */
     protected $decorator = null;
 
@@ -228,7 +228,7 @@ class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testDecoratorNormalizesFormatterException()
     {
-        $formatter = $this->getMock('Webfactory\TranslatorBundle\Translator\Formatting\FormatterInterface');
+        $formatter = $this->getMock('Webfactory\TranslationBundle\Translator\Formatting\FormatterInterface');
         $formatter->expects($this->once())
                   ->method('format')
                   ->will($this->throwException(new \RuntimeException('Formatter exception.')));
@@ -238,7 +238,7 @@ class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
 
         $decorator = new FormatterDecorator($this->translator, $formatter);
 
-        $this->setExpectedException('Webfactory\TranslatorBundle\Translator\FormattingException');
+        $this->setExpectedException('Webfactory\TranslationBundle\Translator\FormattingException');
         $decorator->trans('test', array('test' => 'value'), 'messages', 'en');
     }
 

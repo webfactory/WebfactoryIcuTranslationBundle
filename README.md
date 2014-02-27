@@ -9,7 +9,7 @@ or locale specific date formatting.
 
 Install the bundle via composer:
 
-    php composer.phar require webfactory/icu-translator-bundle *
+    php composer.phar require webfactory/icu-translation-bundle *
 
 Enable the bundle in your kernel:
 
@@ -20,6 +20,6 @@ Enable the bundle in your kernel:
     {
         $bundles = array(
             // ...
-            new \Webfactory\TranslatorBundle\WebfactoryTranslatorBundle()
+            new \Webfactory\TranslationBundle\WebfactoryTranslatorBundle()
         );
     }

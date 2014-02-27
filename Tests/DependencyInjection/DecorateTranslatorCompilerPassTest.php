@@ -4,8 +4,8 @@ namespace Webfactory\WebsiteBundle\Tests\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
-use Webfactory\TranslatorBundle\DependencyInjection\DecorateTranslatorCompilerPass;
-use Webfactory\TranslatorBundle\DependencyInjection\WebfactoryTranslatorExtension;
+use Webfactory\TranslationBundle\DependencyInjection\DecorateTranslatorCompilerPass;
+use Webfactory\TranslationBundle\DependencyInjection\WebfactoryTranslatorExtension;
 
 /**
  * Tests the compiler pass that decorates the translator.
@@ -16,7 +16,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
     /**
      * System under test.
      *
-     * @var \Webfactory\TranslatorBundle\DependencyInjection\DecorateTranslatorCompilerPass
+     * @var \Webfactory\TranslationBundle\DependencyInjection\DecorateTranslatorCompilerPass
      */
     protected $compilerPass = null;
 
@@ -72,7 +72,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
         $this->compilerPass->process($this->container);
 
         $translator = $this->container->get('translator');
-        $this->assertInstanceOf('Webfactory\TranslatorBundle\Translator\FormatterDecorator', $translator);
+        $this->assertInstanceOf('Webfactory\TranslationBundle\Translator\FormatterDecorator', $translator);
     }
 
     /**
@@ -88,7 +88,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
         $this->compilerPass->process($this->container);
 
         $translator = $this->container->get('translator');
-        $this->assertInstanceOf('Webfactory\TranslatorBundle\Translator\FormatterDecorator', $translator);
+        $this->assertInstanceOf('Webfactory\TranslationBundle\Translator\FormatterDecorator', $translator);
     }
 
     /**

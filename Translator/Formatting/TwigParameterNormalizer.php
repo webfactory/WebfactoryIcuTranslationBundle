@@ -1,6 +1,6 @@
 <?php
 
-namespace Webfactory\TranslatorBundle\Translator\Formatting;
+namespace Webfactory\TranslationBundle\Translator\Formatting;
 
 /**
  * Removes leading and trailing percentage signs ('%') from parameter

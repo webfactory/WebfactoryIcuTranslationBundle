@@ -1,6 +1,6 @@
 <?php
 
-namespace Webfactory\TranslatorBundle\Tests\Translator\Formatting;
+namespace Webfactory\TranslationBundle\Tests\Translator\Formatting;
 
 /**
  * Tests the abstract formatter decorator.
@@ -11,7 +11,7 @@ class AbstractFormatterDecoratorTest extends \PHPUnit_Framework_TestCase
     /**
      * System under test.
      *
-     * @var \Webfactory\TranslatorBundle\Translator\Formatting\AbstractFormatterDecorator
+     * @var \Webfactory\TranslationBundle\Translator\Formatting\AbstractFormatterDecorator
      */
     protected $decorator = null;
 
@@ -25,9 +25,9 @@ class AbstractFormatterDecoratorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $formatterInterface   = 'Webfactory\TranslatorBundle\Translator\Formatting\FormatterInterface';
+        $formatterInterface   = 'Webfactory\TranslationBundle\Translator\Formatting\FormatterInterface';
         $this->innerFormatter = $this->getMock($formatterInterface);
-        $decoratorClass  = 'Webfactory\TranslatorBundle\Translator\Formatting\AbstractFormatterDecorator';
+        $decoratorClass  = 'Webfactory\TranslationBundle\Translator\Formatting\AbstractFormatterDecorator';
         $this->decorator = $this->getMockForAbstractClass($decoratorClass, array($this->innerFormatter));
     }
 
@@ -43,7 +43,7 @@ class AbstractFormatterDecoratorTest extends \PHPUnit_Framework_TestCase
      */
     public function testImplementsInterface()
     {
-        $formatterInterface = 'Webfactory\TranslatorBundle\Translator\Formatting\FormatterInterface';
+        $formatterInterface = 'Webfactory\TranslationBundle\Translator\Formatting\FormatterInterface';
         $this->assertInstanceOf($formatterInterface, $this->decorator);
     }
 
