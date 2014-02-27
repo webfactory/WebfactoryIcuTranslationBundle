@@ -4,7 +4,7 @@
          bootstrap="vendor/autoload.php">
 
     <testsuites>
-        <testsuite name="TranslatorBundle test suite">
+        <testsuite name="TranslationBundle test suite">
             <directory>Tests/</directory>
         </testsuite>
     </testsuites>
@@ -12,10 +12,11 @@
     <!-- Filter for code coverage -->
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src/</directory>
+            <directory suffix=".php">.</directory>
             <exclude>
                 <directory>Resources</directory>
                 <directory>Tests</directory>
+                <directory>vendor</directory>
             </exclude>
         </whitelist>
     </filter>
