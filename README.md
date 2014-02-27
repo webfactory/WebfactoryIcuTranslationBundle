@@ -36,10 +36,9 @@ As usual, enable the bundle in your kernel:
 
 ## Usage ##
 
-Formatted messages use a special syntax that defines how to translate the message
-depending on provided translation parameters.
-
-The following examples show translation messages for several common use cases.
+To use the bundle's enhancements, you need to use a special syntax with curly braces in your translation messages. The
+following examples show this syntax for common use cases. For a comprehensive list, please refer to [in-depth
+documentation](Resources/doc/index.rst).
 
 ### Placeholder Substitution ###
 
