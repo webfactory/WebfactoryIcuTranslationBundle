@@ -20,6 +20,27 @@ class NamedToPositionalParameterDecorator extends AbstractFormatterDecorator
 {
 
     /**
+     * The message parser that is used internally.
+     *
+     * @var \Webfactory\TranslationBundle\Translator\Formatting\MessageParser
+     */
+    protected $parser = null;
+
+    /**
+     * Creates a decorator for the provided formatter.
+     *
+     * The decorator needs a parser that is used to analyze and modify the translation message.
+     *
+     * @param \Webfactory\TranslationBundle\Translator\Formatting\FormatterInterface $innerFormatter
+     * @param \Webfactory\TranslationBundle\Translator\Formatting\MessageParser $parser
+     */
+    public function __construct(FormatterInterface $innerFormatter, MessageParser $parser)
+    {
+        parent::__construct($innerFormatter);
+        $this->parser = $parser;
+    }
+
+    /**
      * Formats the provided message.
      *
      * @param string $locale
@@ -29,7 +50,12 @@ class NamedToPositionalParameterDecorator extends AbstractFormatterDecorator
      */
     public function format($locale, $message, array $parameters)
     {
-        // TODO: Implement format() method.
+        $result = $this->parser->parse($message);
+        $positionalParameters = array();
+        foreach ($result->mapping as $name => $index) {
+            $positionalParameters[$index] = isset($parameters[$name]) ? $parameters[$name] : null;
+        }
+        return $this->innerFormatter->format($locale, $result->message, $positionalParameters);
     }
 
 }
