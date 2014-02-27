@@ -1,5 +1,7 @@
 # ICU Translation Bundle #
 
+[![Build Status](https://travis-ci.org/webfactory/icu-translations-bundle.png?branch=master)](https://travis-ci.org/webfactory/icu-translations-bundle)
+
 This bundle enables [ICU message formatting](http://userguide.icu-project.org/formatparse) in Symfony 2 translations.
 
 ICU message formatting can be used to solve problems like pluralization, gender specific translations
