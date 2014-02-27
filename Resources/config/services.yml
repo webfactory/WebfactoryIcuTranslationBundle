@@ -8,8 +8,11 @@ services:
 
     webfactory_translation.formatter.intl_formatter:
         class: Webfactory\TranslationBundle\Translator\Formatting\IntlFormatter
-        arguments: ["@webfactory_translation.message.parser"]
+
+    webfactory_translation.formatter.named_to_positional_parameters:
+        class: Webfactory\TranslationBundle\Translator\Formatting\NamedToPositionalParameterDecorator
+        arguments: ["@webfactory_translation.formatter.intl_formatter", "@webfactory_translation.message.parser"]
 
     webfactory_translation.formatter.twig_parameter_normalizer:
         class: Webfactory\TranslationBundle\Translator\Formatting\TwigParameterNormalizer
-        arguments: ["@webfactory_translation.formatter.intl_formatter"]
+        arguments: ["@webfactory_translation.formatter.named_to_positional_parameters"]
