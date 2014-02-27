@@ -77,4 +77,4 @@ This translation message expects an integer value as "number_of_participants" pa
 Depending on the actual number the correct translation is selected. The *#* in
 the last translation will be substituted by the value of "number_of_participants".
 
-Please refer to <Resources/doc/index.rst> for more details about the formatting options.
+Please refer to [advanced documentation](Resources/doc/index.rst) for more details about the formatting options.
