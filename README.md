@@ -3,10 +3,11 @@
 [![Build Status](https://travis-ci.org/webfactory/icu-translation-bundle.png?branch=master)](https://travis-ci.org/webfactory/icu-translation-bundle)
 [![Coverage Status](https://coveralls.io/repos/webfactory/icu-translation-bundle/badge.png?branch=master)](https://coveralls.io/r/webfactory/icu-translation-bundle?branch=master)
 
-This bundle enables [ICU message formatting](http://userguide.icu-project.org/formatparse) in Symfony 2 translations.
-
-ICU message formatting can be used to solve problems like pluralization, gender specific translations
-or locale specific date formatting.
+While the [Symfony2 translation component](http://symfony.com/doc/current/components/translation/index.html) does a
+great job in most cases, it can become difficult to use if you need conditions other than numbers (e.g. gender) or
+nested conditions. This is where the ICU Translation Bundle steps in. Using the [International Components for Unicode
+project](http://site.icu-project.org/)'s standard message format, it enhances the Symfony component with arbitrary and
+nested conditions, as well as easy-to-use localized number and date formatting.
 
 ## Installation ##
 
