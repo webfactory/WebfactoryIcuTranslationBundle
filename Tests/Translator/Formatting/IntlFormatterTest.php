@@ -49,6 +49,18 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Ensures that the formatter throws an exception if formatting is not possible
+     * with the provided information.
+     */
+    public function testFormatterThrowsExceptionIfParametersAreNotValid()
+    {
+        $expected = '\Webfactory\TranslationBundle\Translator\Formatting\Exception\CannotFormatException';
+        $this->setExpectedException($expected);
+        // The required parameter is missing.
+        $this->formatter->format('en', 'Hello {0}!', array());
+    }
+
+    /**
      * Checks if the formatter can handle an empty string as message argument.
      */
     public function testFormatterCanHandleEmptyString()
