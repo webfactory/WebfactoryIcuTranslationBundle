@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 /**
  * Loads the definitions for translation related services.
  */
-class WebfactoryTranslatorExtension extends Extension
+class WebfactoryTranslationExtension extends Extension
 {
 
     /**

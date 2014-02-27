@@ -5,7 +5,7 @@ namespace Webfactory\WebsiteBundle\Tests\DependencyInjection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Webfactory\TranslationBundle\DependencyInjection\DecorateTranslatorCompilerPass;
-use Webfactory\TranslationBundle\DependencyInjection\WebfactoryTranslatorExtension;
+use Webfactory\TranslationBundle\DependencyInjection\WebfactoryTranslationExtension;
 
 /**
  * Tests the compiler pass that decorates the translator.
@@ -105,7 +105,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
     {
         $container = new ContainerBuilder();
         // Load the services that are provided by the bundle.
-        $extension = new WebfactoryTranslatorExtension();
+        $extension = new WebfactoryTranslationExtension();
         $extension->load(array(), $container);
         return $container;
     }
