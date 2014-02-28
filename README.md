@@ -43,14 +43,15 @@ documentation](Resources/doc/index.rst).
 ### Number formatting with a parameter type ###
 
 In your messages, you can specify "number" as a parameter type after a variable. If so, the output is localized with the
-correct thousands separator and decimal mark. See this example message stored under a message key "message-key":
+correct thousands separator and decimal mark. See this example message stored under the key "message-number":
 
     1 mile = {mile_to_metres, number} metres
 
 In a controller, the example could look like this:
 
-    $output = $this->get('translator')->trans(
-        'message-key',
+    $translator = this->get('translator');
+    $output = $translator->trans(
+        'message-number',
         array('%mile_to_metres%' => 1609.34)
     );
 
@@ -61,16 +62,26 @@ For other parameter types such as date, see the in-depth documentation.
 
 ### Gender Specific Translations ###
 
-Conditions can be used to realize gender specific translations.
-The following message expects the parameter "gender_of_participant", which is
-either "female" or "male":
+Gender specific translations are a special case of arbitrary conditions. Conditions are denoted by the key word "select"
+after the variable, followed by possible variable values and their respective messages. See the following example
+message stored for the locale "en" under the key "message-gender":
 
     {gender_of_participant, select,
-        female {She participated in the course.}
-        other {He participated in the course.}
+        female {She spent all her money on horses}
+        other {He spent all his money on horses}
     }
 
-Depending on the parameter value, the correct translation will be chosen.
+If your controller looks something like this:
+
+    $output = $translator->trans(
+        'message-gender',
+        array('%gender_of_participant%' => 'male')
+    );
+
+the output will be "He spent all his money on horses" for the locale "en".
+
+Why didn't we list "female" and "male" as possible variable values in the message, but "female" and "other" instead?
+Find out in the in-depth documentation.
 
 ### Pluralization ###
 
