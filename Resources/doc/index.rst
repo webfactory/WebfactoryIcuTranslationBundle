@@ -18,7 +18,7 @@ Conditions
 If needed, conditions can be used to provide translations for different circumstances
 (for example depending on the gender).
 
-The following example shows a conditional message:
+The following example shows a conditional message::
 
     {gender_of_participant, select,
         female {She participated in the course.}
@@ -36,7 +36,7 @@ missing, then an error will occur when the translation is used on the website.
 Nested Conditions
 ~~~~~~~~~~~~~~~~~
 
-Even more complex scenarios are possible as conditions can be nested if required:
+Even more complex scenarios are possible as conditions can be nested if required::
 
     {course, select,
         translating_for_beginners {{gender_of_participant, select,
@@ -57,7 +57,7 @@ to the outside.
 Long Translations
 ~~~~~~~~~~~~~~~~~
 
-If necessary, long translations in conditions can be split into several lines:
+If necessary, long translations in conditions can be split into several lines::
 
     {gender_of_participant, select,
         female {
@@ -74,7 +74,7 @@ In this case, the sentence contains additional whitespace at the start and at th
 usually not a problem when used in a HTML context.
 
 If a translation must not contain leading and trailing whitespace, then it has to be enclosed directly
-by the curly braces:
+by the curly braces::
 
     {gender_of_participant, select,
         female {She
@@ -89,12 +89,12 @@ by the curly braces:
 Variable Replacement and Formatting
 -----------------------------------
 
-Variable names are placed within curly braces and are replaced by concrete values during translation:
+Variable names are placed within curly braces and are replaced by concrete values during translation::
 
     Hello {name}!
 
 
-Variables can also have a type, which is noted after the variable name, separated by a comma:
+Variables can also have a type, which is noted after the variable name, separated by a comma::
 
     In this course, {number_of_participants, number} are participating.
 
@@ -104,7 +104,7 @@ Therefore, with locale "en" the number is shown as "1,024", whereas in german ("
 will be used as representation.
 
 
-By marking number as currencies, the currency symbol will be automatically added at the correct position:
+By marking number as currencies, the currency symbol will be automatically added at the correct position::
 
     Available for just {price, number, currency}.
 
@@ -112,7 +112,7 @@ Formatting in en_GB: "Available for just £99.99."
 Formatting in de_DE: "Available for just 99,99 €."
 
 
-For variables that are considered a date, local formats are available:
+For variables that are considered a date, local formats are available::
 
     Born on {birthDate, date, short}.
 
@@ -123,7 +123,7 @@ Formatting in de_DE: "Born on 04.02.86."
 Plural Formatting
 -----------------
 
-Various plural rules can be applied via "plural" condition:
+Various plural rules can be applied via "plural" condition::
 
     {number_of_participants, plural,
         =0 {Nobody is participating.}
@@ -135,7 +135,7 @@ In this case the correct translation is chosen depending on the number_of_partic
 In the "other" case the hash ("#") is replaced by the number of participants.
 
 It is also possible to reference the number via variable name, but in that case the type
-"number" must be provided to avoid a type error:
+"number" must be provided to avoid a type error::
 
     {number_of_participants, plural,
         =0 {Nobody is participating.}
@@ -144,7 +144,7 @@ It is also possible to reference the number via variable name, but in that case 
     }
 
 Additionally, there are several plural categories for each language, which can be used
-to distinguish between the different cases:
+to distinguish between the different cases::
 
     {number_of_participants, plural,
         one {One person participates.}
@@ -163,13 +163,13 @@ Special Characters and Escaping
 
 Any character except curly braces and single quotes can be used within translations.
 
-If a curly brace is needed it should be escaped with single quotes:
+If a curly brace is needed it should be escaped with single quotes::
 
     This '{'token'}' is escaped.
 
 The above message will be transformed into "This {token} is escaped.".
 
-If a single quote is needed it must be preceded by another single quote:
+If a single quote is needed it must be preceded by another single quote::
 
    The character '' is called single quote.
 
