@@ -156,19 +156,19 @@ Languages with more complex plural rules provide several categories. For example
 "zero", "one", "two", "few", "many" and "other" as category.
 
 
-Special Characters and Escaping
--------------------------------
+Escaping Special Characters
+---------------------------
 
-Any character except curly braces and single quotes can be used within translations.
+Any character can be used within translations. But curly braces and single quotes have to be escaped.
 
-If a curly brace is needed it should be escaped with single quotes::
+Escape curly braces by wrapping them in single quotes::
 
-    This '{'token'}' is escaped.
+    This '{'token'}' is escaped
 
-The above message will be transformed into "This {token} is escaped.".
+The output of this message will be "This {token} is escaped".
 
-If a single quote is needed it must be preceded by another single quote::
+Escape single quotes by preceding them with another single quote::
 
-   The character '' is called single quote.
+   The character '' is called single quote
 
-This message is transformed into "The character ' is called single quote.".
+This message is transformed into "The character ' is called single quote".
