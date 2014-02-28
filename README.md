@@ -40,21 +40,24 @@ To use the bundle's enhancements, you need to use a special syntax with curly br
 following examples show this syntax for common use cases. For a comprehensive list, please refer to [in-depth
 documentation](Resources/doc/index.rst).
 
-### Placeholder Substitution ###
+### Number formatting with a parameter type ###
 
-Message placeholders are enclosed by curly braces and will be substituted during formatting:
+In your messages, you can specify "number" as a parameter type after a variable. If so, the output is localized with the
+correct thousands separator and decimal mark. See this example message stored under a message key "message-key":
 
-    Hello {name}!
+    1 mile = {mile_to_metres, number} metres
 
-Things get more interesting when parameter type are involved, which require
-a special treatment depending on the locale.
+In a controller, the example could look like this:
 
-The following message uses correct thousands separators depending on the locale:
+    $output = $this->get('translator')->trans(
+        'message-key',
+        array('%mile_to_metres%' => 1609.34)
+    );
 
-    In this course, {number_of_participants, number} are participating.
+E.g. for the locale "en", the output will be "1 mile = 1,609.34 metres", while for the locale "de" it will be "1 mile =
+1.609,34 metres" (or "1 Meile = 1.609,34 Meter" with a proper translation).
 
-This means, that the value 1024 would be shown as "1,024" for the locale "en", whereas
-in german ("de") "1.024" is used as representation.
+For other parameter types such as date, see the in-depth documentation.
 
 ### Gender Specific Translations ###
 
