@@ -10,38 +10,42 @@ non-invasive, i.e. you don't have to touch your former messages, they'll still w
 The following will introduce you to the new translation message features and format.
 
 
-Variable Replacement and Formatting
------------------------------------
+Variable Replacement and Parameter Types
+----------------------------------------
 
 Variable names are placed within curly braces and are replaced by concrete values during translation::
 
     Hello {name}!
 
+Variables can also have a parameter type, which is noted after the variable name, separated by a comma.
 
-Variables can also have a type, which is noted after the variable name, separated by a comma::
+For the **"number"** parameter type, the output gets localized with the correct thousands separator and decimal mark. See
+this example message stored under the key "message-number"::
 
-    In this course, {number_of_participants, number} are participating.
+    1 mile = {mile_to_metres, number} metres
+    
+In a controller, the example could look like this::
 
-In this case, the type "number" is applied.  Depending on the locale, the correct thousands and decimal
-separator will be chosen automatically.
-Therefore, with locale "en" the number is shown as "1,024", whereas in german ("de") "1.024"
-will be used as representation.
+    $translator = this->get('translator');
+    $output = $translator->trans(
+        'message-number',
+        array('%mile_to_metres%' => 1609.34)
+    );
 
+For the locale "en", the output will be "1 mile = 1,609.34 metres", while for the locale "de" it will be "1 mile =
+1.609,34 metres" (or "1 Meile = 1.609,34 Meter" with a proper translation).
 
-By marking number as currencies, the currency symbol will be automatically added at the correct position::
+By marking a number as **"currency"**, the currency symbol will be automatically added at the localised position::
 
-    Available for just {price, number, currency}.
+    Available for just {price, number, currency}
 
-Formatting in en_GB: "Available for just £99.99."
-Formatting in de_DE: "Available for just 99,99 €."
+Output in en_GB: "Available for just £99.99", output in de_DE: "Available for just 99,99 €".
 
+For variables that are considered a **"date"**, local formats are available::
 
-For variables that are considered a date, local formats are available::
+    Born on {birthDate, date, short}
 
-    Born on {birthDate, date, short}.
-
-Formatting in en_GB: "Born on 04/02/1986."
-Formatting in de_DE: "Born on 04.02.86."
+Output in en_GB: "Born on 04/02/1986", output in de_DE: "Born on 04.02.86".
 
 
 Conditions
