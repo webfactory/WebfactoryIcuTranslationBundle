@@ -47,22 +47,26 @@ Formatting in de_DE: "Born on 04.02.86."
 Conditions
 ----------
 
-If needed, conditions can be used to provide translations for different circumstances
-(for example depending on the gender).
+You may use conditions to provide translations for different circumstances, e.g. the gender of a sentence's subject.
+Conditions are denoted by the key word "select" after the variable, followed by possible variable values and their
+respective messages. See the following example message stored for the locale "en" under the key "message-gender"::
 
-The following example shows a conditional message::
-
-    {gender_of_participant, select,
-        female {She participated in the course.}
-        other {He participated in the course.}
+    {gender, select,
+        female {She spent all her money on horses}
+        other {He spent all his money on horses}
     }
+    
+If your controller looks something like this::
 
-If the variable "gender_of_participant" contains the value "female", then the sentence
-"She participated in the course." will be shown. Otherwise "He participated in the course."
-is used as translation.
+    $output = $translator->trans(
+        'message-gender',
+        array('%gender%' => 'male')
+    );
+    
+the output will be "He spent all his money on horses" for the locale "en".
 
-Please note, that each conditional statement needs an "other" section. If that section is
-missing, then an error will occur when the translation is used on the website.
+**Note**: Each conditional statement needs an "other" section. If that section is missing, then an error will occur when
+the translation is used on the website.
 
 
 Nested Conditions
