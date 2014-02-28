@@ -68,7 +68,7 @@ missing, then an error will occur when the translation is used on the website.
 Nested Conditions
 ~~~~~~~~~~~~~~~~~
 
-Even more complex scenarios are possible as conditions can be nested if required::
+You may nest conditions for more complex scenarios::
 
     {course, select,
         translating_for_beginners {{gender_of_participant, select,
@@ -82,8 +82,7 @@ Even more complex scenarios are possible as conditions can be nested if required
         other {Unknown course.}
     }
 
-To improve readability, it might be useful to move the most complex conditions
-to the outside.
+For readability, you may want to write the conditions with the most cases more on the outside.
 
 
 Long Translations
