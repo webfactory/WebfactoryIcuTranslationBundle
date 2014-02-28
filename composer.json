@@ -13,6 +13,8 @@
     ],
     "require": {
         "php": ">=5.3.3",
+        "ext-intl": "*",
+        "lib-ICU": ">=4.8",
         "symfony/framework-bundle": "~2.2",
         "jms/parser-lib": "~1.0"
     },
