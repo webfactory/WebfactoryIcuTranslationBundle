@@ -2,14 +2,12 @@
 New Translation Features
 ========================
 
-Messages become more powerful and provide features like translations
-depending on certain conditions.
+Using the `International Components for Unicode project <http://site.icu-project.org/>`_'s standard message format, the
+ICU Translation Bundle enhances the `Symfony translation component <http://symfony.com/doc/current/components/translation/index.html>`_
+with arbitrary and nested conditions, as well as easy-to-use localized number and date formatting. The enhancement is
+non-invasive, i.e. you don't have to touch your former messages, they'll still work as usual.
 
-These new features are fully optional: There is still no difference when using
-simple translations. If needed, advanced features may be used.
-
-The following sections will provide a brief introduction into the new
-translation message features.
+The following will introduce you to the new translation message features and format.
 
 
 Conditions
