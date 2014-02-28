@@ -10,6 +10,40 @@ non-invasive, i.e. you don't have to touch your former messages, they'll still w
 The following will introduce you to the new translation message features and format.
 
 
+Variable Replacement and Formatting
+-----------------------------------
+
+Variable names are placed within curly braces and are replaced by concrete values during translation::
+
+    Hello {name}!
+
+
+Variables can also have a type, which is noted after the variable name, separated by a comma::
+
+    In this course, {number_of_participants, number} are participating.
+
+In this case, the type "number" is applied.  Depending on the locale, the correct thousands and decimal
+separator will be chosen automatically.
+Therefore, with locale "en" the number is shown as "1,024", whereas in german ("de") "1.024"
+will be used as representation.
+
+
+By marking number as currencies, the currency symbol will be automatically added at the correct position::
+
+    Available for just {price, number, currency}.
+
+Formatting in en_GB: "Available for just £99.99."
+Formatting in de_DE: "Available for just 99,99 €."
+
+
+For variables that are considered a date, local formats are available::
+
+    Born on {birthDate, date, short}.
+
+Formatting in en_GB: "Born on 04/02/1986."
+Formatting in de_DE: "Born on 04.02.86."
+
+
 Conditions
 ----------
 
@@ -82,40 +116,6 @@ by the curly braces::
     course.}
         other {He participated in the course.}
     }
-
-
-Variable Replacement and Formatting
------------------------------------
-
-Variable names are placed within curly braces and are replaced by concrete values during translation::
-
-    Hello {name}!
-
-
-Variables can also have a type, which is noted after the variable name, separated by a comma::
-
-    In this course, {number_of_participants, number} are participating.
-
-In this case, the type "number" is applied.  Depending on the locale, the correct thousands and decimal
-separator will be chosen automatically.
-Therefore, with locale "en" the number is shown as "1,024", whereas in german ("de") "1.024"
-will be used as representation.
-
-
-By marking number as currencies, the currency symbol will be automatically added at the correct position::
-
-    Available for just {price, number, currency}.
-
-Formatting in en_GB: "Available for just £99.99."
-Formatting in de_DE: "Available for just 99,99 €."
-
-
-For variables that are considered a date, local formats are available::
-
-    Born on {birthDate, date, short}.
-
-Formatting in en_GB: "Born on 04/02/1986."
-Formatting in de_DE: "Born on 04.02.86."
 
 
 Plural Formatting
