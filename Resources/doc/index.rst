@@ -89,7 +89,7 @@ to the outside.
 Long Translations
 ~~~~~~~~~~~~~~~~~
 
-If necessary, long translations in conditions can be split into several lines::
+You may split long translations in conditions into several lines::
 
     {gender_of_participant, select,
         female {
