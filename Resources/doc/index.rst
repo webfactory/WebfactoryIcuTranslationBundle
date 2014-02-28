@@ -118,42 +118,50 @@ by the curly braces::
     }
 
 
-Plural Formatting
------------------
+Pluralization
+-------------
 
-Various plural rules can be applied via "plural" condition::
-
-    {number_of_participants, plural,
-        =0 {Nobody is participating.}
-        =1 {One person participates.}
-        other {# persons are participating.}
-    }
-
-In this case the correct translation is chosen depending on the number_of_participants.
-In the "other" case the hash ("#") is replaced by the number of participants.
-
-It is also possible to reference the number via variable name, but in that case the type
-"number" must be provided to avoid a type error::
+While `Symfony's translation component <http://symfony.com/doc/current/components/translation/index.html>`_ already
+supports pluralization, we think the ICU Translation Bundle provides it in a more readable way. Analogously to
+conditions, pluralizations are denoted by the key word "plural" after the variable, followed by possible variable values
+and their respective messages. See the following example message stored for the locale "en" under the key
+"message-pluralization"::
 
     {number_of_participants, plural,
-        =0 {Nobody is participating.}
-        =1 {One person participates.}
-        other {{number_of_participants, number} persons are participating.}
+        =0 {Nobody is participating}
+        =1 {One person participates}
+        other {# persons are participating}
     }
+    
+If your controller looks something like this::
 
-Additionally, there are several plural categories for each language, which can be used
-to distinguish between the different cases::
+    $output = $translator->trans(
+        'message-pluralization',
+        array('%number_of_participants%' => 2)
+    );
+    
+The output for the locale "en" will be: "2 persons are participating".
+
+You may have noticed three issues:
+
+1. To distinguish between exact numbers, you use the equals sign in front of the number.
+2. The number sign "#" in a message becomes substituted with the value of the variable, 2 in this example.
+3. You can distinguish both between exact numbers like with "=0" and something different like "other". Those are called
+   number categories.
+  
+Number Categories
+~~~~~~~~~~~~~~~~~
+
+Some languages have more forms of number specific grammar and vocabulary. E.g. English has two forms: singular and
+plural, while Bambara has only one form and Arabic has six. To abstract these forms for translations, the ICU Translation
+Bundle supports the `Unicode Common Locale Data Repository number categories <http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html>`_.
+
+E.g. for English, these number categories are named "one" and "other". You use them as follows in your message::
 
     {number_of_participants, plural,
         one {One person participates.}
         other {{number_of_participants, number} persons are participating.}
     }
-
-Which categories exist in a language can be looked up at [http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html].
-In English, there are just the categories "one" and "other".
-
-Languages with more complex plural rules provide several categories. For example Arabic defines
-"zero", "one", "two", "few", "many" and "other" as category.
 
 
 Escaping Special Characters
