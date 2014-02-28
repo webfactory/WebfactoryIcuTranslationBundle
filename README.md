@@ -37,7 +37,7 @@ As usual, enable the bundle in your kernel:
 ## Usage ##
 
 To use the bundle's enhancements, you need to use a special syntax with curly braces in your translation messages. The
-following examples show this syntax for common use cases. For a comprehensive list, please refer to [in-depth
+following examples show this syntax for common use cases. For a comprehensive list, please refer to [bundle
 documentation](Resources/doc/index.rst).
 
 ### Number formatting with a parameter type ###
@@ -58,7 +58,7 @@ In a controller, the example could look like this:
 E.g. for the locale "en", the output will be "1 mile = 1,609.34 metres", while for the locale "de" it will be "1 mile =
 1.609,34 metres" (or "1 Meile = 1.609,34 Meter" with a proper translation).
 
-For other parameter types such as date, see the in-depth documentation.
+For other parameter types such as date, see the bundle documentation.
 
 ### Gender Specific Translations ###
 
@@ -81,7 +81,7 @@ If your controller looks something like this:
 the output will be "He spent all his money on horses" for the locale "en".
 
 Why didn't we list "female" and "male" as possible variable values in the message, but "female" and "other" instead?
-Find out in the in-depth documentation.
+Find out in the bundle documentation.
 
 ### More Readable Pluralization ###
 
@@ -109,5 +109,5 @@ Note that you can distinguish both between exact numbers like with "=0" and [Uni
 number categories](http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html) like "other". Also
 note that the number sign "#" becomes substituted with the value of the variable, 2 in this example.
 
-Now that you've got an idea of the ICU translation bundle's features, we once more invite you to read the [in-depth
+Now that you've got an idea of the ICU translation bundle's features, we once more invite you to read the [bundle
 documentation](Resources/doc/index.rst).
