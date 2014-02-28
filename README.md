@@ -66,7 +66,7 @@ Gender specific translations are a special case of arbitrary conditions. Conditi
 after the variable, followed by possible variable values and their respective messages. See the following example
 message stored for the locale "en" under the key "message-gender":
 
-    {gender_of_participant, select,
+    {gender, select,
         female {She spent all her money on horses}
         other {He spent all his money on horses}
     }
@@ -75,7 +75,7 @@ If your controller looks something like this:
 
     $output = $translator->trans(
         'message-gender',
-        array('%gender_of_participant%' => 'male')
+        array('%gender%' => 'male')
     );
 
 the output will be "He spent all his money on horses" for the locale "en".
@@ -83,17 +83,31 @@ the output will be "He spent all his money on horses" for the locale "en".
 Why didn't we list "female" and "male" as possible variable values in the message, but "female" and "other" instead?
 Find out in the in-depth documentation.
 
-### Pluralization ###
+### More Readable Pluralization ###
 
-This translation message expects an integer value as "number_of_participants" parameter:
+While [Symfony's translation component already supports pluralization](http://symfony.com/doc/current/components/translation/usage.html#component-translation-pluralization),
+we think the ICU Translation Bundle provides it in a more readable way. Analogously to conditions, pluralizations are
+denoted by the key word "plural" after the variable, followed by possible variable values and their respective messages.
+See the following example message stored for the locale "en" under the key "message-pluralization":
 
     {number_of_participants, plural,
-        =0 {Nobody is participating.}
-        =1 {One person participates.}
-        other {# persons are participating.}
+        =0 {Nobody is participating}
+        =1 {One person participates}
+        other {# persons are participating}
     }
 
-Depending on the actual number the correct translation is selected. The *#* in
-the last translation will be substituted by the value of "number_of_participants".
+If your controller looks something like this:
 
-Please refer to [advanced documentation](Resources/doc/index.rst) for more details about the formatting options.
+    $output = $translator->trans(
+        'message-pluralization',
+        array('%number_of_participants%' => 2)
+    );
+
+The output for the locale "en" will be: "2 persons are participating".
+
+Note that you can distinguish both between exact numbers like with "=0" and [Unicode Common Locale Data Repository
+number categories](http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html) like "other". Also
+note that the number sign "#" becomes substituted with the value of the variable, 2 in this example.
+
+Now that you've got an idea of the ICU translation bundle's features, we once more invite you to read the [in-depth
+documentation](Resources/doc/index.rst).
