@@ -2,7 +2,7 @@
 
 namespace Webfactory\TranslationBundle\Tests\Functional;
 
-use Matthias\SymfonyServiceDefinitionValidator\Error\ValidationErrorInterface;
+use Matthias\SymfonyServiceDefinitionValidator\Error\Printer\SimpleErrorListPrinter;
 use Matthias\SymfonyServiceDefinitionValidator\ServiceDefinitionValidatorFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Webfactory\IcuTranslationBundle\DependencyInjection\DecorateTranslatorCompilerPass;
@@ -76,12 +76,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
             new ValidationErrorFactory()
         );
         /* @var $errors \Matthias\SymfonyServiceDefinitionValidator\Error\ValidationErrorListInterface */
-        $errors = $batchValidator->validate($container->getDefinitions());
-        $failures = array_map(function (ValidationErrorInterface $error) {
-            return '- ' . $error->getServiceId() . ': ' . $error->getException();
-        }, iterator_to_array($errors));
-        $message = 'Container configuration errors detected: ' . PHP_EOL . implode(PHP_EOL, $failures);
-        $this->assertCount(0, $errors, $message);
+        $errors  = $batchValidator->validate($container->getDefinitions());
+        $printer = new SimpleErrorListPrinter();
+        $this->assertCount(0, $errors, $printer->printErrorList($errors));
     }
 
     /**
