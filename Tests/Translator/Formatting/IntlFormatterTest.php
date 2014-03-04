@@ -50,18 +50,42 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * Ensures that the formatter throws an exception if formatting is not possible
-     * with the provided information.
+     * with the provided information (PHP < 5.5).
      */
-    public function testFormatterThrowsExceptionIfParametersAreNotValid()
+    public function testFormatterThrowsExceptionIfParameterIsMissing()
     {
-        if (version_compare(PHP_VERSION, '5.5', '<')) {
-            // TODO PHP 5.5 does not substitute missing parameters. We should decide how to handle
-            // this case for prior versions. It might be useful to simulate 5.5 behavior.
-            $expected = '\Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\CannotFormatException';
-            $this->setExpectedException($expected);
+        if (version_compare(PHP_VERSION, '5.5', '>=')) {
+            $this->markTestSkipped('This behavior is only expected for PHP versions below 5.5.');
         }
+        $expected = '\Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\CannotFormatException';
+        $this->setExpectedException($expected);
         // The required parameter is missing.
         $this->formatter->format('en', 'Hello {0}!', array());
+    }
+
+    /**
+     * Ensures that the formatter does not substitute missing parameters (PHP >= 5.5).
+     */
+    public function testFormatterDoesNotSubstituteMissingParameters()
+    {
+        if (version_compare(PHP_VERSION, '5.5', '<')) {
+            $this->markTestSkipped('This behavior is only expected for PHP versions >= 5.5');
+        }
+        // The required parameter is missing.
+        $message = $this->formatter->format('en', 'Hello {0}!', array());
+        $this->assertEquals('Hello {0}!', $message);
+    }
+
+    /**
+     * Checks if the formatter is able to substitute named parameters.
+     */
+    public function testFormatterSubstitutesNamedParameters()
+    {
+        if (version_compare(PHP_VERSION, '5.5', '<')) {
+            $this->markTestSkipped('This behavior is only expected for PHP versions >= 5.5');
+        }
+        $message = $this->formatter->format('en', 'Hello {name}!', array('name' => 'Matthias'));
+        $this->assertEquals('Hello Matthias!', $message);
     }
 
     /**
