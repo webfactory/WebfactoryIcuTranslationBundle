@@ -7,7 +7,8 @@ While the [Symfony2 translation component](http://symfony.com/doc/current/compon
 great job in most cases, it can become difficult to use if you need conditions other than numbers (e.g. gender) or
 nested conditions. This is where the ICU Translation Bundle steps in. Using the [International Components for Unicode
 project](http://site.icu-project.org/)'s standard message format, it enhances the Symfony component with arbitrary and
-nested conditions, as well as easy-to-use localized number and date formatting.
+nested conditions, as well as easy-to-use localized number and date formatting. The enhancement is non-invasive, i.e.
+you don't have to touch your former messages, they'll still work as usual.
 
 ## Installation ##
 
@@ -35,53 +36,78 @@ As usual, enable the bundle in your kernel:
 
 ## Usage ##
 
-Formatting is optional: If no formatting is needed, then simple messages can be used.
+To use the bundle's enhancements, you need to use a special syntax with curly braces in your translation messages. The
+following examples show this syntax for common use cases. For a comprehensive list, please refer to [bundle
+documentation](Resources/doc/index.rst).
 
-Formatted messages use a special syntax that defines how to translate the message
-depending on provided translation parameters.
+### Number formatting with a parameter type ###
 
-The following examples show translation messages for several common use cases.
+In your messages, you can specify "number" as a parameter type after a variable. If so, the output is localized with the
+correct thousands separator and decimal mark. See this example message stored under the key "message-number":
 
-### Placeholder Substitution ###
+    1 mile = {mile_to_metres, number} metres
 
-Message placeholders are enclosed by curly braces and will be substituted during formatting:
+In a controller, the example could look like this:
 
-    Hello {name}!
+    $translator = this->get('translator');
+    $output = $translator->trans(
+        'message-number',
+        array('%mile_to_metres%' => 1609.34)
+    );
 
-Things get more interesting when parameter type are involved, which require
-a special treatment depending on the locale.
+E.g. for the locale "en", the output will be "1 mile = 1,609.34 metres", while for the locale "de" it will be "1 mile =
+1.609,34 metres" (or "1 Meile = 1.609,34 Meter" with a proper translation).
 
-The following message uses correct thousands separators depending on the locale:
-
-    In this course, {number_of_participants, number} are participating.
-
-This means, that the value 1024 would be shown as "1,024" for the locale "en", whereas
-in german ("de") "1.024" is used as representation.
+For other parameter types such as date, see the bundle documentation.
 
 ### Gender Specific Translations ###
 
-Conditions can be used to realize gender specific translations.
-The following message expects the parameter "gender_of_participant", which is
-either "female" or "male":
+Gender specific translations are a special case of arbitrary conditions. Conditions are denoted by the key word "select"
+after the variable, followed by possible variable values and their respective messages. See the following example
+message stored for the locale "en" under the key "message-gender":
 
-    {gender_of_participant, select,
-        female {She participated in the course.}
-        other {He participated in the course.}
+    {gender, select,
+        female {She spent all her money on horses}
+        other {He spent all his money on horses}
     }
 
-Depending on the parameter value, the correct translation will be chosen.
+If your controller looks something like this:
 
-### Pluralization ###
+    $output = $translator->trans(
+        'message-gender',
+        array('%gender%' => 'male')
+    );
 
-This translation message expects an integer value as "number_of_participants" parameter:
+the output will be "He spent all his money on horses" for the locale "en".
+
+Why didn't we list "female" and "male" as possible variable values in the message, but "female" and "other" instead?
+Find out in the bundle documentation.
+
+### More Readable Pluralization ###
+
+While [Symfony's translation component already supports pluralization](http://symfony.com/doc/current/components/translation/usage.html#component-translation-pluralization),
+we think the ICU Translation Bundle provides it in a more readable way. Analogously to conditions, pluralizations are
+denoted by the key word "plural" after the variable, followed by possible variable values and their respective messages.
+See the following example message stored for the locale "en" under the key "message-pluralization":
 
     {number_of_participants, plural,
-        =0 {Nobody is participating.}
-        =1 {One person participates.}
-        other {# persons are participating.}
+        =0 {Nobody is participating}
+        =1 {One person participates}
+        other {# persons are participating}
     }
 
-Depending on the actual number the correct translation is selected. The *#* in
-the last translation will be substituted by the value of "number_of_participants".
+If your controller looks something like this:
 
-Please refer to [advanced documentation](Resources/doc/index.rst) for more details about the formatting options.
+    $output = $translator->trans(
+        'message-pluralization',
+        array('%number_of_participants%' => 2)
+    );
+
+The output for the locale "en" will be: "2 persons are participating".
+
+Note that you can distinguish both between exact numbers like with "=0" and [Unicode Common Locale Data Repository
+number categories](http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html) like "other". Also
+note that the number sign "#" becomes substituted with the value of the variable, 2 in this example.
+
+Now that you've got an idea of the ICU translation bundle's features, we once more invite you to read the [bundle
+documentation](Resources/doc/index.rst).

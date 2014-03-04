@@ -2,41 +2,81 @@
 New Translation Features
 ========================
 
-Messages become more powerful and provide features like translations
-depending on certain conditions.
+Using the `International Components for Unicode project <http://site.icu-project.org/>`_'s standard message format, the
+ICU Translation Bundle enhances the `Symfony translation component <http://symfony.com/doc/current/components/translation/index.html>`_
+with arbitrary and nested conditions, as well as easy-to-use localized number and date formatting. The enhancement is
+non-invasive, i.e. you don't have to touch your former messages, they'll still work as usual.
 
-These new features are fully optional: There is still no difference when using
-simple translations. If needed, advanced features may be used.
+The following will introduce you to the new translation message features and format.
 
-The following sections will provide a brief introduction into the new
-translation message features.
+
+Variable Replacement and Parameter Types
+----------------------------------------
+
+Variable names are placed within curly braces and are replaced by concrete values during translation::
+
+    Hello {name}!
+
+Variables can also have a parameter type, which is noted after the variable name, separated by a comma.
+
+For the **"number"** parameter type, the output gets localized with the correct thousands separator and decimal mark. See
+this example message stored under the key "message-number"::
+
+    1 mile = {mile_to_metres, number} metres
+    
+In a controller, the example could look like this::
+
+    $translator = this->get('translator');
+    $output = $translator->trans(
+        'message-number',
+        array('%mile_to_metres%' => 1609.34)
+    );
+
+For the locale "en", the output will be "1 mile = 1,609.34 metres", while for the locale "de" it will be "1 mile =
+1.609,34 metres" (or "1 Meile = 1.609,34 Meter" with a proper translation).
+
+By marking a number as **"currency"**, the currency symbol will be automatically added at the localised position::
+
+    Available for just {price, number, currency}
+
+Output in en_GB: "Available for just £99.99", output in de_DE: "Available for just 99,99 €".
+
+For variables that are considered a **"date"**, local formats are available::
+
+    Born on {birthDate, date, short}
+
+Output in en_GB: "Born on 04/02/1986", output in de_DE: "Born on 04.02.86".
 
 
 Conditions
 ----------
 
-If needed, conditions can be used to provide translations for different circumstances
-(for example depending on the gender).
+You may use conditions to provide translations for different circumstances, e.g. the gender of a sentence's subject.
+Conditions are denoted by the key word "select" after the variable, followed by possible variable values and their
+respective messages. See the following example message stored for the locale "en" under the key "message-gender"::
 
-The following example shows a conditional message:
-
-    {gender_of_participant, select,
-        female {She participated in the course.}
-        other {He participated in the course.}
+    {gender, select,
+        female {She spent all her money on horses}
+        other {He spent all his money on horses}
     }
+    
+If your controller looks something like this::
 
-If the variable "gender_of_participant" contains the value "female", then the sentence
-"She participated in the course." will be shown. Otherwise "He participated in the course."
-is used as translation.
+    $output = $translator->trans(
+        'message-gender',
+        array('%gender%' => 'male')
+    );
+    
+the output will be "He spent all his money on horses" for the locale "en".
 
-Please note, that each conditional statement needs an "other" section. If that section is
-missing, then an error will occur when the translation is used on the website.
+**Note**: Each conditional statement needs an "other" section. If that section is missing, then an error will occur when
+the translation is used on the website.
 
 
 Nested Conditions
 ~~~~~~~~~~~~~~~~~
 
-Even more complex scenarios are possible as conditions can be nested if required:
+You may nest conditions for more complex scenarios::
 
     {course, select,
         translating_for_beginners {{gender_of_participant, select,
@@ -50,14 +90,13 @@ Even more complex scenarios are possible as conditions can be nested if required
         other {Unknown course.}
     }
 
-To improve readability, it might be useful to move the most complex conditions
-to the outside.
+For readability, you may want to write the conditions with the most cases more on the outside.
 
 
 Long Translations
 ~~~~~~~~~~~~~~~~~
 
-If necessary, long translations in conditions can be split into several lines:
+You may split long translations in conditions into several lines::
 
     {gender_of_participant, select,
         female {
@@ -74,7 +113,7 @@ In this case, the sentence contains additional whitespace at the start and at th
 usually not a problem when used in a HTML context.
 
 If a translation must not contain leading and trailing whitespace, then it has to be enclosed directly
-by the curly braces:
+by the curly braces::
 
     {gender_of_participant, select,
         female {She
@@ -86,91 +125,65 @@ by the curly braces:
     }
 
 
-Variable Replacement and Formatting
------------------------------------
+Pluralization
+-------------
 
-Variable names are placed within curly braces and are replaced by concrete values during translation:
-
-    Hello {name}!
-
-
-Variables can also have a type, which is noted after the variable name, separated by a comma:
-
-    In this course, {number_of_participants, number} are participating.
-
-In this case, the type "number" is applied.  Depending on the locale, the correct thousands and decimal
-separator will be chosen automatically.
-Therefore, with locale "en" the number is shown as "1,024", whereas in german ("de") "1.024"
-will be used as representation.
-
-
-By marking number as currencies, the currency symbol will be automatically added at the correct position:
-
-    Available for just {price, number, currency}.
-
-Formatting in en_GB: "Available for just £99.99."
-Formatting in de_DE: "Available for just 99,99 €."
-
-
-For variables that are considered a date, local formats are available:
-
-    Born on {birthDate, date, short}.
-
-Formatting in en_GB: "Born on 04/02/1986."
-Formatting in de_DE: "Born on 04.02.86."
-
-
-Plural Formatting
------------------
-
-Various plural rules can be applied via "plural" condition:
+While `Symfony's translation component <http://symfony.com/doc/current/components/translation/index.html>`_ already
+supports pluralization, we think the ICU Translation Bundle provides it in a more readable way. Analogously to
+conditions, pluralizations are denoted by the key word "plural" after the variable, followed by possible variable values
+and their respective messages. See the following example message stored for the locale "en" under the key
+"message-pluralization"::
 
     {number_of_participants, plural,
-        =0 {Nobody is participating.}
-        =1 {One person participates.}
-        other {# persons are participating.}
+        =0 {Nobody is participating}
+        =1 {One person participates}
+        other {# persons are participating}
     }
+    
+If your controller looks something like this::
 
-In this case the correct translation is chosen depending on the number_of_participants.
-In the "other" case the hash ("#") is replaced by the number of participants.
+    $output = $translator->trans(
+        'message-pluralization',
+        array('%number_of_participants%' => 2)
+    );
+    
+The output for the locale "en" will be: "2 persons are participating".
 
-It is also possible to reference the number via variable name, but in that case the type
-"number" must be provided to avoid a type error:
+You may have noticed three issues:
 
-    {number_of_participants, plural,
-        =0 {Nobody is participating.}
-        =1 {One person participates.}
-        other {{number_of_participants, number} persons are participating.}
-    }
+1. To distinguish between exact numbers, you use the equals sign in front of the number.
+2. The number sign "#" in a message becomes substituted with the value of the variable, 2 in this example.
+3. You can distinguish both between exact numbers like with "=0" and something different like "other". Those are called
+   number categories.
+  
+Number Categories
+~~~~~~~~~~~~~~~~~
 
-Additionally, there are several plural categories for each language, which can be used
-to distinguish between the different cases:
+Some languages have more forms of number specific grammar and vocabulary. E.g. English has two forms: singular and
+plural, while Bambara has only one form and Arabic has six. To abstract these forms for translations, the ICU Translation
+Bundle supports the `Unicode Common Locale Data Repository number categories <http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html>`_.
+
+E.g. for English, these number categories are named "one" and "other". You use them as follows in your message::
 
     {number_of_participants, plural,
         one {One person participates.}
         other {{number_of_participants, number} persons are participating.}
     }
 
-Which categories exist in a language can be looked up at [http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html].
-In English, there are just the categories "one" and "other".
 
-Languages with more complex plural rules provide several categories. For example Arabic defines
-"zero", "one", "two", "few", "many" and "other" as category.
+Escaping Special Characters
+---------------------------
 
+Any character can be used within translations. But curly braces and single quotes have to be escaped.
 
-Special Characters and Escaping
--------------------------------
+Escape curly braces by wrapping them in single quotes::
 
-Any character except curly braces and single quotes can be used within translations.
+    This '{'token'}' is escaped
 
-If a curly brace is needed it should be escaped with single quotes:
+The output of this message will be "This {token} is escaped".
 
-    This '{'token'}' is escaped.
+Escape single quotes by preceding them with another single quote::
 
-The above message will be transformed into "This {token} is escaped.".
+   The character '' is called single quote
 
-If a single quote is needed it must be preceded by another single quote:
-
-   The character '' is called single quote.
-
-This message is transformed into "The character ' is called single quote.".
+This message is transformed into "The character ' is called single quote".
