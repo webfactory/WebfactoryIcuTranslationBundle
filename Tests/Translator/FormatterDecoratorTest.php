@@ -129,7 +129,7 @@ class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
     /**
      * Checks if the decorator replaces variables in ICU syntax.
      */
-    public function testDecoratorReplacesNumberedVariablesInFormatterFormat()
+    public function testDecoratorReplacesNumberVariablesInFormatterFormat()
     {
         $this->translator->expects($this->any())
                          ->method('trans')
