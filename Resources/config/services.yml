@@ -10,9 +10,9 @@ services:
         class: Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter
 
     webfactory_icu_translation.formatter.named_to_positional_parameters:
-        class: Webfactory\TranslationBundle\Translator\Formatting\NamedToPositionalParameterDecorator
+        class: Webfactory\IcuTranslationBundle\Translator\Formatting\NamedToPositionalParameterDecorator
         arguments: ["@webfactory_icu_translation.formatter.intl_formatter", "@webfactory_icu_translation.message.parser"]
 
     webfactory_icu_translation.formatter.twig_parameter_normalizer:
         class: Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalizer
-        arguments: ["@webfactory_icu_translation.formatter.intl_formatter"]
+        arguments: ["@webfactory_icu_translation.formatter.named_to_positional_parameters"]
