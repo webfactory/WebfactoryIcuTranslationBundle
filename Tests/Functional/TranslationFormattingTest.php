@@ -1,6 +1,7 @@
 <?php
 
 namespace Webfactory\TranslationBundle\Tests\Functional;
+
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Webfactory\IcuTranslationBundle\DependencyInjection\DecorateTranslatorCompilerPass;
 use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslationExtension;
@@ -37,19 +38,19 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that the decorator does not corrupt messages that do not contain further
+     * Ensures that the translator does not corrupt messages that do not contain further
      * formatting instructions.
      */
-    public function testDecoratorDoesNotModifyTranslationWithoutFormattingInstructions()
+    public function testTranslatorDoesNotModifyTranslationWithoutFormattingInstructions()
     {
         $message = 'This is a test message.';
         $this->assertEquals($message, $this->translator->trans($message));
     }
 
     /**
-     * Checks if the decorator replaces variables in ICU syntax.
+     * Checks if the translator replaces variables in ICU syntax.
      */
-    public function testDecoratorReplacesIndexedVariablesInFormatterFormat()
+    public function testTranslatorReplacesIndexedVariablesInFormatterFormat()
     {
         $message = 'We need {0,number,integer} tests.';
         $this->assertEquals('We need 42 tests.', $this->translator->trans($message, array('%0%' => 42)));
@@ -58,7 +59,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     /**
      * Checks if the translator replaces named variables.
      */
-    public function testDecoratorReplacesNamedVariables()
+    public function testTranslatorReplacesNamedVariables()
     {
         $message = 'We need {numberOfTests, number,integer} tests.';
         $this->assertEquals('We need 42 tests.', $this->translator->trans($message, array('%numberOfTests%' => 42)));
@@ -67,7 +68,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     /**
      * Checks if the formatter resolves select expressions correctly.
      */
-    public function testDecoratorResolvesSelectExpressionCorrectly()
+    public function testTranslatorResolvesSelectExpressionCorrectly()
     {
         $message = '{gender, select,'            . PHP_EOL
                  . '    female {She is tested.}' . PHP_EOL
@@ -79,21 +80,21 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that the decorator formats messages that are returned by transChoice().
+     * Ensures that the translator formats messages that are returned by transChoice().
      */
-    public function testDecoratorFormatsMessagesReturnedByTransChoice()
+    public function testTranslatorFormatsMessagesReturnedByTransChoice()
     {
         $message = 'We need {0,number,integer} tests.';
         $this->assertEquals('We need 42 tests.', $this->translator->transChoice($message, 7, array('%0%' => 42)));
     }
 
     /**
-     * Ensures that the decorator resolves an expression as expected when the checked variable
+     * Ensures that the translator resolves an expression as expected when the checked variable
      * is not passed.
      *
      * In such a case, the case should be resolved to other.
      */
-    public function testDecoratorResolvesSelectExpressionCorrectlyIfCheckedVariableIsNotSet()
+    public function testTranslatorResolvesSelectExpressionCorrectlyIfCheckedVariableIsNotSet()
     {
         $message = '{available, select,'        . PHP_EOL
                  . '    yes {It is available!}' . PHP_EOL
@@ -104,9 +105,9 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that the decorator does not fail if a used parameter is not passed.
+     * Ensures that the translator does not fail if a used parameter is not passed.
      */
-    public function testDecoratorCanHandleUndefinedParameters()
+    public function testTranslatorCanHandleUndefinedParameters()
     {
         $message = 'Hello {name}!';
 
@@ -114,19 +115,19 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that the decorator can handle empty messages without raising errors.
+     * Ensures that the translator can handle empty messages without raising errors.
      */
-    public function testDecoratorCanHandleEmptyMessages()
+    public function testTranslatorCanHandleEmptyMessages()
     {
         $this->setExpectedException(null);
         $this->translator->trans('');
     }
 
     /**
-     * Ensures that the decorator can handle messages that contain only whitespace
+     * Ensures that the translator can handle messages that contain only whitespace
      * without raising errors.
      */
-    public function testDecoratorCanHandleMessagesThatContainOnlyBlanks()
+    public function testTranslatorCanHandleMessagesThatContainOnlyBlanks()
     {
         $this->setExpectedException(null);
         $this->translator->trans('   ');
@@ -135,7 +136,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     /**
      * Ensures that HTML can be used in simple messages.
      */
-    public function testDecoratorSupportsSimpleMessagesWithHtml()
+    public function testTranslatorSupportsSimpleMessagesWithHtml()
     {
         $message = 'Hello <strong>{name}</strong>!';
         $translation = $this->translator->trans($message, array('%name%' => 'webfactory'));
@@ -145,7 +146,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     /**
      * Checks if HTML can be used in the different parts of a select expression.
      */
-    public function testDecoratorSupportsSelectExpressionsWithHtml()
+    public function testTranslatorSupportsSelectExpressionsWithHtml()
     {
         $message = '{location, select,'                                    . PHP_EOL
                  . '    webfactory {<strong>Best</strong> place to work.}' . PHP_EOL
@@ -159,7 +160,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     /**
      * Checks if multi line text is supported in select expressions.
      */
-    public function testDecoratorSupportsMultiLineTextInSelectExpression()
+    public function testTranslatorSupportsMultiLineTextInSelectExpression()
     {
         $message = '{location, select,'            . PHP_EOL
                  . '    webfactory {'              . PHP_EOL
@@ -178,9 +179,9 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Checks if the decorator can handle umlauts in messages.
+     * Checks if the translator can handle umlauts in messages.
      */
-    public function testDecoratorCanHandleUmlautsInMessages()
+    public function testTranslatorCanHandleUmlautsInMessages()
     {
         $message = 'Schlüsselkompetenzen sind bei {name} vorhanden.';
 
@@ -189,9 +190,9 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Checks if the decorator supports slashes in messages.
+     * Checks if the translator supports slashes in messages.
      */
-    public function testDecoratorCanHandleSlashesInMessages()
+    public function testTranslatorCanHandleSlashesInMessages()
     {
         $message = 'He/she is called {name}.';
 
@@ -200,9 +201,9 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Checks if the decorator resolves nested select expressions correctly.
+     * Checks if the translator resolves nested select expressions correctly.
      */
-    public function testDecoratorCanHandleNestedSelectExpressions()
+    public function testTranslatorCanHandleNestedSelectExpressions()
     {
         $message = '{a, select,'          . PHP_EOL
                  . '    yes {{b, select,' . PHP_EOL
@@ -219,7 +220,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     /**
      * Checks if plural formatting is supported.
      */
-    public function testDecoratorSupportsPluralFormatting()
+    public function testTranslatorSupportsPluralFormatting()
     {
         $message = '{number_of_participants, plural,'         . PHP_EOL
                  . '    =0 {Nobody is participating.}'        . PHP_EOL
@@ -232,10 +233,10 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Checks if the decorator replaces a hash (#) in a plural statement
+     * Checks if the translator replaces a hash (#) in a plural statement
      * by the checked number.
      */
-    public function testDecoratorReplacesHashInPluralFormatCorrectly()
+    public function testTranslatorReplacesHashInPluralFormatCorrectly()
     {
         $message = '{number_of_participants, plural,'         . PHP_EOL
                  . '    =0 {Nobody is participating.}'        . PHP_EOL
@@ -264,7 +265,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     /**
      * Checks if the plural categories (zero, one, few, ...) work as expected.
      */
-    public function testDecoratorSupportsPluralCategories()
+    public function testTranslatorSupportsPluralCategories()
     {
         $message = '{number_of_participants, plural,'                                        . PHP_EOL
                  . '    one {One person participates.}'                                      . PHP_EOL
@@ -278,7 +279,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     /**
      * Checks if the number formatting depends on the locale.
      */
-    public function testDecoratorFormatsNumbersDependingOnLocale()
+    public function testTranslatorFormatsNumbersDependingOnLocale()
     {
         $message = '{number_of_persons, number} have been counted.';
 
@@ -291,7 +292,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     /**
      * Checks if the translator formats currencies correctly.
      */
-    public function testDecoratorFormatsCurrencyDependingOnLocale()
+    public function testTranslatorFormatsCurrencyDependingOnLocale()
     {
         $message = 'Available for just {price, number, currency}.';
 
@@ -311,7 +312,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      *              1970-01-01 is used, regardless of the content of the
      *              date object.
      */
-    public function testDecoratorSupportsDateFormatting()
+    public function testTranslatorSupportsDateFormatting()
     {
         $message = 'Born on {birthDate, date, short}.';
 
@@ -325,9 +326,9 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Checks if the decorator allows double quotes in text fragments.
+     * Checks if the translator allows double quotes in text fragments.
      */
-    public function testDecoratorSupportsDoubleQuotesInText()
+    public function testTranslatorSupportsDoubleQuotesInText()
     {
         $message = 'It is called "Formatting" by {name}.';
 
@@ -337,12 +338,12 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Checks if the decorator allows single quotes in text fragments.
+     * Checks if the translator allows single quotes in text fragments.
      *
      * Notice: Is this the correct behavior? Should not the text be treated
      *         as quoted while the quotes are removed?
      */
-    public function testDecoratorSupportsSingleQuotesInText()
+    public function testTranslatorSupportsSingleQuotesInText()
     {
         $message = "It is called 'Formatting' by {name}.";
 
@@ -354,7 +355,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     /**
      * Ensures that escaped braces are not touched by the translator.
      */
-    public function testDecoratorDoesNotChangeEscapedBraces()
+    public function testTranslatorDoesNotChangeEscapedBraces()
     {
         $message = "The placeholder '{'name'}' is escaped.";
 
@@ -366,7 +367,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     /**
      * Checks if escaped single quotes are handled correctly.
      */
-    public function testDecoratorSupportsEscapedSingleQuotes()
+    public function testTranslatorSupportsEscapedSingleQuotes()
     {
         $message = "The character '' is called single quote by {name}.";
 
