@@ -69,17 +69,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     {
         $container->compile();
 
-        $validatorFactory = new ServiceDefinitionValidatorFactory();
-        $validator = $validatorFactory->create($container);
-        $errors    = new ValidationErrorList();
-        foreach ($container->getDefinitions() as $serviceId => $definition) {
-            try {
-                $validator->validate($definition);
-            } catch (\Exception $exception) {
-                $error = new ValidationError($serviceId, $definition, $exception);
-                $errors->add($error);
-            }
-        }
+        $errors  = $this->validateContainer($container);
         $printer = new SimpleErrorListPrinter();
         $this->assertCount(0, $errors, $printer->printErrorList($errors));
     }
@@ -96,6 +86,29 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         $extension->load(array(), $builder);
         $builder->addCompilerPass(new DecorateTranslatorCompilerPass());
         return $builder;
+    }
+
+    /**
+     * Validates the definitions in the provided container and returns a list of errors.
+     *
+     * @param ContainerBuilder $container
+     * @return ValidationErrorList
+     */
+    protected function validateContainer(ContainerBuilder $container)
+    {
+        $validatorFactory = new ServiceDefinitionValidatorFactory();
+        $validator = $validatorFactory->create($container);
+        $errors = new ValidationErrorList();
+        foreach ($container->getDefinitions() as $serviceId => $definition) {
+            try {
+                $validator->validate($definition);
+                return $errors;
+            } catch (\Exception $exception) {
+                $error = new ValidationError($serviceId, $definition, $exception);
+                $errors->add($error);
+            }
+        }
+        return $errors;
     }
 
 }
