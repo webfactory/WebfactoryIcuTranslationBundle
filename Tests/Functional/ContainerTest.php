@@ -3,12 +3,12 @@
 namespace Webfactory\TranslationBundle\Tests\Functional;
 
 use Matthias\SymfonyServiceDefinitionValidator\Error\Printer\SimpleErrorListPrinter;
+use Matthias\SymfonyServiceDefinitionValidator\Error\ValidationError;
+use Matthias\SymfonyServiceDefinitionValidator\Error\ValidationErrorList;
 use Matthias\SymfonyServiceDefinitionValidator\ServiceDefinitionValidatorFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Webfactory\IcuTranslationBundle\DependencyInjection\DecorateTranslatorCompilerPass;
 use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslationExtension;
-use Matthias\SymfonyServiceDefinitionValidator\BatchServiceDefinitionValidator;
-use Matthias\SymfonyServiceDefinitionValidator\Error\ValidationErrorFactory;
 
 /**
  * Tests the service container configuration.
@@ -71,12 +71,15 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
 
         $validatorFactory = new ServiceDefinitionValidatorFactory();
         $validator = $validatorFactory->create($container);
-        $batchValidator = new BatchServiceDefinitionValidator(
-            $validator,
-            new ValidationErrorFactory()
-        );
-        /* @var $errors \Matthias\SymfonyServiceDefinitionValidator\Error\ValidationErrorListInterface */
-        $errors  = $batchValidator->validate($container->getDefinitions());
+        $errors    = new ValidationErrorList();
+        foreach ($container->getDefinitions() as $serviceId => $definition) {
+            try {
+                $validator->validate($definition);
+            } catch (\Exception $exception) {
+                $error = new ValidationError($serviceId, $definition, $exception);
+                $errors->add($error);
+            }
+        }
         $printer = new SimpleErrorListPrinter();
         $this->assertCount(0, $errors, $printer->printErrorList($errors));
     }
