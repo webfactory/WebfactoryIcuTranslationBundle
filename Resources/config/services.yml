@@ -16,3 +16,6 @@ services:
     webfactory_icu_translation.formatter.twig_parameter_normalizer:
         class: Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalizer
         arguments: ["@webfactory_icu_translation.formatter.named_to_positional_parameters"]
+
+    webfactory_icu_translation.formatter:
+        alias: webfactory_icu_translation.formatter.twig_parameter_normalizer

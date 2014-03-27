@@ -33,7 +33,7 @@ class DecorateTranslatorCompilerPass implements CompilerPassInterface
             'Webfactory\IcuTranslationBundle\Translator\FormatterDecorator',
             array(
                 new Reference('webfactory_icu_translation.inner_translator'),
-                new Reference('webfactory_icu_translation.formatter.twig_parameter_normalizer')
+                new Reference('webfactory_icu_translation.formatter')
             )
         );
         $container->setDefinition('translator', $decorated);
