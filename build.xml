@@ -28,7 +28,11 @@
         <mkdir dir="${basedir}/build/logs"/>
     </target>
 
-    <target name="install-composer">
+    <target name="composer-check">
+        <available file="composer.phar" property="composer.present"/>
+    </target>
+
+    <target name="install-composer" depends="composer-check" unless="composer.present">
         <exec executable="wget" failonerror="true">
             <arg value="-Ocomposer.phar" />
             <arg value="http://getcomposer.org/composer.phar" />
