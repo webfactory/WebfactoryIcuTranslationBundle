@@ -26,6 +26,8 @@
     <target name="create-build-directories" depends="clean" extensionOf="prepare">
         <mkdir dir="${basedir}/build/coverage"/>
         <mkdir dir="${basedir}/build/logs"/>
+        <mkdir dir="${basedir}/build/pdepend"/>
+        <mkdir dir="${basedir}/build/code-browser"/>
     </target>
 
     <target name="composer-check">
@@ -53,6 +55,72 @@
             <arg value="--coverage-html=${basedir}/build/coverage" />
             <arg value="--coverage-clover=${basedir}/build/logs/clover.xml" />
             <arg value="--log-junit=${basedir}/build/logs/junit.xml" />
+        </exec>
+    </target>
+
+    <target name="phploc" description="Measure project size using PHPLOC" extensionOf="analyze">
+        <exec executable="vendor/bin/phploc">
+            <arg value="--log-xml" />
+            <arg value="${basedir}/build/logs/phploc.xml" />
+            <arg value="--log-csv" />
+            <arg value="${basedir}/build/logs/phploc.csv" />
+            <arg value="--exclude=vendor" />
+            <arg value="--exclude=build" />
+            <arg value="${basedir}" />
+
+        </exec>
+    </target>
+
+    <target name="pdepend" description="Calculate software metrics using PHP_Depend" extensionOf="analyze">
+        <exec executable="vendor/bin/pdepend">
+            <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
+            <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
+            <arg value="--overview-pyramid=${basedir}/build/pdepend/overview-pyramid.svg" />
+            <arg value="--ignore=vendor,build" />
+            <arg value="${basedir}" />
+        </exec>
+    </target>
+
+    <target name="phpmd"
+            description="Perform project mess detection using PHPMD creating a log file for the continuous integration server" extensionOf="analyze">
+        <exec executable="vendor/bin/phpmd">
+            <arg value="${basedir}" />
+            <arg value="xml" />
+            <arg value="cleancode,codesize,controversial,design,naming,unusedcode" />
+            <arg value="--reportfile" />
+            <arg value="${basedir}/build/logs/pmd.xml" />
+            <arg value="--exclude" />
+            <arg value="vendor,build" />
+        </exec>
+    </target>
+
+    <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server" extensionOf="analyze">
+        <exec executable="vendor/bin/phpcs" output="/dev/null">
+            <arg value="--report=checkstyle" />
+            <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
+            <arg value="--standard=PSR2" />
+            <arg value="--ignore=vendor,build" />
+            <arg value="${basedir}" />
+        </exec>
+    </target>
+
+    <target name="phpcpd" description="Find duplicate code using PHPCPD" extensionOf="analyze">
+        <exec executable="vendor/bin/phpcpd">
+            <arg value="--log-pmd" />
+            <arg value="${basedir}/build/logs/pmd-cpd.xml" />
+            <arg value="--exclude=vendor" />
+            <arg value="--exclude=build" />
+            <arg value="${basedir}" />
+        </exec>
+    </target>
+
+    <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser" extensionOf="generate-artifacts">
+        <exec executable="vendor/bin/phpcb">
+            <arg value="--log=${basedir}/build/logs" />
+            <arg value="--ignore=vendor" />
+            <arg value="--ignore=build" />
+            <arg value="--source=${basedir}" />
+            <arg value="--output=${basedir}/build/code-browser" />
         </exec>
     </target>
 
