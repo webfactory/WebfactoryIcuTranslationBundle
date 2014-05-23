@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="IcuTranslationBundle" default="build" basedir=".">
     <target name="build"
-            depends="prepare,test,analyze,generate-artifacts" />
+            depends="phase-prepare,phase-test,phase-analyze,phase-generate-artifacts" />
 
     <!--
      The build is divided into different phases:
@@ -10,12 +10,12 @@
      - analyze
      - generate-artifacts
     -->
-    <extension-point name="prepare" description="Prepare for build" />
-    <extension-point name="test" depends="prepare" />
-    <extension-point name="analyze" depends="test" />
-    <extension-point name="generate-artifacts" depends="analyze" />
+    <extension-point name="phase-prepare" description="Prepare for build" />
+    <extension-point name="phase-test" depends="phase-prepare" />
+    <extension-point name="phase-analyze" depends="phase-test" />
+    <extension-point name="phase-generate-artifacts" depends="phase-analyze" />
 
-    <target name="show-identity" extensionOf="prepare">
+    <target name="show-identity" extensionOf="phase-prepare">
         <exec executable="whoami" failonerror="true" />
     </target>
 
@@ -23,7 +23,7 @@
         <delete dir="${basedir}/build"/>
     </target>
 
-    <target name="create-build-directories" depends="clean" extensionOf="prepare">
+    <target name="create-build-directories" depends="clean" extensionOf="phase-prepare">
         <mkdir dir="${basedir}/build/coverage"/>
         <mkdir dir="${basedir}/build/logs"/>
         <mkdir dir="${basedir}/build/pdepend"/>
@@ -41,7 +41,7 @@
         </exec>
     </target>
 
-    <target name="install-dependencies" depends="install-composer" extensionOf="prepare">
+    <target name="install-dependencies" depends="install-composer" extensionOf="phase-prepare">
         <exec executable="php" failonerror="true">
             <arg value="${basedir}/composer.phar" />
             <arg value="--no-interaction" />
@@ -50,7 +50,7 @@
         </exec>
     </target>
 
-    <target name="phpunit" description="Run unit tests with PHPUnit" extensionOf="test">
+    <target name="phpunit" description="Run unit tests with PHPUnit" extensionOf="phase-test">
         <exec executable="vendor/bin/phpunit" failonerror="true">
             <arg value="--coverage-html=${basedir}/build/coverage" />
             <arg value="--coverage-clover=${basedir}/build/logs/clover.xml" />
@@ -58,7 +58,7 @@
         </exec>
     </target>
 
-    <target name="phploc" description="Measure project size using PHPLOC" extensionOf="analyze">
+    <target name="phploc" description="Measure project size using PHPLOC" extensionOf="phase-analyze">
         <exec executable="vendor/bin/phploc">
             <arg value="--log-xml" />
             <arg value="${basedir}/build/logs/phploc.xml" />
@@ -71,7 +71,7 @@
         </exec>
     </target>
 
-    <target name="pdepend" description="Calculate software metrics using PHP_Depend" extensionOf="analyze">
+    <target name="pdepend" description="Calculate software metrics using PHP_Depend" extensionOf="phase-analyze">
         <exec executable="vendor/bin/pdepend">
             <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
             <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
@@ -82,7 +82,7 @@
     </target>
 
     <target name="phpmd"
-            description="Perform project mess detection using PHPMD creating a log file for the continuous integration server" extensionOf="analyze">
+            description="Perform project mess detection using PHPMD creating a log file for the continuous integration server" extensionOf="phase-analyze">
         <exec executable="vendor/bin/phpmd">
             <arg value="${basedir}" />
             <arg value="xml" />
@@ -94,7 +94,7 @@
         </exec>
     </target>
 
-    <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server" extensionOf="analyze">
+    <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server" extensionOf="phase-analyze">
         <exec executable="vendor/bin/phpcs" output="/dev/null">
             <arg value="--report=checkstyle" />
             <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
@@ -104,7 +104,7 @@
         </exec>
     </target>
 
-    <target name="phpcpd" description="Find duplicate code using PHPCPD" extensionOf="analyze">
+    <target name="phpcpd" description="Find duplicate code using PHPCPD" extensionOf="phase-analyze">
         <exec executable="vendor/bin/phpcpd">
             <arg value="--log-pmd" />
             <arg value="${basedir}/build/logs/pmd-cpd.xml" />
@@ -114,7 +114,7 @@
         </exec>
     </target>
 
-    <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser" extensionOf="generate-artifacts">
+    <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser" extensionOf="phase-generate-artifacts">
         <exec executable="vendor/bin/phpcb">
             <arg value="--log=${basedir}/build/logs" />
             <arg value="--ignore=vendor" />
