@@ -8,8 +8,8 @@ php:
   - hhvm
 
 before_script:
-    - curl -s http://getcomposer.org/installer | php
-    - php composer.phar install --dev
+    - travis_retry curl -s http://getcomposer.org/installer | php
+    - travis_retry php composer.phar install --dev
     - mkdir -p build/logs
 
 script:
