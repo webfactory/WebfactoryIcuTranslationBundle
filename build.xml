@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="IcuTranslationBundle" default="build" basedir=".">
+    <target name="build"
+            depends="prepare,test,analyze,generate-artifacts" />
+
+    <!--
+     The build is divided into different phases:
+     - prepare
+     - test
+     - analyze
+     - generate-artifacts
+    -->
+    <extension-point name="prepare" description="Prepare for build" />
+    <extension-point name="test" depends="prepare" />
+    <extension-point name="analyze" depends="test" />
+    <extension-point name="generate-artifacts" depends="analyze" />
+
+    <target name="show-identity" extensionOf="prepare">
+        <exec executable="whoami" failonerror="true" />
+    </target>
+
+    <target name="clean" description="Cleanup build artifacts.">
+        <delete dir="${basedir}/build"/>
+    </target>
+
+    <target name="create-build-directories" depends="clean" extensionOf="prepare">
+        <mkdir dir="${basedir}/build/coverage"/>
+        <mkdir dir="${basedir}/build/logs"/>
+    </target>
+
+    <target name="install-composer">
+        <exec executable="wget" failonerror="true">
+            <arg value="-Ocomposer.phar" />
+            <arg value="http://getcomposer.org/composer.phar" />
+        </exec>
+    </target>
+
+    <target name="install-dependencies" depends="install-composer" extensionOf="prepare">
+        <exec executable="php" failonerror="true">
+            <arg value="composer.phar" />
+            <arg value="--no-interaction" />
+            <arg value="install" />
+            <arg value="--dev" />
+        </exec>
+    </target>
+
+    <target name="phpunit" description="Run unit tests with PHPUnit" extensionOf="test">
+        <exec executable="vendor/bin/phpunit" failonerror="true">
+            <arg value="--coverage-html=${basedir}/build/coverage" />
+            <arg value="--coverage-clover=${basedir}/build/logs/clover.xml" />
+            <arg value="--log-junit=${basedir}/build/logs/junit.xml" />
+        </exec>
+    </target>
+
+</project>
