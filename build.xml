@@ -19,15 +19,8 @@
         <exec executable="whoami" failonerror="true" />
     </target>
 
-    <target name="clean" description="Cleanup build artifacts.">
+    <target name="clean" description="Cleanup build artifacts." extensionOf="phase-prepare">
         <delete dir="${basedir}/build"/>
-    </target>
-
-    <target name="create-build-directories" depends="clean" extensionOf="phase-prepare">
-        <mkdir dir="${basedir}/build/coverage"/>
-        <mkdir dir="${basedir}/build/logs"/>
-        <mkdir dir="${basedir}/build/pdepend"/>
-        <mkdir dir="${basedir}/build/code-browser"/>
     </target>
 
     <target name="composer-check">
@@ -50,7 +43,17 @@
         </exec>
     </target>
 
-    <target name="phpunit" description="Run unit tests with PHPUnit" extensionOf="phase-test">
+    <target name="create-logs-directory">
+        <mkdir dir="${basedir}/build/logs"/>
+    </target>
+
+    <target name="create-coverage-directory">
+        <mkdir dir="${basedir}/build/coverage"/>
+    </target>
+    <target name="phpunit"
+            description="Run unit tests with PHPUnit"
+            depends="create-logs-directory, create-coverage-directory"
+            extensionOf="phase-test">
         <exec executable="vendor/bin/phpunit" failonerror="true">
             <arg value="--coverage-html=${basedir}/build/coverage" />
             <arg value="--coverage-clover=${basedir}/build/logs/clover.xml" />
@@ -58,7 +61,10 @@
         </exec>
     </target>
 
-    <target name="phploc" description="Measure project size using PHPLOC" extensionOf="phase-analyze">
+    <target name="phploc"
+            description="Measure project size using PHPLOC"
+            depends="create-logs-directory"
+            extensionOf="phase-analyze">
         <exec executable="vendor/bin/phploc">
             <arg value="--log-xml" />
             <arg value="${basedir}/build/logs/phploc.xml" />
@@ -71,7 +77,11 @@
         </exec>
     </target>
 
-    <target name="pdepend" description="Calculate software metrics using PHP_Depend" extensionOf="phase-analyze">
+    <target name="pdepend"
+            description="Calculate software metrics using PHP_Depend"
+            depends="create-logs-directory"
+            extensionOf="phase-analyze">
+        <mkdir dir="${basedir}/build/pdepend"/>
         <exec executable="vendor/bin/pdepend">
             <arg value="--jdepend-xml=${basedir}/build/logs/jdepend.xml" />
             <arg value="--jdepend-chart=${basedir}/build/pdepend/dependencies.svg" />
@@ -82,7 +92,9 @@
     </target>
 
     <target name="phpmd"
-            description="Perform project mess detection using PHPMD creating a log file for the continuous integration server" extensionOf="phase-analyze">
+            description="Perform project mess detection using PHPMD creating a log file for the continuous integration server"
+            depends="create-logs-directory"
+            extensionOf="phase-analyze">
         <exec executable="vendor/bin/phpmd">
             <arg value="${basedir}" />
             <arg value="xml" />
@@ -94,7 +106,10 @@
         </exec>
     </target>
 
-    <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server" extensionOf="phase-analyze">
+    <target name="phpcs"
+            description="Find coding standard violations using PHP_CodeSniffer creating a log file for the continuous integration server"
+            depends="create-logs-directory"
+            extensionOf="phase-analyze">
         <exec executable="vendor/bin/phpcs" output="/dev/null">
             <arg value="--report=checkstyle" />
             <arg value="--report-file=${basedir}/build/logs/checkstyle.xml" />
@@ -104,7 +119,10 @@
         </exec>
     </target>
 
-    <target name="phpcpd" description="Find duplicate code using PHPCPD" extensionOf="phase-analyze">
+    <target name="phpcpd"
+            description="Find duplicate code using PHPCPD"
+            depends="create-logs-directory"
+            extensionOf="phase-analyze">
         <exec executable="vendor/bin/phpcpd">
             <arg value="--log-pmd" />
             <arg value="${basedir}/build/logs/pmd-cpd.xml" />
@@ -114,7 +132,11 @@
         </exec>
     </target>
 
-    <target name="phpcb" description="Aggregate tool output with PHP_CodeBrowser" extensionOf="phase-generate-artifacts">
+    <target name="phpcb"
+            description="Aggregate tool output with PHP_CodeBrowser"
+            depends="create-logs-directory"
+            extensionOf="phase-generate-artifacts">
+        <mkdir dir="${basedir}/build/code-browser"/>
         <exec executable="vendor/bin/phpcb">
             <arg value="--log=${basedir}/build/logs" />
             <arg value="--ignore=vendor" />
