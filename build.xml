@@ -31,19 +31,19 @@
     </target>
 
     <target name="composer-check">
-        <available file="composer.phar" property="composer.present"/>
+        <available file="${basedir}/composer.phar" property="composer.present" />
     </target>
 
     <target name="install-composer" depends="composer-check" unless="composer.present">
         <exec executable="wget" failonerror="true">
-            <arg value="-Ocomposer.phar" />
+            <arg value="-O${basedir}/composer.phar" />
             <arg value="http://getcomposer.org/composer.phar" />
         </exec>
     </target>
 
     <target name="install-dependencies" depends="install-composer" extensionOf="prepare">
         <exec executable="php" failonerror="true">
-            <arg value="composer.phar" />
+            <arg value="${basedir}/composer.phar" />
             <arg value="--no-interaction" />
             <arg value="install" />
             <arg value="--dev" />
