@@ -44,7 +44,7 @@ final class GracefulExceptionsDecorator extends AbstractFormatterDecorator
             return parent::format($locale, $message, $parameters);
         } catch (FormattingException $e) {
             $this->logger->error($e);
-            return $message . ' (formatting error)';
+            return ' (message formatting error)';
         }
     }
 }
