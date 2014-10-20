@@ -4,7 +4,7 @@ namespace Webfactory\IcuTranslationBundle\Translator\Formatting;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use Webfactory\IcuTranslationBundle\Translator\FormattingException;
+use Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\FormattingException;
 
 /**
  * Catches exceptions generated in the decorated formatter to log them and to returns a string gracefully.

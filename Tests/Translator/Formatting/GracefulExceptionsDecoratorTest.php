@@ -5,7 +5,7 @@ namespace Webfactory\TranslationBundle\Tests\Translator\Formatting;
 use Psr\Log\LoggerInterface;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;
-use Webfactory\IcuTranslationBundle\Translator\FormattingException;
+use Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\FormattingException;
 
 /**
  * Tests for the decorator that deals gracefully with exceptions.
@@ -73,7 +73,7 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
      */
     public function logException()
     {
-        $innerException = new FormattingException('en', 'msg_id', 'msg pattern', array(), new \Exception());
+        $innerException = new FormattingException();
         $this->innerFormatter->expects($this->once())
                              ->method('format')
                              ->will($this->throwException($innerException));
@@ -90,10 +90,9 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
      */
     public function returnStringInCaseOfException()
     {
-        $innerException = new FormattingException('en', 'msg_id', 'msg pattern', array(), new \Exception());
         $this->innerFormatter->expects($this->once())
                              ->method('format')
-                             ->will($this->throwException($innerException));
+                             ->will($this->throwException(new FormattingException()));
 
         $this->assertInternalType('string', $this->decorator->format('', '', array()));
     }
@@ -106,10 +105,9 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
     public function loggerIsOptional()
     {
         $decorator = new GracefulExceptionsDecorator($this->innerFormatter);
-        $innerException = new FormattingException('en', 'msg_id', 'msg pattern', array(), new \Exception());
         $this->innerFormatter->expects($this->once())
                              ->method('format')
-                             ->will($this->throwException($innerException));
+                             ->will($this->throwException(new FormattingException()));
 
         $this->setExpectedException(null);
 
