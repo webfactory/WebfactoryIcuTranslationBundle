@@ -17,5 +17,9 @@ services:
         class: Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalizer
         arguments: ["@webfactory_icu_translation.formatter.named_to_positional_parameters"]
 
+    webfactory_icu_translation.formatter.graceful_exceptions:
+        class: Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator
+        arguments: ["@webfactory_icu_translation.formatter.twig_parameter_normalizer", "@?webfactory_icu_translation.logger"]
+
     webfactory_icu_translation.formatter:
-        alias: webfactory_icu_translation.formatter.twig_parameter_normalizer
+        alias: webfactory_icu_translation.formatter.graceful_exceptions
