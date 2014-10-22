@@ -19,7 +19,9 @@ services:
 
     webfactory_icu_translation.formatter.graceful_exceptions:
         class: Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator
-        arguments: ["@webfactory_icu_translation.formatter.twig_parameter_normalizer", "@?webfactory_icu_translation.logger"]
+        arguments: ["@webfactory_icu_translation.formatter.twig_parameter_normalizer", "@?logger"]
+        tags:
+            - { name: monolog.logger, channel: webfactory_icu_translation }
 
     webfactory_icu_translation.formatter:
         alias: webfactory_icu_translation.formatter.graceful_exceptions
