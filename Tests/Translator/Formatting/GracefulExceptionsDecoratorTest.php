@@ -79,7 +79,10 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
                              ->will($this->throwException($innerException));
         $this->logger->expects($this->once())
                      ->method('error')
-                     ->with($this->equalTo($innerException));
+                     ->with(
+                         $this->anything(),
+                         $this->contains($innerException)
+                     );
 
         $this->decorator->format('', '', array());
     }
