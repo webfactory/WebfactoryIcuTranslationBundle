@@ -1,0 +1,9 @@
+framework:
+    secret: "NotSoSecret"
+    translator: { fallback: "en" }
+
+monolog:
+    handlers:
+        main:
+            type: "null"
+            level: debug
