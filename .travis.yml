@@ -7,9 +7,20 @@ php:
   - 5.6
   - hhvm
 
+env:
+  - SYMFONY_VERSION=locked # Use the versions that are given in composer.lock.
+  - SYMFONY_VERSION="2.3.*"
+  - SYMFONY_VERSION="2.4.*"
+  - SYMFONY_VERSION="2.5.*"
+  - SYMFONY_VERSION="2.6.*"
+
 before_script:
     - travis_retry curl -s http://getcomposer.org/installer | php
     - travis_retry php composer.phar install --dev
+    # Register a specific Symfony version if necessary...
+    - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then php composer.phar require --dev --no-update symfony/symfony:${SYMFONY_VERSION}; fi"
+    # ... and update the dependencies accordingly.
+    - travis_retry sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then php composer.phar update --dev symfony/*; fi"
     - mkdir -p build/logs
 
 script:
