@@ -35,6 +35,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
         $this->container    = $this->createContainer();
         $this->compilerPass = new DecorateTranslatorCompilerPass();
+        $this->container->addCompilerPass($this->compilerPass);
     }
 
     /**
@@ -62,7 +63,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
     public function testPassDoesNothingIfTranslatorIsNotAvailable()
     {
         $this->setExpectedException(null);
-        $this->compilerPass->process($this->container);
+        $this->container->compile();
     }
 
     /**
@@ -74,7 +75,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
         $translatorDefinition = new Definition($translatorClass);
         $this->container->setDefinition('translator', $translatorDefinition);
 
-        $this->compilerPass->process($this->container);
+        $this->container->compile();
 
         $translator = $this->container->get('translator');
         $this->assertInstanceOf('Webfactory\IcuTranslationBundle\Translator\FormatterDecorator', $translator);
@@ -90,7 +91,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
         $this->container->setDefinition('translator.default', $translatorDefinition);
         $this->container->setAlias('translator', 'translator.default');
 
-        $this->compilerPass->process($this->container);
+        $this->container->compile();
 
         $translator = $this->container->get('translator');
         $this->assertInstanceOf('Webfactory\IcuTranslationBundle\Translator\FormatterDecorator', $translator);
