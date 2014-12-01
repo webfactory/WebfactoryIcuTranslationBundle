@@ -25,18 +25,24 @@ class DecorateTranslatorCompilerPass implements CompilerPassInterface
             return;
         }
 
-        // Copy the existing service definition...
-        $container->setDefinition('webfactory_icu_translation.inner_translator', $definition);
-
-        // ... and replace with a decorated version.
+        // Define the decorator...
         $decorated = new Definition(
             'Webfactory\IcuTranslationBundle\Translator\FormatterDecorator',
             array(
-                new Reference('webfactory_icu_translation.inner_translator'),
+                new Reference('webfactory_icu_translation.decorator.inner'),
                 new Reference('webfactory_icu_translation.formatter')
             )
         );
-        $container->setDefinition('translator', $decorated);
+        $container->setDefinition('webfactory_icu_translation.decorator', $decorated);
+
+        if (method_exists($decorated, 'setDecoratedService')) {
+            // ... and use the decoration capabilities of the Symfony container if available...
+            $decorated->setDecoratedService('translator');
+        } else {
+            // ... or copy the original translator manually and point to the decorator.
+            $container->setDefinition('webfactory_icu_translation.decorator.inner', $definition);
+            $container->setAlias('translator', 'webfactory_icu_translation.decorator');
+        }
     }
 
     /**
