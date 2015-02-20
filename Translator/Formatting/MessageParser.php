@@ -10,7 +10,6 @@ use JMS\Parser\AbstractParser;
  */
 class MessageParser extends AbstractParser
 {
-
     /**
      * State if the parser is currently in a text block.
      */
@@ -84,7 +83,6 @@ class MessageParser extends AbstractParser
         }
         return parent::parse($message, $context);
     }
-
 
     /**
      * Performs the parsing and creates the result object that is returned by parse().
@@ -258,5 +256,4 @@ class MessageParser extends AbstractParser
     {
         return $this->state->top() === $checkedState;
     }
-
 }
