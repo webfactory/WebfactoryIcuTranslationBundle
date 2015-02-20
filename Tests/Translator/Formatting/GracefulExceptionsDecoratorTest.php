@@ -74,15 +74,8 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
     public function logsFormattingException()
     {
         $innerException = new FormattingException();
-        $this->innerFormatter->expects($this->once())
-                             ->method('format')
-                             ->will($this->throwException($innerException));
-        $this->logger->expects($this->once())
-                     ->method('error')
-                     ->with(
-                         $this->anything(),
-                         $this->contains($innerException)
-                     );
+        $this->simulateFormatterException($innerException);
+        $this->assertWillLogException($innerException);
 
         $this->decorator->format('', '', array());
     }
@@ -96,15 +89,8 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
     public function logsOtherExceptionTypes()
     {
         $innerException = new \RuntimeException('Unexpected exception.');
-        $this->innerFormatter->expects($this->once())
-            ->method('format')
-            ->will($this->throwException($innerException));
-        $this->logger->expects($this->once())
-            ->method('error')
-            ->with(
-                $this->anything(),
-                $this->contains($innerException)
-            );
+        $this->simulateFormatterException($innerException);
+        $this->assertWillLogException($innerException);
 
         $this->decorator->format('', '', array());
     }
@@ -115,9 +101,7 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
      */
     public function returnStringInCaseOfException()
     {
-        $this->innerFormatter->expects($this->once())
-                             ->method('format')
-                             ->will($this->throwException(new FormattingException()));
+        $this->simulateFormatterException(new FormattingException());
 
         $this->assertInternalType('string', $this->decorator->format('', '', array()));
     }
@@ -130,12 +114,37 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
     public function loggerIsOptional()
     {
         $decorator = new GracefulExceptionsDecorator($this->innerFormatter);
-        $this->innerFormatter->expects($this->once())
-                             ->method('format')
-                             ->will($this->throwException(new FormattingException()));
+        $this->simulateFormatterException(new FormattingException());
 
         $this->setExpectedException(null);
 
         $decorator->format('', '', array());
+    }
+
+    /**
+     * Ensures that the inner formatter throws the given exception.
+     *
+     * @param \Exception $exception
+     */
+    private function simulateFormatterException(\Exception $exception)
+    {
+        $this->innerFormatter->expects($this->once())
+            ->method('format')
+            ->will($this->throwException($exception));
+    }
+
+    /**
+     * Asserts that the given exception will be logged.
+     *
+     * @param \Exception  $exception
+     */
+    private function assertWillLogException(\Exception $exception)
+    {
+        $this->logger->expects($this->once())
+            ->method('error')
+            ->with(
+                $this->anything(),
+                $this->contains($exception)
+            );
     }
 }
