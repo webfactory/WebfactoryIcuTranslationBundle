@@ -69,9 +69,9 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
-     * Checks the decorator logs an exception thrown in the inner formatter.
+     * Checks the decorator logs a formatting exception thrown in the inner formatter.
      */
-    public function logException()
+    public function logsFormattingException()
     {
         $innerException = new FormattingException();
         $this->innerFormatter->expects($this->once())
@@ -83,6 +83,28 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
                          $this->anything(),
                          $this->contains($innerException)
                      );
+
+        $this->decorator->format('', '', array());
+    }
+
+    /**
+     * Checks if none-formatting exceptions are logged.
+     *
+     * @test
+     * @see https://github.com/webfactory/icu-translation-bundle/issues/4
+     */
+    public function logsOtherExceptionTypes()
+    {
+        $innerException = new \RuntimeException('Unexpected exception.');
+        $this->innerFormatter->expects($this->once())
+            ->method('format')
+            ->will($this->throwException($innerException));
+        $this->logger->expects($this->once())
+            ->method('error')
+            ->with(
+                $this->anything(),
+                $this->contains($innerException)
+            );
 
         $this->decorator->format('', '', array());
     }
