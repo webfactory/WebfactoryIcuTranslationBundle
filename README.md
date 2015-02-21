@@ -112,9 +112,15 @@ note that the number sign "#" becomes substituted with the value of the variable
 Now that you've got an idea of the ICU translation bundle's features, we once more invite you to read the [bundle
 documentation](Resources/doc/index.rst).
 
+## Changelog ##
+
+### 0.2.2 -> 0.2.3 ###
+
+The ``GracefulExceptionsDecorator`` logs all types of exception now, not just instances of ``FormattingException``.
+
 Credits, Copyright and License
 ------------------------------
-Copyright 2012-2014 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
+Copyright 2012-2015 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
 
 - <http://www.webfactory.de>
 - <http://twitter.com/webfactory>

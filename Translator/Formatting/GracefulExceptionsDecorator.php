@@ -4,7 +4,6 @@ namespace Webfactory\IcuTranslationBundle\Translator\Formatting;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
-use Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\FormattingException;
 
 /**
  * Catches exceptions generated in the decorated formatter to log them and to returns a string gracefully.
@@ -42,7 +41,7 @@ final class GracefulExceptionsDecorator extends AbstractFormatterDecorator
     {
         try {
             return parent::format($locale, $message, $parameters);
-        } catch (FormattingException $e) {
+        } catch (\Exception $e) {
             $this->logger->error(
                 'Formatting translation failed.',
                 array(
