@@ -34,3 +34,8 @@ matrix:
   allow_failures:
     - php: 7
     - php: hhvm
+
+notifications:
+  hipchat:
+    rooms:
+      secure: U5zi3jZwy8qzO/fgBD4EhwDG3OoslwHDUfVamvtaScGq3R7FF0XkAY243l4+/5KKy30ON0fD9xkfVV+QJtnX/hMzFmWU1OOcr7hHrsEYf7U6DRll4qTiIMN5WfHoYwRxKEM1PAPMjJTrbcvXCDKcrFIENaGEk3srvv34NgWCyo4=
