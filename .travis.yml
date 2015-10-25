@@ -17,7 +17,7 @@ env:
 
 before_script:
     - travis_retry curl -s http://getcomposer.org/installer | php
-    - travis_retry php composer.phar install --dev
+    - travis_retry php composer.phar install
     # Register a specific Symfony version if necessary...
     - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then php composer.phar require --dev --no-update symfony/symfony:${SYMFONY_VERSION}; fi"
     # ... and update the dependencies accordingly.
