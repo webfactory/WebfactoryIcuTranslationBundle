@@ -18,16 +18,16 @@ env:
   - SYMFONY_VERSION="2.6.*"
 
 before_script:
-    - travis_retry curl -s http://getcomposer.org/installer | php
-    - travis_retry php composer.phar install
-    # Register a specific Symfony version if necessary...
-    - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then php composer.phar require --dev --no-update symfony/symfony:${SYMFONY_VERSION}; fi"
-    # ... and update the dependencies accordingly.
-    - travis_retry sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then php composer.phar update --dev symfony/*; fi"
-    - mkdir -p build/logs
+  - travis_retry curl -s http://getcomposer.org/installer | php
+  - travis_retry php composer.phar install
+  # Register a specific Symfony version if necessary...
+  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then php composer.phar require --dev --no-update symfony/symfony:${SYMFONY_VERSION}; fi"
+  # ... and update the dependencies accordingly.
+  - travis_retry sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then php composer.phar update --dev symfony/*; fi"
+  - mkdir -p build/logs
 
 script:
-    - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+  - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_script:
   - php vendor/bin/coveralls
