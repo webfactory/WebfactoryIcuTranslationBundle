@@ -49,7 +49,7 @@ correct thousands separator and decimal mark. See this example message stored un
 
 In a controller, the example could look like this:
 
-    $translator = this->get('translator');
+    $translator = $this->get('translator');
     $output = $translator->trans(
         'message-number',
         array('%mile_to_metres%' => 1609.34)
