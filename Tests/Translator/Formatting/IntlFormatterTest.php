@@ -9,7 +9,6 @@ use Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter;
  */
 class IntlFormatterTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * System under test.
      *
@@ -128,6 +127,4 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
         $message = sprintf($message, $comparator, $version, PHP_VERSION);
         $this->markTestSkipped($message);
     }
-
 }
- 

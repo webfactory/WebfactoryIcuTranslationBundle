@@ -28,7 +28,11 @@ class IntlFormatter implements FormatterInterface
             return $message;
         }
 
-        $formatter = new \MessageFormatter($locale, $message);
+        try {
+            $formatter = new \MessageFormatter($locale, $message);
+        } catch (\IntlException $e) {
+            throw new CannotInstantiateFormatterException($e->getMessage(), $e->getCode(), $e);
+        }
         if (!$formatter) {
             throw new CannotInstantiateFormatterException(
                 intl_get_error_message(),
