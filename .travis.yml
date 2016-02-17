@@ -22,12 +22,11 @@ env:
   - SYMFONY_VERSION="2.8.*"
 
 before_script:
-  - travis_retry curl -s http://getcomposer.org/installer | php
-  - php composer.phar install
+  - composer install
   # Register a specific Symfony version if necessary...
-  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then php composer.phar require --no-update symfony/symfony:${SYMFONY_VERSION}; fi"
+  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then composer require --no-update symfony/symfony:${SYMFONY_VERSION}; fi"
   # ... and update the dependencies accordingly.
-  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then php composer.phar update; fi"
+  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then composer update; fi"
   - mkdir -p build/logs
 
 script:
