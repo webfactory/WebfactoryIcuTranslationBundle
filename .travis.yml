@@ -18,6 +18,7 @@ env:
   - SYMFONY_VERSION="2.6.*"
   - SYMFONY_VERSION="2.7.*"
   - SYMFONY_VERSION="2.8.*"
+  - SYMFONY_VERSION="3.0.*"
 
 before_script:
   - travis_retry curl -s http://getcomposer.org/installer | php
