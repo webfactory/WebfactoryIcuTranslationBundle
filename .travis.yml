@@ -23,7 +23,7 @@ before_script:
   # Register a specific Symfony version if necessary...
   - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then php composer.phar require --no-update symfony/symfony:${SYMFONY_VERSION}; fi"
   # ... and update the dependencies accordingly.
-  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then php composer.phar update symfony/*; fi"
+  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then php composer.phar update; fi"
   - mkdir -p build/logs
 
 script:
