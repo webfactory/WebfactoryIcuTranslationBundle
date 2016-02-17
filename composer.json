@@ -11,8 +11,9 @@
             "role": "Developer"
         }
     ],
+
     "require": {
-        "php": ">=5.3.3",
+        "php": "^5.5.0 | ^7.0.0",
         "ext-intl": "*",
         "lib-ICU": ">=4.8",
         "symfony/framework-bundle": "~2.2",
@@ -30,8 +31,15 @@
         "matthiasnoback/symfony-service-definition-validator": "~1.0",
         "symfony/monolog-bundle": "~2.0"
     },
+
     "autoload": {
         "psr-0": { "Webfactory\\IcuTranslationBundle": "" }
     },
-    "target-dir": "Webfactory/IcuTranslationBundle"
+    "target-dir": "Webfactory/IcuTranslationBundle",
+
+    "config": {
+        "platform": {
+            "php": "5.5.9"
+        }
+    }
 }

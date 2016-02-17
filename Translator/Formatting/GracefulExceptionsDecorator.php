@@ -25,7 +25,7 @@ final class GracefulExceptionsDecorator extends AbstractFormatterDecorator
      */
     public function __construct(FormatterInterface $innerFormatter, LoggerInterface $logger = null)
     {
-        $this->innerFormatter = $innerFormatter;
+        parent::__construct($innerFormatter);
         $this->logger = ($logger !== null) ? $logger : new NullLogger();
     }
 

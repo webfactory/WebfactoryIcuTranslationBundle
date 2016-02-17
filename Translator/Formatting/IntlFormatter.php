@@ -10,7 +10,6 @@ use Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\CannotFormat
  */
 class IntlFormatter implements FormatterInterface
 {
-
     /**
      * Formats the message with the help of php intl extension.
      * 
@@ -28,7 +27,11 @@ class IntlFormatter implements FormatterInterface
             return $message;
         }
 
-        $formatter = new \MessageFormatter($locale, $message);
+        try {
+            $formatter = new \MessageFormatter($locale, $message);
+        } catch (\IntlException $e) {
+            throw new CannotInstantiateFormatterException($e->getMessage(), $e->getCode(), $e);
+        }
         if (!$formatter) {
             throw new CannotInstantiateFormatterException(
                 intl_get_error_message(),
@@ -46,5 +49,4 @@ class IntlFormatter implements FormatterInterface
 
         return $result;
     }
-
 }
