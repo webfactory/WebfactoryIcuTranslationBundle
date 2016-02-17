@@ -48,26 +48,10 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Ensures that the formatter throws an exception if formatting is not possible
-     * with the provided information (PHP < 5.5).
-     */
-    public function testFormatterThrowsExceptionIfParameterIsMissing()
-    {
-        $this->skipIfNotPhpVersion('<', '5.5');
-
-        $expected = '\Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\CannotFormatException';
-        $this->setExpectedException($expected);
-        // The required parameter is missing.
-        $this->formatter->format('en', 'Hello {0}!', array());
-    }
-
-    /**
      * Ensures that the formatter does not substitute missing parameters (PHP >= 5.5).
      */
     public function testFormatterDoesNotSubstituteMissingParameters()
     {
-        $this->skipIfNotPhpVersion('>=', '5.5');
-
         // The required parameter is missing.
         $message = $this->formatter->format('en', 'Hello {0}!', array());
         $this->assertEquals('Hello {0}!', $message);
@@ -78,8 +62,6 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormatterSubstitutesNamedParameters()
     {
-        $this->skipIfNotPhpVersion('>=', '5.5');
-
         $message = $this->formatter->format('en', 'Hello {name}!', array('name' => 'Matthias'));
         $this->assertEquals('Hello Matthias!', $message);
     }
@@ -104,27 +86,5 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
         $formatted = $this->formatter->format('en', 'Hello {0}!', array(0 => 'Matthias'));
 
         $this->assertEquals('Hello Matthias!', $formatted);
-    }
-
-
-    /**
-     * Skips the test if the current PHP version does not fulfill the specified
-     * requirements.
-     *
-     * Example:
-     *
-     *     $this->skipIfNotPhpVersion('>=', '5.5');
-     *
-     * @param string $comparator Comparison operator, for example ">" or "<=".
-     * @param string $version
-     */
-    protected function skipIfNotPhpVersion($comparator, $version)
-    {
-        if (version_compare(PHP_VERSION, $version, $comparator)) {
-            return;
-        }
-        $message = 'The tested behavior is only expected for PHP versions %s %s (current version: %s).';
-        $message = sprintf($message, $comparator, $version, PHP_VERSION);
-        $this->markTestSkipped($message);
     }
 }
