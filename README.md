@@ -114,9 +114,13 @@ documentation](Resources/doc/index.rst).
 
 ## Changelog ##
 
+### 0.3.0 -> 0.4.0 ###
+
+Symfony 3 is now supported.
+
 ### 0.2.3 -> 0.3.0 ###
 
-Dropped support for PHP 5.3 and 5.4, added  support for PHP 7.
+Dropped support for PHP 5.3 and 5.4, added support for PHP 7.
 
 ### 0.2.2 -> 0.2.3 ###
 
