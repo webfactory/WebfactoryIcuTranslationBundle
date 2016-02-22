@@ -116,7 +116,7 @@ documentation](Resources/doc/index.rst).
 
 ### 0.2.3 -> 0.3.0 ###
 
-Support for PHP 7.
+Dropped support for PHP 5.3 and 5.4, added  support for PHP 7.
 
 ### 0.2.2 -> 0.2.3 ###
 
