@@ -24,11 +24,11 @@ env:
 
 before_script:
   - composer self-update
-  - composer install --no-interaction
+  - composer install --no-interaction --prefer-source
   # Register a specific Symfony version if necessary...
   - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then composer require --no-update symfony/symfony:${SYMFONY_VERSION}; fi"
   # ... and update the dependencies accordingly.
-  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then composer update --no-interaction; fi"
+  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then composer update --no-interaction --prefer-source; fi"
   - mkdir -p build/logs
 
 script:
