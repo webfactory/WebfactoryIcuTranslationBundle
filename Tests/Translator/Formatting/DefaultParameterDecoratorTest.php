@@ -79,6 +79,21 @@ class DefaultParameterDecoratorTest extends \PHPUnit_Framework_TestCase
         $this->innerFormatter->format('en', $message, array());
     }
 
+    public function testWorksForTypedPlaceholder()
+    {
+
+    }
+
+    public function testWorksForPlaceholderThatIsUsedInCondition()
+    {
+
+    }
+
+    public function testWorksForNestedPlaceholder()
+    {
+
+    }
+
     public function testDoesNotSetDefaultIfParameterForAlphabeticPlaceholderIsPassed()
     {
         $message = 'Hello {name}!';
