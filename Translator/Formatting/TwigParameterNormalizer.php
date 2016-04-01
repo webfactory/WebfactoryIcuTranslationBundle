@@ -8,7 +8,6 @@ namespace Webfactory\IcuTranslationBundle\Translator\Formatting;
  */
 class TwigParameterNormalizer extends AbstractFormatterDecorator
 {
-
     /**
      * Transforms parameter names if necessary.
      *
@@ -38,6 +37,4 @@ class TwigParameterNormalizer extends AbstractFormatterDecorator
         }
         return $parameters;
     }
-
-
 }
