@@ -20,13 +20,15 @@ env:
   - SYMFONY_VERSION="2.6.*"
   - SYMFONY_VERSION="2.7.*"
   - SYMFONY_VERSION="2.8.*"
+  - SYMFONY_VERSION="3.0.*" 
 
 before_script:
-  - composer install
+  - composer self-update
+  - composer install --no-interaction --prefer-source
   # Register a specific Symfony version if necessary...
   - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then composer require --no-update symfony/symfony:${SYMFONY_VERSION}; fi"
   # ... and update the dependencies accordingly.
-  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then composer update; fi"
+  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then composer update --no-interaction --prefer-source; fi"
   - mkdir -p build/logs
 
 script:

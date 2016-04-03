@@ -114,13 +114,21 @@ documentation](Resources/doc/index.rst).
 
 ## Changelog ##
 
+### 0.3.0 -> 0.4.0 ###
+
+Symfony 3 is now supported.
+
+### 0.2.3 -> 0.3.0 ###
+
+Dropped support for PHP 5.3 and 5.4, added support for PHP 7.
+
 ### 0.2.2 -> 0.2.3 ###
 
 The ``GracefulExceptionsDecorator`` logs all types of exception now, not just instances of ``FormattingException``.
 
 Credits, Copyright and License
 ------------------------------
-Copyright 2012-2015 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
+Copyright 2012-2016 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
 
 - <http://www.webfactory.de>
 - <http://twitter.com/webfactory>
