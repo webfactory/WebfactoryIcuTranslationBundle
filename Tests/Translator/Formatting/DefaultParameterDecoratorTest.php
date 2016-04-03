@@ -81,17 +81,32 @@ class DefaultParameterDecoratorTest extends \PHPUnit_Framework_TestCase
 
     public function testWorksForTypedPlaceholder()
     {
+        $message = 'We need {number_of_tests,number,integer} tests.';
 
+        $this->assertExpectedParameters(array('number_of_tests' => null));
+        $this->innerFormatter->format('en', $message, array());
     }
 
     public function testWorksForPlaceholderThatIsUsedInCondition()
     {
+        $message = '{number_of_tries, plural,'                      . PHP_EOL
+                 . '    =0 {First try}' . PHP_EOL
+                 . '    other {Try #}'  . PHP_EOL
+                 . '}';
 
+        $this->assertExpectedParameters(array('number_of_tries' => null));
+        $this->innerFormatter->format('en', $message, array());
     }
 
     public function testWorksForNestedPlaceholder()
     {
+        $message = '{number_of_tries, plural,'                      . PHP_EOL
+                 . '    =0 {Hello {name}, this is your first try.}' . PHP_EOL
+                 . '    other {Hello {name}, this is your # try.}'  . PHP_EOL
+                 . '}';
 
+        $this->assertExpectedParameters(array('name' => null));
+        $this->innerFormatter->format('en', $message, array());
     }
 
     public function testDoesNotSetDefaultIfParameterForAlphabeticPlaceholderIsPassed()
