@@ -15,6 +15,7 @@ namespace Webfactory\IcuTranslationBundle\Translator\Formatting;
  *
  * The conversion is necessary as named parameters are only supported in PHP 5.5 and above.
  *
+ * @deprecated Not necessary anymore and will be removed in the next major version.
  */
 class NamedToPositionalParameterDecorator extends AbstractFormatterDecorator
 {
@@ -59,4 +60,3 @@ class NamedToPositionalParameterDecorator extends AbstractFormatterDecorator
     }
 
 }
- 
