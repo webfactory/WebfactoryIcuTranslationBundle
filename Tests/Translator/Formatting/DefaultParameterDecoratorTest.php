@@ -63,6 +63,14 @@ class DefaultParameterDecoratorTest extends \PHPUnit_Framework_TestCase
         $this->decorator->format('en', $message, array());
     }
 
+    public function testInjectsDefaultForPlaceholderWithUnderscore()
+    {
+        $message = 'Hello {your_name}!';
+
+        $this->assertExpectedParameters(array('your_name' => null));
+        $this->decorator->format('en', $message, array());
+    }
+
     public function testInjectsDefaultIfPlaceholderIsUsedMultipleTimes()
     {
         $message = 'Hello {name}! Nice to see you, {name}.';
@@ -81,26 +89,26 @@ class DefaultParameterDecoratorTest extends \PHPUnit_Framework_TestCase
 
     public function testWorksForTypedPlaceholder()
     {
-        $message = 'We need {number_of_tests,number,integer} tests.';
+        $message = 'We need {tests,number,integer} tests.';
 
-        $this->assertExpectedParameters(array('number_of_tests' => null));
+        $this->assertExpectedParameters(array('tests' => null));
         $this->decorator->format('en', $message, array());
     }
 
     public function testWorksForPlaceholderThatIsUsedInCondition()
     {
-        $message = '{number_of_tries, plural,'                      . PHP_EOL
+        $message = '{tries, plural,'                      . PHP_EOL
                  . '    =0 {First try}' . PHP_EOL
                  . '    other {Try #}'  . PHP_EOL
                  . '}';
 
-        $this->assertExpectedParameters(array('number_of_tries' => null));
+        $this->assertExpectedParameters(array('tries' => null));
         $this->decorator->format('en', $message, array());
     }
 
     public function testWorksForNestedPlaceholder()
     {
-        $message = '{number_of_tries, plural,'                      . PHP_EOL
+        $message = '{tries, plural,'                      . PHP_EOL
                  . '    =0 {Hello {name}, this is your first try.}' . PHP_EOL
                  . '    other {Hello {name}, this is your # try.}'  . PHP_EOL
                  . '}';
