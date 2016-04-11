@@ -97,9 +97,9 @@ class DefaultParameterDecoratorTest extends \PHPUnit_Framework_TestCase
 
     public function testWorksForPlaceholderThatIsUsedInCondition()
     {
-        $message = '{tries, plural,'                      . PHP_EOL
+        $message = '{tries, plural,' . PHP_EOL
                  . '    =0 {First try}' . PHP_EOL
-                 . '    other {Try #}'  . PHP_EOL
+                 . '    other {Try #}' . PHP_EOL
                  . '}';
 
         $this->assertExpectedParameters(array('tries' => null));
@@ -108,9 +108,9 @@ class DefaultParameterDecoratorTest extends \PHPUnit_Framework_TestCase
 
     public function testWorksForNestedPlaceholder()
     {
-        $message = '{tries, plural,'                      . PHP_EOL
+        $message = '{tries, plural,' . PHP_EOL
                  . '    =0 {Hello {name}, this is your first try.}' . PHP_EOL
-                 . '    other {Hello {name}, this is your # try.}'  . PHP_EOL
+                 . '    other {Hello {name}, this is your # try.}' . PHP_EOL
                  . '}';
 
         $this->assertExpectedParameters(array('name' => null));
