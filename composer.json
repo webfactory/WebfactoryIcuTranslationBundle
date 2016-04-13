@@ -33,9 +33,8 @@
     },
 
     "autoload": {
-        "psr-0": { "Webfactory\\IcuTranslationBundle": "" }
+        "psr-4": { "Webfactory\\IcuTranslationBundle\\": "" }
     },
-    "target-dir": "Webfactory/IcuTranslationBundle",
 
     "config": {
         "platform": {

@@ -114,6 +114,11 @@ documentation](Resources/doc/index.rst).
 
 ## Changelog ##
 
+### 0.4.0 -> 0.5.0 ###
+
+Improved performance by removing lexer/parser classes and message rewriting that was necessary to support named
+parameters in PHP versions < 5.5.
+
 ### 0.3.0 -> 0.4.0 ###
 
 Symfony 3 is now supported.
