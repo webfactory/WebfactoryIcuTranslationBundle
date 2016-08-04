@@ -5,6 +5,7 @@ namespace Webfactory\IcuTranslationBundle\Translator\Formatting;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\FormattingException;
+use Webfactory\IcuTranslationBundle\Translator\Formatting\Util\MessageAnalyzer;
 
 /**
  * Decorator that generates a warning log entry whenever a parameter for a formatted message seems to be missing.
@@ -52,10 +53,7 @@ class MissingParameterWarningDecorator extends AbstractFormatterDecorator
      */
     private function logIfParameterIsMissing($locale, $message, array $parameters)
     {
-        $pattern = '/\{(?P<variables>[a-zA-Z0-9_]+)/u';
-        $matches = array();
-        preg_match_all($pattern, $message, $matches, PREG_PATTERN_ORDER);
-        $usedParameters = $matches['variables'];
+        $usedParameters = (new MessageAnalyzer($message))->getParameters();
         $availableParameters = array_keys($parameters);
         $missingParameters = array_diff($usedParameters, $availableParameters);
         if (count($missingParameters) === 0) {
