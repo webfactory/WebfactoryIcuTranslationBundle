@@ -10,11 +10,18 @@ namespace Webfactory\IcuTranslationBundle\Translator\Formatting\Util;
 class MessageAnalyzer
 {
     /**
+     * The message that is analyzed.
+     *
+     * @var string
+     */
+    private $message = null;
+
+    /**
      * @param string $message
      */
     public function __construct($message)
     {
-
+        $this->message = $message;
     }
 
     /**
@@ -33,6 +40,10 @@ class MessageAnalyzer
      */
     public function getParameters()
     {
-
+        $pattern = '/\{(?P<parameters>[a-zA-Z0-9_]+)(,|\})/u';
+        $matches = array();
+        preg_match_all($pattern, $this->message, $matches,  PREG_PATTERN_ORDER);
+        $parameters = array_unique($matches['parameters']);
+        return $parameters;
     }
 }
