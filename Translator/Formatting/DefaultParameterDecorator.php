@@ -10,7 +10,7 @@ namespace Webfactory\IcuTranslationBundle\Translator\Formatting;
  * the checked parameter was not passed.
  *
  * The decorator works on a best-effort basis: It does not guarantee that defaults are *only*
- * added for real parameters as placeholder nesting can be quote complex.
+ * added for real parameters as placeholder nesting can be quite complex.
  * So in some cases superfluous defaults *might* be passed, which are usually ignored by
  * the following formatter.
  */
