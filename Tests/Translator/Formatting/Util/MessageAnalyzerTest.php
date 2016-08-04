@@ -10,30 +10,35 @@ class MessageAnalyzerTest extends \PHPUnit_Framework_TestCase
     {
         $message = 'Hello {name}!';
 
-        $parameters = $this->getParametersFrom($message);
-
-        $this->assertInternalType('array', $parameters);
-        $this->assertContains('name', $parameters);
+        $this->assertParameterDetected($message, 'name');
     }
 
     public function testAnalyzerDetectsAlphanumericParameter()
     {
         $message = 'Hello {name42}!';
 
-        $parameters = $this->getParametersFrom($message);
-
-        $this->assertInternalType('array', $parameters);
-        $this->assertContains('name42', $parameters);
+        $this->assertParameterDetected($message, 'name42');
     }
 
     public function testAnalyzerDetectsNumericParameter()
     {
         $message = 'Hello {0}!';
 
+        $this->assertParameterDetected($message, '0');
+    }
+
+    /**
+     * Asserts that the analyzer detected the parameter with the name $parameter in $message.
+     *
+     * @param string $message
+     * @param string $parameter
+     */
+    private function assertParameterDetected($message, $parameter)
+    {
         $parameters = $this->getParametersFrom($message);
 
         $this->assertInternalType('array', $parameters);
-        $this->assertContains('0', $parameters);
+        $this->assertContains($parameter, $parameters);
     }
 
     /**
