@@ -29,7 +29,8 @@
         "pdepend/pdepend": "~1.1.0",
         "satooshi/php-coveralls": "~0.6",
         "matthiasnoback/symfony-service-definition-validator": "~1.0",
-        "symfony/monolog-bundle": "~2.0"
+        "symfony/monolog-bundle": "~2.0",
+        "symfony/debug": "^2.7.4"
     },
 
     "autoload": {
