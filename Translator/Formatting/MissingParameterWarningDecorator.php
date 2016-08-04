@@ -41,25 +41,38 @@ class MissingParameterWarningDecorator extends AbstractFormatterDecorator
      */
     public function format($locale, $message, array $parameters)
     {
+        $this->logIfParameterIsMissing($locale, $message, $parameters);
+        return parent::format($locale, $message, $parameters);
+    }
+
+    /**
+     * @param string $locale
+     * @param string $message
+     * @param array(string=>mixed) $parameters
+     */
+    private function logIfParameterIsMissing($locale, $message, array $parameters)
+    {
         $pattern = '/\{(?P<variables>[a-zA-Z0-9_]+)/u';
-        preg_match_all($pattern, $message, $matches,  PREG_PATTERN_ORDER);
+        $matches = array();
+        preg_match_all($pattern, $message, $matches, PREG_PATTERN_ORDER);
         $usedParameters = $matches['variables'];
         $availableParameters = array_keys($parameters);
         $missingParameters = array_diff($usedParameters, $availableParameters);
         if (count($missingParameters) > 0) {
-            $logMessage = 'The parameters %s are probably missing in the message "%s".';
-            $logMessage = sprintf($logMessage, implode(',', $missingParameters), $message);
+            $logMessage = 'The parameters %s are might be missing in the message "%s" in locale "%s".';
+            $logMessage = sprintf($logMessage, implode(',', $missingParameters), $message, $locale);
             $this->logger->error(
                 $logMessage,
                 array(
                     'locale' => $locale,
                     'message' => $message,
                     'parameters' => $parameters,
+                    'usedParameters' => $usedParameters,
+                    'missingParameters' => $missingParameters,
                     // Add an exception (but do not throw it) to ensure that we get a stack trace.
                     'exception' => new FormattingException($logMessage)
                 )
             );
         }
-        return parent::format($locale, $message, $parameters);
     }
 }
