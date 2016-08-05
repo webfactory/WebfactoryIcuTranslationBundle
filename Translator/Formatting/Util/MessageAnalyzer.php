@@ -40,10 +40,48 @@ class MessageAnalyzer
      */
     public function getParameters()
     {
-        $pattern = '/\{(?P<parameters>[a-zA-Z0-9_]+)(,|\})/u';
-        $matches = array();
-        preg_match_all($pattern, $this->message, $matches,  PREG_PATTERN_ORDER);
-        $parameters = array_unique($matches['parameters']);
-        return array_values($parameters);
+        $bracePattern = '/(?P<braces>\{|\})[^\\\']/u';
+        $nonEscapedBraces = array();
+        preg_match_all($bracePattern, $this->message, $nonEscapedBraces,  PREG_PATTERN_ORDER|PREG_OFFSET_CAPTURE);
+        $openBracesBefore = function ($offset) use ($nonEscapedBraces) {
+            $openBraces = 0;
+            foreach ($nonEscapedBraces['braces'] as $match) {
+                list($brace, $braceOffset) = $match;
+                if ($braceOffset > $offset) {
+                    continue;
+                }
+                if ($brace === '{') {
+                    $openBraces++;
+                } else {
+                    $openBraces--;
+                }
+            }
+            return $openBraces;
+        };
+
+        $choicesPattern = '/\{([a-zA-Z0-9_]+), (plural|select|choice),/u';
+        $choices = array();
+        preg_match_all($choicesPattern, $this->message, $choices,  PREG_PATTERN_ORDER|PREG_OFFSET_CAPTURE);
+        $openChoicesBefore = function ($offset) use($choices) {
+            $numberOfChoices = 0;
+            foreach ($choices[0] as $match) {
+                $matchOffset = $match[1];
+                if ($matchOffset <= $offset) {
+                    $numberOfChoices++;
+                }
+            }
+            return $numberOfChoices;
+        };
+
+        $parameterPattern = '/\{(?P<parameters>[a-zA-Z0-9_]+)(,|\})/u';
+        $possibleParameters = array();
+        preg_match_all($parameterPattern, $this->message, $possibleParameters, PREG_PATTERN_ORDER|PREG_OFFSET_CAPTURE);
+        $parameters = array();
+        foreach ($possibleParameters['parameters'] as $matchIndex => $match) {
+            list($name, $offset) = $match;
+            //var_dump($name . ' braces:' . $openBracesBefore($offset) . ' choices:' . $openChoicesBefore($offset));
+            $parameters[] = $name;
+        }
+        return array_values(array_unique($parameters));
     }
 }
