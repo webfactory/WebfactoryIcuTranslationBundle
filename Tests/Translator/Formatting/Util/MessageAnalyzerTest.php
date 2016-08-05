@@ -133,6 +133,19 @@ class MessageAnalyzerTest extends \PHPUnit_Framework_TestCase
         $this->assertParameterNotDetected($message, 'looks_like_a_parameter');
     }
 
+    public function testAnalyzerDetectsParameterIfPreviousConditionBranchContainsAnotherCondition()
+    {
+        $message = '{tries, plural,' . PHP_EOL
+                 . '    =0 {{name, select,' . PHP_EOL
+                 . '        matthias {Great!}' . PHP_EOL
+                 . '        other {Could have been better!}' . PHP_EOL
+                 . '    }}' . PHP_EOL
+                 . '    other {Nice try, {salutation}!}' . PHP_EOL
+                 . '}';
+
+        $this->assertParameterDetected($message, 'salutation');
+    }
+
     /**
      * Asserts that the analyzer detected the parameter with the name $parameter in $message.
      *
