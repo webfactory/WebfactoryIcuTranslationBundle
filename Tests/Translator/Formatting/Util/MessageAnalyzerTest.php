@@ -114,10 +114,23 @@ class MessageAnalyzerTest extends \PHPUnit_Framework_TestCase
     {
         $message = '{tries, plural,' . PHP_EOL
                  . '    =0 {This is a message}' . PHP_EOL
-                 . '    other {fallback_message_string}' . PHP_EOL
+                 . '    other {looks_like_a_parameter}' . PHP_EOL
                  . '}';
 
-        $this->assertParameterNotDetected($message, 'fallback_message_string');
+        $this->assertParameterNotDetected($message, 'looks_like_a_parameter');
+    }
+
+    public function testAnalyzerDoesNotRecognizeMessageFromNestedConditionPartAsParameter()
+    {
+        $message = '{tries, plural,' . PHP_EOL
+                 . '    =0 {This is a message}' . PHP_EOL
+                 . '    other {{name, select,' . PHP_EOL
+                 . '        matthias {it is not that bad!}' . PHP_EOL
+                 . '        other {looks_like_a_parameter}' . PHP_EOL
+                 . '    }}' . PHP_EOL
+                 . '}';
+
+        $this->assertParameterNotDetected($message, 'looks_like_a_parameter');
     }
 
     /**
