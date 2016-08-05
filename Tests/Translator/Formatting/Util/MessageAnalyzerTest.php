@@ -110,6 +110,16 @@ class MessageAnalyzerTest extends \PHPUnit_Framework_TestCase
         $this->assertParameterNotDetected($message, 'name');
     }
 
+    public function testAnalyzerDoesNotRecognizeMessageFromConditionPartAsParameter()
+    {
+        $message = '{tries, plural,' . PHP_EOL
+                 . '    =0 {This is a message}' . PHP_EOL
+                 . '    other {fallback_message_string}' . PHP_EOL
+                 . '}';
+
+        $this->assertParameterNotDetected($message, 'fallback_message_string');
+    }
+
     /**
      * Asserts that the analyzer detected the parameter with the name $parameter in $message.
      *
