@@ -45,10 +45,11 @@ class MessageAnalyzer
         preg_match_all($bracePattern, $this->message, $nonEscapedBraces,  PREG_PATTERN_ORDER|PREG_OFFSET_CAPTURE);
         $openBracesBefore = function ($offset) use ($nonEscapedBraces) {
             $openBraces = 0;
+            // Braces must be sorted by offset!
             foreach ($nonEscapedBraces['braces'] as $match) {
                 list($brace, $braceOffset) = $match;
-                if ($braceOffset > $offset) {
-                    continue;
+                if ($braceOffset >= $offset) {
+                    break;
                 }
                 if ($brace === '{') {
                     $openBraces++;
@@ -66,7 +67,7 @@ class MessageAnalyzer
             $numberOfChoices = 0;
             foreach ($choices[0] as $match) {
                 $matchOffset = $match[1];
-                if ($matchOffset <= $offset) {
+                if ($matchOffset < $offset) {
                     $numberOfChoices++;
                 }
             }
@@ -79,7 +80,12 @@ class MessageAnalyzer
         $parameters = array();
         foreach ($possibleParameters['parameters'] as $matchIndex => $match) {
             list($name, $offset) = $match;
-            //var_dump($name . ' braces:' . $openBracesBefore($offset) . ' choices:' . $openChoicesBefore($offset));
+            // Start offset counting at the brace.
+            $offset--;
+            if (($openBracesBefore($offset) - ($openChoicesBefore($offset) * 2)) < 0) {
+                // Probably not a parameter, but part of a choice branch.
+                continue;
+            }
             $parameters[] = $name;
         }
         return array_values(array_unique($parameters));
