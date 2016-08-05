@@ -2,7 +2,8 @@
 
 namespace Webfactory\TranslationBundle\Tests\Translator\Formatting;
 
-use Symfony\Component\Debug\BufferingLogger;
+use Psr\Log\AbstractLogger;
+use Psr\Log\LoggerInterface;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\MissingParameterWarningDecorator;
 
@@ -16,11 +17,9 @@ class MissingParameterWarningDecoratorTest extends \PHPUnit_Framework_TestCase
     private $decorator = null;
 
     /**
-     * Mocked injected logger.
-     *
-     * @var \PHPUnit_Framework_MockObject_MockObject|BufferingLogger
+     * @var array<array<string=>mixed>>
      */
-    private $logger = null;
+    private $logEntries = null;
 
     /**
      * Initializes the test environment.
@@ -28,8 +27,8 @@ class MissingParameterWarningDecoratorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->logger = new BufferingLogger();
-        $this->decorator = new MissingParameterWarningDecorator($this->createInnerFormatter(), $this->logger);
+        $this->logEntries = array();
+        $this->decorator = new MissingParameterWarningDecorator($this->createInnerFormatter(), $this->createLogger());
     }
 
     /**
@@ -38,7 +37,7 @@ class MissingParameterWarningDecoratorTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         $this->decorator = null;
-        $this->logger = null;
+        $this->logEntries = null;
         parent::tearDown();
     }
 
@@ -84,8 +83,7 @@ class MissingParameterWarningDecoratorTest extends \PHPUnit_Framework_TestCase
      */
     private function assertProblemLogged()
     {
-        $logs = $this->logger->cleanLogs();
-        $this->assertGreaterThan(0, count($logs), 'Expected at least 1 log entry.');
+        $this->assertGreaterThan(0, count($this->logEntries), 'Expected at least 1 log entry.');
     }
 
     /**
@@ -93,8 +91,7 @@ class MissingParameterWarningDecoratorTest extends \PHPUnit_Framework_TestCase
      */
     private function assertNothingLogged()
     {
-        $logs = $this->logger->cleanLogs();
-        $this->assertCount(0, $logs, 'No log entry expected.');
+        $this->assertCount(0, $this->logEntries, 'No log entry expected.');
     }
 
     /**
@@ -109,5 +106,25 @@ class MissingParameterWarningDecoratorTest extends \PHPUnit_Framework_TestCase
             ->method('format')
             ->will($this->returnValue('inner message'));
         return $formatter;
+    }
+
+    /**
+     * Creates a mocked logger that stores received log entries in the $logEntries attribute.
+     *
+     * @return LoggerInterface
+     */
+    private function createLogger()
+    {
+        $storeLogEntry = function ($level, $message) {
+            $this->logEntries[] = array(
+                'level' => $level,
+                'message' => $message
+            );
+        };
+        $logger = $this->getMockForAbstractClass(AbstractLogger::class);
+        $logger->expects($this->any())
+            ->method('log')
+            ->will($this->returnCallback($storeLogEntry));
+        return $logger;
     }
 }
