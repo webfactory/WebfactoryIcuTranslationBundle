@@ -44,6 +44,18 @@ class MessageAnalyzerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $parameters);
     }
 
+    public function testAnalyzerReturnsNumericallyIndexedParametersArrayEvenIfMessageContainsParameterMoreThanOnce()
+    {
+        $message = 'Hello {description} {name}! Nice to see you, {name}, beloved child of {parent}.';
+
+        $parameters = $this->getParametersFrom($message);
+
+        $this->assertInternalType('array', $parameters);
+        $this->assertArrayHasKey(0, $parameters);
+        $this->assertArrayHasKey(1, $parameters);
+        $this->assertArrayHasKey(2, $parameters);
+    }
+
     public function testAnalyzerDetectsMultipleParametersInMessage()
     {
         $message = 'Hello {name}! You are assigned to {group}.';
