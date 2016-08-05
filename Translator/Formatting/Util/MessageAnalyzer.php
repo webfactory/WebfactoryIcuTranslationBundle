@@ -44,6 +44,6 @@ class MessageAnalyzer
         $matches = array();
         preg_match_all($pattern, $this->message, $matches,  PREG_PATTERN_ORDER);
         $parameters = array_unique($matches['parameters']);
-        return $parameters;
+        return array_values($parameters);
     }
 }
