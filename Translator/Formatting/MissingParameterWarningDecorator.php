@@ -61,7 +61,7 @@ class MissingParameterWarningDecorator extends AbstractFormatterDecorator
             return;
         }
         $logMessage = 'The parameters [%s] might be missing in locale "%s" in the message "%s".';
-        $logMessage = sprintf($logMessage, implode(',', $missingParameters), $message, $locale);
+        $logMessage = sprintf($logMessage, implode(',', $missingParameters), $locale, $message);
         $this->logger->warning(
             $logMessage,
             array(
