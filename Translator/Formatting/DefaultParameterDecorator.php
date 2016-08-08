@@ -1,7 +1,8 @@
 <?php
 
 namespace Webfactory\IcuTranslationBundle\Translator\Formatting;
-use Webfactory\IcuTranslationBundle\Translator\Formatting\Util\MessageAnalyzer;
+
+use Webfactory\IcuTranslationBundle\Translator\Formatting\Analysis\MessageAnalyzer;
 
 /**
  * Injects default parameters for placeholders that occur in a message.

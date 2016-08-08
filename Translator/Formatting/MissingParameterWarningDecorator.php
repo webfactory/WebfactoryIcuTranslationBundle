@@ -5,7 +5,7 @@ namespace Webfactory\IcuTranslationBundle\Translator\Formatting;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\FormattingException;
-use Webfactory\IcuTranslationBundle\Translator\Formatting\Util\MessageAnalyzer;
+use Webfactory\IcuTranslationBundle\Translator\Formatting\Analysis\MessageAnalyzer;
 
 /**
  * Decorator that generates a warning log entry whenever a parameter for a formatted message seems to be missing.
