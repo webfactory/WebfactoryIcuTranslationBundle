@@ -5,8 +5,9 @@ namespace Webfactory\IcuTranslationBundle\Translator\Formatting\Analysis;
 use JMS\Parser\AbstractParser;
 
 /**
- * Parse a translation message and replaces named variables with indexes,
- * which are the only supported variable types in PHP versions prior 5.5.
+ * Parses a translation message and returns the tokens of that message.
+ *
+ * @internal
  */
 class MessageParser extends AbstractParser
 {
@@ -47,6 +48,16 @@ class MessageParser extends AbstractParser
     const STATE_QUOTED_TEXT = 'quoted_text';
 
     /**
+     * Token for parameter names, for example the "name" in {name}.
+     */
+    const TOKEN_PARAMETER_NAME = 'parameter_name';
+
+    /**
+     * Token for choice types, for example the "select" in {name, select, [...]}
+     */
+    const TOKEN_CHOICE_TYPE = 'choice_type';
+
+    /**
      * Stack whose top element holds the current parsing state.
      *
      * @var \SplStack|null
@@ -54,49 +65,42 @@ class MessageParser extends AbstractParser
     protected $state = null;
 
     /**
-     * Maps parameter names to indexes.
+     * Parses the message and returns the tokens.
      *
-     * @var array(string=>integer)
-     */
-    protected $parameters = null;
-
-    /**
-     * Parses the message and replaces parameter names by numerical indexes.
-     *
-     * Returns an object that contains the modified message as well as the
-     * parameter mapping.
-     *
-     * The result contains the following attributes:
-     * # message - The modified message.
-     * # mapping - Array that maps parameter names to indices.
+     * The result is an array of tokens.
+     * Each token is an array that consists of the token type as
+     * first value and the message part as second value.
+     * The token type is always one of the MessageLexer::TOKEN_* or
+     * MessageParser::TOKEN_* constants.
      *
      * @param string $message
      * @param string|null $context
-     * @return \stdClass
+     * @return array<array<string>> The message tokens.
      */
     public function parse($message, $context = null)
     {
         if (strpos($message, '{') === false) {
             // Message does not contain any declarations, therefore, we can avoid
             // the parsing process.
-            return $this->createResult($message, array());
+            return array(array(MessageLexer::TOKEN_TEXT, $message));
         }
         return parent::parse($message, $context);
     }
 
     /**
-     * Performs the parsing and creates the result object that is returned by parse().
+     * Performs the parsing and creates the result that is returned by parse().
      *
-     * @return \stdClass
+     * @return array<array<string>> The message tokens.
      */
     protected function parseInternal()
     {
         $this->state = new \SplStack();
         $this->enterState(self::STATE_TEXT);
-        $this->parameters = array();
-        $message = '';
+        $tokens = array();
         $this->lexer->moveNext();
         while ($this->lexer->token !== null) {
+            $tokenType = $this->getTokenType();
+
             if ($this->isState(self::STATE_TEXT)) {
                 if ($this->isToken(MessageLexer::TOKEN_SINGLE_QUOTE)) {
                     $this->enterState(self::STATE_QUOTED_TEXT);
@@ -110,8 +114,7 @@ class MessageParser extends AbstractParser
             } elseif ($this->isState(self::STATE_DECLARATION_START)) {
                 if ($this->isToken(MessageLexer::TOKEN_TEXT)) {
                     $this->swapState(self::STATE_DECLARATION_VARIABLE);
-                    $name = $this->getTokenValue();
-                    $this->setTokenValue($this->getParameterIndex($name));
+                    $tokenType = self::TOKEN_PARAMETER_NAME;
                 }
 
             } elseif ($this->isState(self::STATE_DECLARATION_VARIABLE)) {
@@ -125,6 +128,7 @@ class MessageParser extends AbstractParser
                 if ($this->isToken(MessageLexer::TOKEN_TEXT)) {
                     if (in_array($this->getTokenValue(), array('select', 'choice', 'plural'))) {
                         $this->swapState(self::STATE_DECLARATION_EXPRESSION);
+                        $tokenType = self::TOKEN_CHOICE_TYPE;
                     }
                 } elseif ($this->isToken(MessageLexer::TOKEN_COMMA)) {
                     $this->swapState(self::STATE_DECLARATION_ARGUMENT);
@@ -147,41 +151,12 @@ class MessageParser extends AbstractParser
                 }
             }
 
-            $message .= $this->getTokenValue();
+            $tokens[] = array($tokenType, $this->getTokenValue());
 
             $this->lexer->moveNext();
         }
 
-        return $this->createResult($message, $this->parameters);
-    }
-
-    /**
-     * Creates a result object that contains the provided message and parameter mapping.
-     *
-     * @param string $message
-     * @param array(string=>integer) $parameterMapping
-     * @return \stdClass
-     */
-    protected function createResult($message, $parameterMapping)
-    {
-        $result = new \stdClass();
-        $result->message = $message;
-        $result->mapping = $parameterMapping;
-        return $result;
-    }
-
-    /**
-     * Returns the index of the provided parameter.
-     *
-     * @param string $name
-     * @return integer
-     */
-    protected function getParameterIndex($name)
-    {
-        if (!isset($this->parameters[$name])) {
-            $this->parameters[$name] = count($this->parameters);
-        }
-        return $this->parameters[$name];
+        return $tokens;
     }
 
     /**
@@ -192,7 +167,17 @@ class MessageParser extends AbstractParser
      */
     protected function isToken($type)
     {
-        return $this->lexer->token[2] === $type;
+        return $this->getTokenType() === $type;
+    }
+
+    /**
+     * Returns the type of the current token.
+     *
+     * @return integer One of the MessageLexer::TOKEN_* constants.
+     */
+    protected function getTokenType()
+    {
+        return $this->lexer->token[2];
     }
 
     /**
@@ -203,16 +188,6 @@ class MessageParser extends AbstractParser
     protected function getTokenValue()
     {
         return $this->lexer->token[0];
-    }
-
-    /**
-     * Sets the value ofg the current token.
-     *
-     * @param string $newValue
-     */
-    protected function setTokenValue($newValue)
-    {
-        $this->lexer->token[0] = $newValue;
     }
 
     /**

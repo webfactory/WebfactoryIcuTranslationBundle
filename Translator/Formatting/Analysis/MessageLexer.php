@@ -6,6 +6,8 @@ use JMS\Parser\AbstractLexer;
 
 /**
  * Splits a translation message into tokens that can be analyzed by a parser.
+ *
+ * @internal
  */
 class MessageLexer extends AbstractLexer
 {

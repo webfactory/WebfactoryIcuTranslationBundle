@@ -40,53 +40,13 @@ class MessageAnalyzer
      */
     public function getParameters()
     {
-        $bracePattern = '/(?P<braces>\{|\})[^\\\']/u';
-        $nonEscapedBraces = array();
-        preg_match_all($bracePattern, $this->message, $nonEscapedBraces,  PREG_PATTERN_ORDER|PREG_OFFSET_CAPTURE);
-        $openBracesBefore = function ($offset) use ($nonEscapedBraces) {
-            $openBraces = 0;
-            // Braces must be sorted by offset!
-            foreach ($nonEscapedBraces['braces'] as $match) {
-                list($brace, $braceOffset) = $match;
-                if ($braceOffset >= $offset) {
-                    break;
-                }
-                if ($brace === '{') {
-                    $openBraces++;
-                } else {
-                    $openBraces--;
-                }
-            }
-            return $openBraces;
-        };
-
-        $choicesPattern = '/\{([a-zA-Z0-9_]+), (plural|select|choice),/u';
-        $choices = array();
-        preg_match_all($choicesPattern, $this->message, $choices,  PREG_PATTERN_ORDER|PREG_OFFSET_CAPTURE);
-        $openChoicesBefore = function ($offset) use($choices) {
-            $numberOfChoices = 0;
-            foreach ($choices[0] as $match) {
-                $matchOffset = $match[1];
-                if ($matchOffset < $offset) {
-                    $numberOfChoices++;
-                }
-            }
-            return $numberOfChoices;
-        };
-
-        $parameterPattern = '/\{(?P<parameters>[a-zA-Z0-9_]+)(,|\})/u';
-        $possibleParameters = array();
-        preg_match_all($parameterPattern, $this->message, $possibleParameters, PREG_PATTERN_ORDER|PREG_OFFSET_CAPTURE);
         $parameters = array();
-        foreach ($possibleParameters['parameters'] as $matchIndex => $match) {
-            list($name, $offset) = $match;
-            // Start offset counting at the brace.
-            $offset--;
-            if (($openBracesBefore($offset) - ($openChoicesBefore($offset) * 2)) < 0) {
-                // Probably not a parameter, but part of a choice branch.
-                continue;
+        $tokens = (new MessageParser(new MessageLexer()))->parse($this->message);
+        foreach ($tokens as $token) {
+            /* @var $token array */
+            if ($token[0] === MessageParser::TOKEN_PARAMETER_NAME) {
+                $parameters[] = $token[1];
             }
-            $parameters[] = $name;
         }
         return array_values(array_unique($parameters));
     }
