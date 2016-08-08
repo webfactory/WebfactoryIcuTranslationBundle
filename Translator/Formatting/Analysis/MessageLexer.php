@@ -9,7 +9,6 @@ use JMS\Parser\AbstractLexer;
  */
 class MessageLexer extends AbstractLexer
 {
-
     /**
      * Identifies an opening brace.
      */
@@ -57,7 +56,6 @@ class MessageLexer extends AbstractLexer
      * a different PHP type where necessary.
      *
      * @param string $value
-     *
      * @return array a tupel of type and normalized value
      */
     protected function determineTypeAndValue($value)
@@ -79,5 +77,4 @@ class MessageLexer extends AbstractLexer
         }
         return array(self::TOKEN_TEXT, $value);
     }
-
 }
