@@ -7,8 +7,6 @@ use JMS\Parser\AbstractParser;
 /**
  * Parse a translation message and replaces named variables with indexes,
  * which are the only supported variable types in PHP versions prior 5.5.
- *
- * @deprecated Not necessary anymore and will be removed in the next major version.
  */
 class MessageParser extends AbstractParser
 {
