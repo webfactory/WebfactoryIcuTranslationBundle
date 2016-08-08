@@ -1,6 +1,6 @@
 <?php
 
-namespace Webfactory\IcuTranslationBundle\Translator\Formatting\Util;
+namespace Webfactory\IcuTranslationBundle\Translator\Formatting\Analysis;
 
 /**
  * Helper class that is used to analyze translation messages.

@@ -1,8 +1,8 @@
 <?php
 
-namespace Webfactory\IcuTranslationBundle\Tests\Translator\Formatting\Util;
+namespace Webfactory\IcuTranslationBundle\Tests\Translator\Formatting\Analysis;
 
-use Webfactory\IcuTranslationBundle\Translator\Formatting\Util\MessageAnalyzer;
+use Webfactory\IcuTranslationBundle\Translator\Formatting\Analysis\MessageAnalyzer;
 
 class MessageAnalyzerTest extends \PHPUnit_Framework_TestCase
 {
