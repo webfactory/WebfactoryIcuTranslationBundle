@@ -60,7 +60,7 @@ class MissingParameterWarningDecorator extends AbstractFormatterDecorator
             // All parameters available, nothing to do.
             return;
         }
-        $logMessage = 'The parameters [%s] might be missing in the message "%s" in locale "%s".';
+        $logMessage = 'The parameters [%s] might be missing in locale "%s" in the message "%s".';
         $logMessage = sprintf($logMessage, implode(',', $missingParameters), $message, $locale);
         $this->logger->warning(
             $logMessage,
@@ -71,7 +71,7 @@ class MissingParameterWarningDecorator extends AbstractFormatterDecorator
                 'usedParameters' => $usedParameters,
                 'missingParameters' => $missingParameters,
                 // Add an exception (but do not throw it) to ensure that we get a stack trace.
-                'exception' => new FormattingException($logMessage)
+                'exception' => new FormattingException('Some message parameters are missing.')
             )
         );
     }
