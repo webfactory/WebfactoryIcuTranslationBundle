@@ -62,7 +62,7 @@ class MessageParser extends AbstractParser
      *
      * @var \SplStack|null
      */
-    protected $state = null;
+    private $state = null;
 
     /**
      * Parses the message and returns the tokens.
@@ -165,7 +165,7 @@ class MessageParser extends AbstractParser
      * @param integer $type
      * @return boolean
      */
-    protected function isToken($type)
+    private function isToken($type)
     {
         return $this->getTokenType() === $type;
     }
@@ -175,7 +175,7 @@ class MessageParser extends AbstractParser
      *
      * @return integer One of the MessageLexer::TOKEN_* constants.
      */
-    protected function getTokenType()
+    private function getTokenType()
     {
         return $this->lexer->token[2];
     }
@@ -185,7 +185,7 @@ class MessageParser extends AbstractParser
      *
      * @return string
      */
-    protected function getTokenValue()
+    private function getTokenValue()
     {
         return $this->lexer->token[0];
     }
@@ -197,7 +197,7 @@ class MessageParser extends AbstractParser
      *
      * @param string $newState
      */
-    protected function enterState($newState)
+    private function enterState($newState)
     {
         $this->state->push($newState);
     }
@@ -205,7 +205,7 @@ class MessageParser extends AbstractParser
     /**
      * Leaves the current state and restores the previous one.
      */
-    protected function leaveState()
+    private function leaveState()
     {
         $this->state->pop();
     }
@@ -215,7 +215,7 @@ class MessageParser extends AbstractParser
      *
      * @param string $newState
      */
-    protected function swapState($newState)
+    private function swapState($newState)
     {
         $this->leaveState();
         $this->enterState($newState);
@@ -227,7 +227,7 @@ class MessageParser extends AbstractParser
      * @param string $checkedState
      * @return boolean
      */
-    protected function isState($checkedState)
+    private function isState($checkedState)
     {
         return $this->state->top() === $checkedState;
     }
