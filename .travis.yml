@@ -30,7 +30,7 @@ before_script:
   # ... and update the dependencies accordingly, without restrictions regarding the PHP version.
   - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then composer config --unset platform.php; composer update --no-interaction --prefer-source; fi"
   # List the installed dependency versions.
-  - composer show -i
+  - composer show
   - mkdir -p build/logs
 
 script:
