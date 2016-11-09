@@ -114,6 +114,10 @@ documentation](Resources/doc/index.rst).
 
 ## Changelog ##
 
+### 0.5.0 -> 0.6.0 ###
+
+Introduced logging of missing parameters.
+
 ### 0.4.0 -> 0.5.0 ###
 
 Improved performance by removing lexer/parser classes and message rewriting that was necessary to support named
