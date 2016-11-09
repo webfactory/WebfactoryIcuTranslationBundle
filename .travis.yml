@@ -25,7 +25,7 @@ env:
 before_script:
   - composer self-update --no-interaction
   - sh -c "if [ '$SYMFONY_VERSION' = 'locked' ]; then composer install --no-interaction --prefer-source; fi"
-  # Register a specific dependency versions if necessary...
+  # Register a specific dependency version if necessary...
   - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then composer require --no-update symfony/symfony:${SYMFONY_VERSION}; fi"
   # ... and update the dependencies accordingly, without restrictions regarding the PHP version.
   - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then composer config --unset platform.php; composer update --no-interaction --prefer-source; fi"
