@@ -6,9 +6,15 @@ services:
         class: Webfactory\IcuTranslationBundle\Translator\Formatting\DefaultParameterDecorator
         arguments: ["@webfactory_icu_translation.formatter.intl_formatter"]
 
+    webfactory_icu_translation.formatter.missing_parameters:
+        class: Webfactory\IcuTranslationBundle\Translator\Formatting\MissingParameterWarningDecorator
+        arguments: ["@webfactory_icu_translation.formatter.default_parameters", "@?logger"]
+        tags:
+            - { name: monolog.logger, channel: webfactory_icu_translation }
+
     webfactory_icu_translation.formatter.twig_parameter_normalizer:
         class: Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalizer
-        arguments: ["@webfactory_icu_translation.formatter.default_parameters"]
+        arguments: ["@webfactory_icu_translation.formatter.missing_parameters"]
 
     webfactory_icu_translation.formatter.graceful_exceptions:
         class: Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator

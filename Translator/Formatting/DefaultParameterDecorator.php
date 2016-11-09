@@ -2,6 +2,8 @@
 
 namespace Webfactory\IcuTranslationBundle\Translator\Formatting;
 
+use Webfactory\IcuTranslationBundle\Translator\Formatting\Analysis\MessageAnalyzer;
+
 /**
  * Injects default parameters for placeholders that occur in a message.
  *
@@ -10,7 +12,7 @@ namespace Webfactory\IcuTranslationBundle\Translator\Formatting;
  * the checked parameter was not passed.
  *
  * The decorator works on a best-effort basis: It does not guarantee that defaults are *only*
- * added for real parameters as placeholder nesting can be quote complex.
+ * added for real parameters as placeholder nesting can be quite complex.
  * So in some cases superfluous defaults *might* be passed, which are usually ignored by
  * the following formatter.
  */
@@ -26,9 +28,7 @@ class DefaultParameterDecorator extends AbstractFormatterDecorator
      */
     public function format($locale, $message, array $parameters)
     {
-        $pattern = '/\{(?P<variables>[a-zA-Z0-9_]+)/u';
-        preg_match_all($pattern, $message, $matches,  PREG_PATTERN_ORDER);
-        $variables = $matches['variables'];
+        $variables = (new MessageAnalyzer($message))->getParameters();
         $defaults =  array_fill_keys($variables, null);
         $parameters = $parameters + $defaults;
         return parent::format($locale, $message, $parameters);

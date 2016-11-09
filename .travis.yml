@@ -7,10 +7,10 @@ cache:
     - $HOME/.composer/cache
 
 php:
-  - 5.5
-  - 5.6
-  - 7
-  - hhvm
+  - '5.5'
+  - '5.6'
+  - '7.0'
+  - 'hhvm'
 
 env:
   - SYMFONY_VERSION=locked # Use the versions that are given in composer.lock.
@@ -20,15 +20,15 @@ env:
   - SYMFONY_VERSION="2.6.*"
   - SYMFONY_VERSION="2.7.*"
   - SYMFONY_VERSION="2.8.*"
-  - SYMFONY_VERSION="3.0.*" 
+  - SYMFONY_VERSION="3.0.*"
 
 before_script:
-  - composer self-update
-  - composer install --no-interaction --prefer-source
-  # Register a specific Symfony version if necessary...
+  - composer self-update --no-interaction
+  - sh -c "if [ '$SYMFONY_VERSION' = 'locked' ]; then composer install --no-interaction --prefer-source; fi"
+  # Register a specific dependency versions if necessary...
   - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then composer require --no-update symfony/symfony:${SYMFONY_VERSION}; fi"
-  # ... and update the dependencies accordingly.
-  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then composer update --no-interaction --prefer-source; fi"
+  # ... and update the dependencies accordingly, without restrictions regarding the PHP version.
+  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then composer config --unset platform.php; composer update --no-interaction --prefer-source; fi"
   - mkdir -p build/logs
 
 script:
