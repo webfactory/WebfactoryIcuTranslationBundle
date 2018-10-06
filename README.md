@@ -1,6 +1,6 @@
 # ICU Translation Bundle #
 
-[![Build Status](https://travis-ci.org/webfactory/icu-translation-bundle.png?branch=master)](https://travis-ci.org/webfactory/icu-translation-bundle)
+[![Build Status](https://travis-ci.org/webfactory/WebfactoryIcuTranslationBundle.svg?branch=master)](https://travis-ci.org/webfactory/WebfactoryIcuTranslationBundle)
 [![Coverage Status](https://coveralls.io/repos/webfactory/icu-translation-bundle/badge.png?branch=master)](https://coveralls.io/r/webfactory/icu-translation-bundle?branch=master)
 
 While the [Symfony2 translation component](http://symfony.com/doc/current/components/translation/index.html) does a
