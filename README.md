@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/webfactory/WebfactoryIcuTranslationBundle.svg?branch=master)](https://travis-ci.org/webfactory/WebfactoryIcuTranslationBundle)
 [![Coverage Status](https://coveralls.io/repos/webfactory/icu-translation-bundle/badge.png?branch=master)](https://coveralls.io/r/webfactory/icu-translation-bundle?branch=master)
 
-While the [Symfony2 translation component](http://symfony.com/doc/current/components/translation/index.html) does a
+While the [Symfony translation component](http://symfony.com/doc/current/components/translation/index.html) does a
 great job in most cases, it can become difficult to use if you need conditions other than numbers (e.g. gender) or
 nested conditions. This is where the ICU Translation Bundle steps in. Using the [International Components for Unicode
 project](http://site.icu-project.org/)'s standard message format, it enhances the Symfony component with arbitrary and
@@ -12,7 +12,7 @@ you don't have to touch your former messages, they'll still work as usual.
 
 ## Installation ##
 
-Assuming you've already [enabled and configured the Symfony2 translation component](http://symfony.com/doc/current/book/translation.html#book-translation-configuration),
+Assuming you've already [enabled and configured the Symfony translation component](http://symfony.com/doc/current/book/translation.html#book-translation-configuration),
 all you have to do is to install the bundle via [composer](https://getcomposer.org) with something like this:
 
     php composer.phar require webfactory/icu-translation-bundle
@@ -137,7 +137,7 @@ The ``GracefulExceptionsDecorator`` logs all types of exception now, not just in
 
 Credits, Copyright and License
 ------------------------------
-Copyright 2012-2016 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
+Copyright 2012-2018 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
 
-- <http://www.webfactory.de>
-- <http://twitter.com/webfactory>
+- <https://www.webfactory.de>
+- <https://twitter.com/webfactory>
