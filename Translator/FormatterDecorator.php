@@ -2,15 +2,14 @@
 
 namespace Webfactory\IcuTranslationBundle\Translator;
 
-use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;
 
 /**
  * Decorates a Symfony translator and adds support for message formatting.
  */
 class FormatterDecorator implements TranslatorInterface
 {
-
     /**
      * The inner translator.
      *
@@ -29,26 +28,28 @@ class FormatterDecorator implements TranslatorInterface
      * Creates a decorator for the provided translator.
      *
      * @param \Symfony\Component\Translation\TranslatorInterface $translator
-     * @param \Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface The formatter that is used.
+     * @param \Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface the formatter that is used
      */
     public function __construct(TranslatorInterface $translator, FormatterInterface $formatter)
     {
         $this->translator = $translator;
-        $this->formatter  = $formatter;
+        $this->formatter = $formatter;
     }
 
     /**
      * Translates the given message.
      *
      * @param string $id         The message id
-     * @param array $parameters An array of parameters for the message
+     * @param array  $parameters An array of parameters for the message
      * @param string $domain     The domain for the message
      * @param string $locale     The locale
+     *
      * @return string The translated string
      */
-    public function trans($id, array $parameters = array(), $domain = null, $locale = null)
+    public function trans($id, array $parameters = [], $domain = null, $locale = null)
     {
         $message = $this->translator->trans($id, $parameters, $domain, $locale);
+
         return $this->handleFormatting($id, $message, $parameters, $locale);
     }
 
@@ -56,15 +57,17 @@ class FormatterDecorator implements TranslatorInterface
      * Translates the given choice message by choosing a translation according to a number.
      *
      * @param string $id         The message id
-     * @param integer $number     The number to use to find the indice of the message
-     * @param array $parameters An array of parameters for the message
+     * @param int    $number     The number to use to find the indice of the message
+     * @param array  $parameters An array of parameters for the message
      * @param string $domain     The domain for the message
      * @param string $locale     The locale
+     *
      * @return string The translated string
      */
-    public function transChoice($id, $number, array $parameters = array(), $domain = null, $locale = null)
+    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null)
     {
         $message = $this->translator->transChoice($id, $number, $parameters, $domain, $locale);
+
         return $this->handleFormatting($id, $message, $parameters, $locale);
     }
 
@@ -91,12 +94,14 @@ class FormatterDecorator implements TranslatorInterface
     /**
      * Formats the message if possible and throws a normalized exception in case of error.
      *
-     * @param string $id The translation message ID.
-     * @param string $message The message pattern that will be used for formatting.
+     * @param string       $id         the translation message ID
+     * @param string       $message    the message pattern that will be used for formatting
      * @param array(mixed) $parameters
-     * @param string|null $locale
-     * @return string The formatted message.
-     * @throws \Webfactory\IcuTranslationBundle\Translator\FormattingException If formatting fails.
+     * @param string|null  $locale
+     *
+     * @return string the formatted message
+     *
+     * @throws \Webfactory\IcuTranslationBundle\Translator\FormattingException if formatting fails
      */
     protected function handleFormatting($id, $message, array $parameters, $locale)
     {
@@ -115,9 +120,10 @@ class FormatterDecorator implements TranslatorInterface
     /**
      * Applies Intl formatting on the provided message.
      *
-     * @param string $message
+     * @param string       $message
      * @param array(mixed) $parameters
-     * @param string $locale
+     * @param string       $locale
+     *
      * @return string
      */
     protected function format($message, array $parameters, $locale)
@@ -132,11 +138,11 @@ class FormatterDecorator implements TranslatorInterface
      * Otherwise, the default locale is returned.
      *
      * @param string|null $locale
+     *
      * @return string
      */
     protected function toLocale($locale = null)
     {
         return ($locale === null) ? $this->getLocale() : $locale;
     }
-
 }

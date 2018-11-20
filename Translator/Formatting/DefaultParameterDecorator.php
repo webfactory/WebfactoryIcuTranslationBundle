@@ -21,16 +21,18 @@ class DefaultParameterDecorator extends AbstractFormatterDecorator
     /**
      * Injects default parameters before forwarding to the inner formatter.
      *
-     * @param string $locale
-     * @param string $message
+     * @param string               $locale
+     * @param string               $message
      * @param array(string=>mixed) $parameters
-     * @return string The formatted message.
+     *
+     * @return string the formatted message
      */
     public function format($locale, $message, array $parameters)
     {
         $variables = (new MessageAnalyzer($message))->getParameters();
-        $defaults =  array_fill_keys($variables, null);
+        $defaults = array_fill_keys($variables, null);
         $parameters = $parameters + $defaults;
+
         return parent::format($locale, $message, $parameters);
     }
 }

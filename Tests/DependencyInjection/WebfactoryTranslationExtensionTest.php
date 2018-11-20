@@ -10,7 +10,6 @@ use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslation
  */
 class WebfactoryIcuTranslationExtensionTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * System under test.
      *
@@ -43,11 +42,9 @@ class WebfactoryIcuTranslationExtensionTest extends \PHPUnit_Framework_TestCase
     public function testConfiguredContainerIsCompilable()
     {
         $builder = new ContainerBuilder();
-        $this->extension->load(array(), $builder);
+        $this->extension->load([], $builder);
 
         $this->setExpectedException(null);
         $builder->compile();
     }
-
 }
- 

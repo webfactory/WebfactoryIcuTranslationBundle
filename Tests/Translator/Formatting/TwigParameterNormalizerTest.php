@@ -9,7 +9,6 @@ use Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalize
  */
 class TwigParameterNormalizerTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * System under test.
      *
@@ -31,7 +30,7 @@ class TwigParameterNormalizerTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->innerFormatter = $this->getMock('\Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface');
-        $this->formatter      = new TwigParameterNormalizer($this->innerFormatter);
+        $this->formatter = new TwigParameterNormalizer($this->innerFormatter);
     }
 
     /**
@@ -39,7 +38,7 @@ class TwigParameterNormalizerTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        $this->formatter      = null;
+        $this->formatter = null;
         $this->innerFormatter = null;
         parent::tearDown();
     }
@@ -50,7 +49,7 @@ class TwigParameterNormalizerTest extends \PHPUnit_Framework_TestCase
     public function testFormatterWorksIfParameterListIsEmpty()
     {
         $this->setExpectedException(null);
-        $this->formatter->format('de', 'test', array());
+        $this->formatter->format('de', 'test', []);
     }
 
     /**
@@ -58,9 +57,9 @@ class TwigParameterNormalizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormatterDoesNotModifyParameterNamesWithoutDelimiters()
     {
-        $this->assertPassedParameters(array('user' => 'Matthias'));
+        $this->assertPassedParameters(['user' => 'Matthias']);
 
-        $this->formatter->format('de', 'test', array('user' => 'Matthias'));
+        $this->formatter->format('de', 'test', ['user' => 'Matthias']);
     }
 
     /**
@@ -68,9 +67,9 @@ class TwigParameterNormalizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormatterRemovesDelimitersFromParameterNames()
     {
-        $this->assertPassedParameters(array('user' => 'Matthias'));
+        $this->assertPassedParameters(['user' => 'Matthias']);
 
-        $this->formatter->format('de', 'test', array('%user%' => 'Matthias'));
+        $this->formatter->format('de', 'test', ['%user%' => 'Matthias']);
     }
 
     /**
@@ -79,9 +78,9 @@ class TwigParameterNormalizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormatterKeepsExistingParameterIfRemovingDelimitersLeadsToConflict()
     {
-        $this->assertPassedParameters(array('user' => 'Matthias'));
+        $this->assertPassedParameters(['user' => 'Matthias']);
 
-        $this->formatter->format('de', 'test', array('user' => 'Matthias', '%user%' => 'Malte'));
+        $this->formatter->format('de', 'test', ['user' => 'Matthias', '%user%' => 'Malte']);
     }
 
     /**
@@ -89,9 +88,9 @@ class TwigParameterNormalizerTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormatterDoesNotChangeIntegerKeys()
     {
-        $this->assertPassedParameters(array(0 => 'Matthias'));
+        $this->assertPassedParameters([0 => 'Matthias']);
 
-        $this->formatter->format('de', 'test', array(0 => 'Matthias'));
+        $this->formatter->format('de', 'test', [0 => 'Matthias']);
     }
 
     /**
@@ -105,5 +104,4 @@ class TwigParameterNormalizerTest extends \PHPUnit_Framework_TestCase
                              ->method('format')
                              ->with($this->anything(), $this->anything(), $parameters);
     }
-
 }

@@ -14,48 +14,48 @@ class MessageParser extends AbstractParser
     /**
      * State if the parser is currently in a text block.
      */
-    public const STATE_TEXT = 'text';
+    const STATE_TEXT = 'text';
 
     /**
      * State if the parser has found the start of a declaration (started via opening brace).
      */
-    public const STATE_DECLARATION_START = 'declaration_start';
+    const STATE_DECLARATION_START = 'declaration_start';
 
     /**
      * State if the a variable name is encountered.
      */
-    public const STATE_DECLARATION_VARIABLE = 'declaration_variable';
+    const STATE_DECLARATION_VARIABLE = 'declaration_variable';
 
     /**
      * State if an operation is encountered (for example select expression
      * or number formatting identifier).
      */
-    public const STATE_DECLARATION_OPERATION = 'declaration_operation';
+    const STATE_DECLARATION_OPERATION = 'declaration_operation';
 
     /**
      * State if the parser is in an argument block (date format etc.).
      */
-    public const STATE_DECLARATION_ARGUMENT = 'declaration_argument';
+    const STATE_DECLARATION_ARGUMENT = 'declaration_argument';
 
     /**
      * State if the parser is in an expression (select, choice, plural).
      */
-    public const STATE_DECLARATION_EXPRESSION = 'declaration_expression';
+    const STATE_DECLARATION_EXPRESSION = 'declaration_expression';
 
     /**
      * State if the parser is in a block of quoted text.
      */
-    public const STATE_QUOTED_TEXT = 'quoted_text';
+    const STATE_QUOTED_TEXT = 'quoted_text';
 
     /**
      * Token for parameter names, for example the "name" in {name}.
      */
-    public const TOKEN_PARAMETER_NAME = 'parameter_name';
+    const TOKEN_PARAMETER_NAME = 'parameter_name';
 
     /**
-     * Token for choice types, for example the "select" in {name, select, [...]}
+     * Token for choice types, for example the "select" in {name, select, [...]}.
      */
-    public const TOKEN_CHOICE_TYPE = 'choice_type';
+    const TOKEN_CHOICE_TYPE = 'choice_type';
 
     /**
      * Stack whose top element holds the current parsing state.
@@ -71,32 +71,34 @@ class MessageParser extends AbstractParser
      * Each token is an array that consists of the token type as
      * first value and the message part as second value.
      * The token type is always one of the MessageLexer::TOKEN_* or
-     * MessageParser::TOKEN_* public constants.
+     * MessageParser::TOKEN_* constants.
      *
-     * @param string $message
+     * @param string      $message
      * @param string|null $context
-     * @return array<array<string>> The message tokens.
+     *
+     * @return array<array<string>> the message tokens
      */
     public function parse($message, $context = null)
     {
         if (strpos($message, '{') === false) {
             // Message does not contain any declarations, therefore, we can avoid
             // the parsing process.
-            return array(array(MessageLexer::TOKEN_TEXT, $message));
+            return [[MessageLexer::TOKEN_TEXT, $message]];
         }
+
         return parent::parse($message, $context);
     }
 
     /**
      * Performs the parsing and creates the result that is returned by parse().
      *
-     * @return array<array<string>> The message tokens.
+     * @return array<array<string>> the message tokens
      */
     protected function parseInternal()
     {
         $this->state = new \SplStack();
         $this->enterState(self::STATE_TEXT);
-        $tokens = array();
+        $tokens = [];
         $this->lexer->moveNext();
         while ($this->lexer->token !== null) {
             $tokenType = $this->getTokenType();
@@ -110,23 +112,20 @@ class MessageParser extends AbstractParser
                 } elseif ($this->isToken(MessageLexer::TOKEN_CLOSING_BRACE)) {
                     $this->leaveState();
                 }
-
             } elseif ($this->isState(self::STATE_DECLARATION_START)) {
                 if ($this->isToken(MessageLexer::TOKEN_TEXT)) {
                     $this->swapState(self::STATE_DECLARATION_VARIABLE);
                     $tokenType = self::TOKEN_PARAMETER_NAME;
                 }
-
             } elseif ($this->isState(self::STATE_DECLARATION_VARIABLE)) {
                 if ($this->isToken(MessageLexer::TOKEN_COMMA)) {
                     $this->swapState(self::STATE_DECLARATION_OPERATION);
                 } elseif ($this->isToken(MessageLexer::TOKEN_CLOSING_BRACE)) {
                     $this->leaveState();
                 }
-
             } elseif ($this->isState(self::STATE_DECLARATION_OPERATION)) {
                 if ($this->isToken(MessageLexer::TOKEN_TEXT)) {
-                    if (in_array($this->getTokenValue(), array('select', 'choice', 'plural'))) {
+                    if (in_array($this->getTokenValue(), ['select', 'choice', 'plural'])) {
                         $this->swapState(self::STATE_DECLARATION_EXPRESSION);
                         $tokenType = self::TOKEN_CHOICE_TYPE;
                     }
@@ -135,12 +134,10 @@ class MessageParser extends AbstractParser
                 } elseif ($this->isToken(MessageLexer::TOKEN_CLOSING_BRACE)) {
                     $this->leaveState();
                 }
-
             } elseif ($this->isState(self::STATE_DECLARATION_ARGUMENT)) {
                 if ($this->isToken(MessageLexer::TOKEN_CLOSING_BRACE)) {
                     $this->leaveState();
                 }
-
             } elseif ($this->isState(self::STATE_DECLARATION_EXPRESSION)) {
                 if ($this->isToken(MessageLexer::TOKEN_OPENING_BRACE)) {
                     $this->enterState(self::STATE_TEXT);
@@ -151,7 +148,7 @@ class MessageParser extends AbstractParser
                 }
             }
 
-            $tokens[] = array($tokenType, $this->getTokenValue());
+            $tokens[] = [$tokenType, $this->getTokenValue()];
 
             $this->lexer->moveNext();
         }
@@ -162,8 +159,9 @@ class MessageParser extends AbstractParser
     /**
      * Checks if the current token has the provided type.
      *
-     * @param integer $type
-     * @return boolean
+     * @param int $type
+     *
+     * @return bool
      */
     private function isToken($type)
     {
@@ -173,7 +171,7 @@ class MessageParser extends AbstractParser
     /**
      * Returns the type of the current token.
      *
-     * @return integer One of the MessageLexer::TOKEN_* public constants.
+     * @return int one of the MessageLexer::TOKEN_* constants
      */
     private function getTokenType()
     {
@@ -225,7 +223,8 @@ class MessageParser extends AbstractParser
      * Checks if $checkedState is the current state.
      *
      * @param string $checkedState
-     * @return boolean
+     *
+     * @return bool
      */
     private function isState($checkedState)
     {
