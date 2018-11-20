@@ -13,7 +13,7 @@
     ],
 
     "require": {
-        "php": "^5.5.0|^7.1",
+        "php": "^7.0|^7.1",
         "ext-intl": "*",
         "lib-ICU": ">=4.8",
         "symfony/framework-bundle": "~2.2|~3.0|~4.0",
