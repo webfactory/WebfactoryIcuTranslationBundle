@@ -27,7 +27,7 @@ class MissingParameterWarningDecoratorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->logEntries = array();
+        $this->logEntries = [];
         $this->decorator = new MissingParameterWarningDecorator($this->createInnerFormatter(), $this->createLogger());
     }
 
@@ -50,7 +50,7 @@ class MissingParameterWarningDecoratorTest extends \PHPUnit_Framework_TestCase
     {
         $message = 'Hello {name}, you are writing a {description} test!';
 
-        $this->decorator->format('en', $message, array('name' => 'Matthias', 'description' => 'great'));
+        $this->decorator->format('en', $message, ['name' => 'Matthias', 'description' => 'great']);
 
         $this->assertNothingLogged();
     }
@@ -59,7 +59,7 @@ class MissingParameterWarningDecoratorTest extends \PHPUnit_Framework_TestCase
     {
         $message = 'Hello {name}, you are writing a {description} test!';
 
-        $this->decorator->format('en', $message, array('description' => 'great'));
+        $this->decorator->format('en', $message, ['description' => 'great']);
 
         $this->assertProblemLogged();
     }
@@ -68,14 +68,14 @@ class MissingParameterWarningDecoratorTest extends \PHPUnit_Framework_TestCase
     {
         $message = 'Hello {Name}, you are writing a {description} test!';
 
-        $this->decorator->format('en', $message, array('name' => 'Matthias', 'description' => 'great'));
+        $this->decorator->format('en', $message, ['name' => 'Matthias', 'description' => 'great']);
 
         $this->assertProblemLogged();
     }
 
     public function testReturnsMessageFromInnerFormatter()
     {
-        $this->assertEquals('inner message', $this->decorator->format('de', 'test', array()));
+        $this->assertEquals('inner message', $this->decorator->format('de', 'test', []));
     }
 
     /**
@@ -105,6 +105,7 @@ class MissingParameterWarningDecoratorTest extends \PHPUnit_Framework_TestCase
         $formatter->expects($this->any())
             ->method('format')
             ->will($this->returnValue('inner message'));
+
         return $formatter;
     }
 
@@ -116,15 +117,16 @@ class MissingParameterWarningDecoratorTest extends \PHPUnit_Framework_TestCase
     private function createLogger()
     {
         $storeLogEntry = function ($level, $message) {
-            $this->logEntries[] = array(
+            $this->logEntries[] = [
                 'level' => $level,
-                'message' => $message
-            );
+                'message' => $message,
+            ];
         };
         $logger = $this->getMockForAbstractClass(AbstractLogger::class);
         $logger->expects($this->any())
             ->method('log')
             ->will($this->returnCallback($storeLogEntry));
+
         return $logger;
     }
 }

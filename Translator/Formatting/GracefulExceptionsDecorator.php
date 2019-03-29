@@ -21,7 +21,7 @@ final class GracefulExceptionsDecorator extends AbstractFormatterDecorator
      * Creates a decorator for the provided formatter.
      *
      * @param \Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface $innerFormatter
-     * @param LoggerInterface $logger
+     * @param LoggerInterface                                                           $logger
      */
     public function __construct(FormatterInterface $innerFormatter, LoggerInterface $logger = null)
     {
@@ -32,10 +32,11 @@ final class GracefulExceptionsDecorator extends AbstractFormatterDecorator
     /**
      * Formats the provided message.
      *
-     * @param string $locale
-     * @param string $message
+     * @param string               $locale
+     * @param string               $message
      * @param array(string=>mixed) $parameters
-     * @return string The formatted message.
+     *
+     * @return string the formatted message
      */
     public function format($locale, $message, array $parameters)
     {
@@ -44,13 +45,14 @@ final class GracefulExceptionsDecorator extends AbstractFormatterDecorator
         } catch (\Exception $e) {
             $this->logger->error(
                 'Formatting translation failed.',
-                array(
+                [
                     'locale' => $locale,
                     'message' => $message,
                     'parameters' => $parameters,
-                    'exception' => $e
-                )
+                    'exception' => $e,
+                ]
             );
+
             return ' (message formatting error)';
         }
     }

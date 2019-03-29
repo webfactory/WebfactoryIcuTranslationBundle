@@ -11,7 +11,6 @@ use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslation
  */
 class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * System under test.
      *
@@ -53,7 +52,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     public function testTranslatorReplacesIndexedVariablesInFormatterFormat()
     {
         $message = 'We need {0,number,integer} tests.';
-        $this->assertEquals('We need 42 tests.', $this->translator->trans($message, array('%0%' => 42)));
+        $this->assertEquals('We need 42 tests.', $this->translator->trans($message, ['%0%' => 42]));
     }
 
     /**
@@ -62,7 +61,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     public function testTranslatorReplacesNamedVariables()
     {
         $message = 'We need {numberOfTests, number,integer} tests.';
-        $this->assertEquals('We need 42 tests.', $this->translator->trans($message, array('%numberOfTests%' => 42)));
+        $this->assertEquals('We need 42 tests.', $this->translator->trans($message, ['%numberOfTests%' => 42]));
     }
 
     /**
@@ -70,13 +69,13 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      */
     public function testTranslatorResolvesSelectExpressionCorrectly()
     {
-        $message = '{gender, select,'            . PHP_EOL
-                 . '    female {She is tested.}' . PHP_EOL
-                 . '    male {He is tested.}'    . PHP_EOL
-                 . '    other {unknown}'         . PHP_EOL
-                 . '}';
+        $message = '{gender, select,'.PHP_EOL
+                 .'    female {She is tested.}'.PHP_EOL
+                 .'    male {He is tested.}'.PHP_EOL
+                 .'    other {unknown}'.PHP_EOL
+                 .'}';
 
-        $this->assertEquals('She is tested.', $this->translator->trans($message, array('%gender%' => 'female')));
+        $this->assertEquals('She is tested.', $this->translator->trans($message, ['%gender%' => 'female']));
     }
 
     /**
@@ -85,7 +84,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     public function testTranslatorFormatsMessagesReturnedByTransChoice()
     {
         $message = 'We need {0,number,integer} tests.';
-        $this->assertEquals('We need 42 tests.', $this->translator->transChoice($message, 7, array('%0%' => 42)));
+        $this->assertEquals('We need 42 tests.', $this->translator->transChoice($message, 7, ['%0%' => 42]));
     }
 
     /**
@@ -96,12 +95,12 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      */
     public function testTranslatorResolvesSelectExpressionCorrectlyIfCheckedVariableIsNotSet()
     {
-        $message = '{available, select,'        . PHP_EOL
-                 . '    yes {It is available!}' . PHP_EOL
-                 . '    other {Not available.}' . PHP_EOL
-                 . '}';
+        $message = '{available, select,'.PHP_EOL
+                 .'    yes {It is available!}'.PHP_EOL
+                 .'    other {Not available.}'.PHP_EOL
+                 .'}';
 
-        $this->assertEquals('Not available.', $this->translator->trans($message, array()));
+        $this->assertEquals('Not available.', $this->translator->trans($message, []));
     }
 
     /**
@@ -111,7 +110,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     {
         $message = 'Hello {name}!';
 
-        $this->assertEquals('Hello !', $this->translator->trans($message, array()));
+        $this->assertEquals('Hello !', $this->translator->trans($message, []));
     }
 
     /**
@@ -139,7 +138,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     public function testTranslatorSupportsSimpleMessagesWithHtml()
     {
         $message = 'Hello <strong>{name}</strong>!';
-        $translation = $this->translator->trans($message, array('%name%' => 'webfactory'));
+        $translation = $this->translator->trans($message, ['%name%' => 'webfactory']);
         $this->assertEquals('Hello <strong>webfactory</strong>!', $translation);
     }
 
@@ -148,12 +147,12 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      */
     public function testTranslatorSupportsSelectExpressionsWithHtml()
     {
-        $message = '{location, select,'                                    . PHP_EOL
-                 . '    webfactory {<strong>Best</strong> place to work.}' . PHP_EOL
-                 . '    other {Unknown location.}'                         . PHP_EOL
-                 . '}';
+        $message = '{location, select,'.PHP_EOL
+                 .'    webfactory {<strong>Best</strong> place to work.}'.PHP_EOL
+                 .'    other {Unknown location.}'.PHP_EOL
+                 .'}';
 
-        $translation = $this->translator->trans($message, array('%location%' => 'webfactory'));
+        $translation = $this->translator->trans($message, ['%location%' => 'webfactory']);
         $this->assertEquals('<strong>Best</strong> place to work.', $translation);
     }
 
@@ -162,19 +161,19 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      */
     public function testTranslatorSupportsMultiLineTextInSelectExpression()
     {
-        $message = '{location, select,'            . PHP_EOL
-                 . '    webfactory {'              . PHP_EOL
-                 . 'This is'                       . PHP_EOL
-                 . 'a multi line'                  . PHP_EOL
-                 . 'text.'                         . PHP_EOL
-                 . '    }'                         . PHP_EOL
-                 . '    other {Unknown location.}' . PHP_EOL
-                 . '}';
+        $message = '{location, select,'.PHP_EOL
+                 .'    webfactory {'.PHP_EOL
+                 .'This is'.PHP_EOL
+                 .'a multi line'.PHP_EOL
+                 .'text.'.PHP_EOL
+                 .'    }'.PHP_EOL
+                 .'    other {Unknown location.}'.PHP_EOL
+                 .'}';
 
-        $translation = $this->translator->trans($message, array('%location%' => 'webfactory'));
-        $expected = 'This is' . PHP_EOL
-                  . 'a multi line' . PHP_EOL
-                  . 'text.';
+        $translation = $this->translator->trans($message, ['%location%' => 'webfactory']);
+        $expected = 'This is'.PHP_EOL
+                  .'a multi line'.PHP_EOL
+                  .'text.';
         $this->assertEquals($expected, trim($translation));
     }
 
@@ -186,7 +185,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
         $message = 'Schlüsselkompetenzen sind bei {name} vorhanden.';
 
         $this->setExpectedException(null);
-        $this->translator->trans($message, array('%name%' => 'Eddy'));
+        $this->translator->trans($message, ['%name%' => 'Eddy']);
     }
 
     /**
@@ -197,7 +196,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
         $message = 'He/she is called {name}.';
 
         $this->setExpectedException(null);
-        $this->translator->trans($message, array('%name%' => 'Eddy'));
+        $this->translator->trans($message, ['%name%' => 'Eddy']);
     }
 
     /**
@@ -205,16 +204,16 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      */
     public function testTranslatorCanHandleNestedSelectExpressions()
     {
-        $message = '{a, select,'          . PHP_EOL
-                 . '    yes {{b, select,' . PHP_EOL
-                 . '        yes {ab}'     . PHP_EOL
-                 . '        other {a}'    . PHP_EOL
-                 . '    }}'               . PHP_EOL
-                 . '    other {none}'     . PHP_EOL
-                 . '}';
+        $message = '{a, select,'.PHP_EOL
+                 .'    yes {{b, select,'.PHP_EOL
+                 .'        yes {ab}'.PHP_EOL
+                 .'        other {a}'.PHP_EOL
+                 .'    }}'.PHP_EOL
+                 .'    other {none}'.PHP_EOL
+                 .'}';
 
         $this->setExpectedException(null);
-        $this->assertEquals('ab', $this->translator->trans($message, array('%a%' => 'yes', '%b%' => 'yes')));
+        $this->assertEquals('ab', $this->translator->trans($message, ['%a%' => 'yes', '%b%' => 'yes']));
     }
 
     /**
@@ -222,13 +221,13 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      */
     public function testTranslatorSupportsPluralFormatting()
     {
-        $message = '{number_of_participants, plural,'         . PHP_EOL
-                 . '    =0 {Nobody is participating.}'        . PHP_EOL
-                 . '    =1 {One person participates.}'        . PHP_EOL
-                 . '    other {# persons are participating.}' . PHP_EOL
-                 . '}';
+        $message = '{number_of_participants, plural,'.PHP_EOL
+                 .'    =0 {Nobody is participating.}'.PHP_EOL
+                 .'    =1 {One person participates.}'.PHP_EOL
+                 .'    other {# persons are participating.}'.PHP_EOL
+                 .'}';
 
-        $translation = $this->translator->trans($message, array('%number_of_participants%' => 0));
+        $translation = $this->translator->trans($message, ['%number_of_participants%' => 0]);
         $this->assertEquals('Nobody is participating.', $translation);
     }
 
@@ -238,13 +237,13 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      */
     public function testTranslatorReplacesHashInPluralFormatCorrectly()
     {
-        $message = '{number_of_participants, plural,'         . PHP_EOL
-                 . '    =0 {Nobody is participating.}'        . PHP_EOL
-                 . '    =1 {One person participates.}'        . PHP_EOL
-                 . '    other {# persons are participating.}' . PHP_EOL
-                 . '}';
+        $message = '{number_of_participants, plural,'.PHP_EOL
+                 .'    =0 {Nobody is participating.}'.PHP_EOL
+                 .'    =1 {One person participates.}'.PHP_EOL
+                 .'    other {# persons are participating.}'.PHP_EOL
+                 .'}';
 
-        $translation = $this->translator->trans($message, array('%number_of_participants%' => 42));
+        $translation = $this->translator->trans($message, ['%number_of_participants%' => 42]);
         $this->assertEquals('42 persons are participating.', $translation);
     }
 
@@ -253,12 +252,12 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      */
     public function testVariableFromPluralConditionCanBeReferencedInTranslation()
     {
-        $message = '{number_of_participants, plural,'                                       . PHP_EOL
-                 . '    =0 {Nobody is participating.}'                                       . PHP_EOL
-                 . '    other {{number_of_participants, number} persons are participating.}' . PHP_EOL
-                 . '}';
+        $message = '{number_of_participants, plural,'.PHP_EOL
+                 .'    =0 {Nobody is participating.}'.PHP_EOL
+                 .'    other {{number_of_participants, number} persons are participating.}'.PHP_EOL
+                 .'}';
 
-        $translation = $this->translator->trans($message, array('%number_of_participants%' => 42));
+        $translation = $this->translator->trans($message, ['%number_of_participants%' => 42]);
         $this->assertEquals('42 persons are participating.', $translation);
     }
 
@@ -267,12 +266,12 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      */
     public function testTranslatorSupportsPluralCategories()
     {
-        $message = '{number_of_participants, plural,'                                        . PHP_EOL
-                 . '    one {One person participates.}'                                      . PHP_EOL
-                 . '    other {{number_of_participants, number} persons are participating.}' . PHP_EOL
-                 . '}';
+        $message = '{number_of_participants, plural,'.PHP_EOL
+                 .'    one {One person participates.}'.PHP_EOL
+                 .'    other {{number_of_participants, number} persons are participating.}'.PHP_EOL
+                 .'}';
 
-        $translation = $this->translator->trans($message, array('%number_of_participants%' => 1), null, 'en');
+        $translation = $this->translator->trans($message, ['%number_of_participants%' => 1], null, 'en');
         $this->assertEquals('One person participates.', $translation);
     }
 
@@ -283,9 +282,9 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     {
         $message = '{number_of_persons, number} have been counted.';
 
-        $translationEn = $this->translator->trans($message, array('%number_of_persons%' => 1024), null, 'en');
+        $translationEn = $this->translator->trans($message, ['%number_of_persons%' => 1024], null, 'en');
         $this->assertEquals('1,024 have been counted.', $translationEn);
-        $translationDe = $this->translator->trans($message, array('%number_of_persons%' => 1024), null, 'de');
+        $translationDe = $this->translator->trans($message, ['%number_of_persons%' => 1024], null, 'de');
         $this->assertEquals('1.024 have been counted.', $translationDe);
     }
 
@@ -296,10 +295,10 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     {
         $message = 'Available for just {price, number, currency}.';
 
-        $translationEnGb = $this->translator->trans($message, array('%price%' => 99.99), null, 'en_GB');
+        $translationEnGb = $this->translator->trans($message, ['%price%' => 99.99], null, 'en_GB');
         $expected = 'Available for just £99.99.';
         $this->assertEquals($expected, $translationEnGb);
-        $translationDe = $this->translator->trans($message, array('%price%' => 99.99), null, 'de_DE');
+        $translationDe = $this->translator->trans($message, ['%price%' => 99.99], null, 'de_DE');
         // Notice: ICU seems to use a special whitespace that is added in front of the currency.
         $expected = 'Available for just 99,99 €.';
         $this->assertEquals($expected, $translationDe);
@@ -317,10 +316,10 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
         $message = 'Born on {birthDate, date, short}.';
 
         $date = new \DateTime('1986-02-04');
-        $translationEnGb = $this->translator->trans($message, array('%birthDate%' => $date->getTimestamp()), null, 'en_GB');
+        $translationEnGb = $this->translator->trans($message, ['%birthDate%' => $date->getTimestamp()], null, 'en_GB');
         $expected = 'Born on 04/02/1986.';
         $this->assertEquals($expected, $translationEnGb);
-        $translationDe = $this->translator->trans($message, array('%birthDate%' => $date->getTimestamp()), null, 'de_DE');
+        $translationDe = $this->translator->trans($message, ['%birthDate%' => $date->getTimestamp()], null, 'de_DE');
         $expected = 'Born on 04.02.86.';
         $this->assertEquals($expected, $translationDe);
     }
@@ -332,8 +331,8 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     {
         $message = 'It is called "Formatting" by {name}.';
 
-        $translation = $this->translator->trans($message, array('%name%' => 'Theo Translator'));
-        $expected    = 'It is called "Formatting" by Theo Translator.';
+        $translation = $this->translator->trans($message, ['%name%' => 'Theo Translator']);
+        $expected = 'It is called "Formatting" by Theo Translator.';
         $this->assertEquals($expected, $translation);
     }
 
@@ -347,8 +346,8 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     {
         $message = "It is called 'Formatting' by {name}.";
 
-        $translation = $this->translator->trans($message, array('%name%' => 'Theo Translator'));
-        $expected    = "It is called 'Formatting' by Theo Translator.";
+        $translation = $this->translator->trans($message, ['%name%' => 'Theo Translator']);
+        $expected = "It is called 'Formatting' by Theo Translator.";
         $this->assertEquals($expected, $translation);
     }
 
@@ -360,7 +359,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
         $message = "The placeholder '{'name'}' is escaped.";
 
         $translation = $this->translator->trans($message);
-        $expected    = 'The placeholder {name} is escaped.';
+        $expected = 'The placeholder {name} is escaped.';
         $this->assertEquals($expected, $translation);
     }
 
@@ -371,8 +370,8 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
     {
         $message = "The character '' is called single quote by {name}.";
 
-        $translation = $this->translator->trans($message, array('%name%' => 'Translator'));
-        $expected    = "The character ' is called single quote by Translator.";
+        $translation = $this->translator->trans($message, ['%name%' => 'Translator']);
+        $expected = "The character ' is called single quote by Translator.";
         $this->assertEquals($expected, $translation);
     }
 
@@ -386,13 +385,12 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
         $builder = new ContainerBuilder();
         $builder->register('translator', '\Symfony\Component\Translation\Translator')->addArgument('en');
         $extension = new WebfactoryIcuTranslationExtension();
-        $extension->load(array(), $builder);
+        $extension->load([], $builder);
         $builder->addCompilerPass(new DecorateTranslatorCompilerPass());
         $builder->compile();
         $translator = $builder->get('translator');
         $this->assertInstanceOf('\Symfony\Component\Translation\TranslatorInterface', $translator);
+
         return $translator;
     }
-
 }
- 

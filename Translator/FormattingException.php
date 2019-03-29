@@ -7,7 +7,6 @@ namespace Webfactory\IcuTranslationBundle\Translator;
  */
 class FormattingException extends \Exception
 {
-
     /**
      * The locale of the message.
      *
@@ -39,20 +38,20 @@ class FormattingException extends \Exception
     /**
      * Wraps an exception that occurred during formatting and provided additional information.
      *
-     * @param string $locale
-     * @param string $messageId
-     * @param string $messagePattern
+     * @param string       $locale
+     * @param string       $messageId
+     * @param string       $messagePattern
      * @param array(mixed) $parameters
-     * @param \Exception $previous
+     * @param \Exception   $previous
      */
     public function __construct($locale, $messageId, $messagePattern, array $parameters, \Exception $previous)
     {
         $message = $this->toMessage($locale, $messageId, $messagePattern, $parameters, $previous->getMessage());
         parent::__construct($message, $previous->getCode(), $previous);
-        $this->locale         = $locale;
-        $this->messageId      = $messageId;
+        $this->locale = $locale;
+        $this->messageId = $messageId;
         $this->messagePattern = $messagePattern;
-        $this->parameters     = $parameters;
+        $this->parameters = $parameters;
     }
 
     /**
@@ -98,26 +97,27 @@ class FormattingException extends \Exception
     /**
      * Creates an error message.
      *
-     * @param string $locale The used locale (for example "en").
-     * @param string $messageId The translation message ID.
-     * @param string $messagePattern The translation message pattern.
+     * @param string       $locale         the used locale (for example "en")
+     * @param string       $messageId      the translation message ID
+     * @param string       $messagePattern the translation message pattern
      * @param array(mixed) $parameters
-     * @param string $error Description of the error that occurred.
+     * @param string       $error          description of the error that occurred
+     *
      * @return string
      */
     protected function toMessage($locale, $messageId, $messagePattern, array $parameters, $error)
     {
-        $message = 'Cannot format translation:' . PHP_EOL
-                 . '-> Locale:          %s'     . PHP_EOL
-                 . '-> Message-ID:      %s'     . PHP_EOL
-                 . '-> Message-Pattern:'        . PHP_EOL
-                 . '%s'                         . PHP_EOL
-                 . '-> Parameters:'             . PHP_EOL
-                 . '%s'                         . PHP_EOL
-                 . '-> Error:'                  . PHP_EOL
-                 . '%s';
+        $message = 'Cannot format translation:'.PHP_EOL
+                 .'-> Locale:          %s'.PHP_EOL
+                 .'-> Message-ID:      %s'.PHP_EOL
+                 .'-> Message-Pattern:'.PHP_EOL
+                 .'%s'.PHP_EOL
+                 .'-> Parameters:'.PHP_EOL
+                 .'%s'.PHP_EOL
+                 .'-> Error:'.PHP_EOL
+                 .'%s';
         $message = sprintf($message, $locale, $messageId, $messagePattern, print_r($parameters, true), $error);
+
         return $message;
     }
-
 }

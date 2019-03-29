@@ -7,7 +7,6 @@ namespace Webfactory\IcuTranslationBundle\Translator\Formatting;
  */
 abstract class AbstractFormatterDecorator implements FormatterInterface
 {
-
     /**
      * The inner formatter.
      *
@@ -28,10 +27,11 @@ abstract class AbstractFormatterDecorator implements FormatterInterface
     /**
      * Formats the provided message.
      *
-     * @param string $locale
-     * @param string $message
+     * @param string               $locale
+     * @param string               $message
      * @param array(string=>mixed) $parameters
-     * @return string The formatted message.
+     *
+     * @return string the formatted message
      */
     public function format($locale, $message, array $parameters)
     {
@@ -45,7 +45,8 @@ abstract class AbstractFormatterDecorator implements FormatterInterface
     /**
      * Pre-processes the locale before it is passed to the inner formatter.
      *
-     * @param string $locale For example 'en' or 'de_DE'.
+     * @param string $locale for example 'en' or 'de_DE'
+     *
      * @return string
      */
     protected function preProcessLocale($locale)
@@ -56,7 +57,8 @@ abstract class AbstractFormatterDecorator implements FormatterInterface
     /**
      * Pre-processes the message before it is passed to the inner formatter.
      *
-     * @param string $message The translation message.
+     * @param string $message the translation message
+     *
      * @return string
      */
     protected function preProcessMessage($message)
@@ -68,11 +70,11 @@ abstract class AbstractFormatterDecorator implements FormatterInterface
      * Pre-processes the parameters before these are passed to the inner formatter.
      *
      * @param array(string=>mixed) $parameters
+     *
      * @return array(string=>mixed)
      */
     protected function preProcessParameters(array $parameters)
     {
         return $parameters;
     }
-
 }

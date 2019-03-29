@@ -58,25 +58,27 @@ class MessageLexer extends AbstractLexer
      * a different PHP type where necessary.
      *
      * @param string $value
+     *
      * @return array a tupel of type and normalized value
      */
     protected function determineTypeAndValue($value)
     {
         if ($value === '{') {
-            return array(self::TOKEN_OPENING_BRACE, $value);
+            return [self::TOKEN_OPENING_BRACE, $value];
         }
         if ($value === '}') {
-            return array(self::TOKEN_CLOSING_BRACE, $value);
+            return [self::TOKEN_CLOSING_BRACE, $value];
         }
         if ($value === ',') {
-            return array(self::TOKEN_COMMA, $value);
+            return [self::TOKEN_COMMA, $value];
         }
         if ($value === "'") {
-            return array(self::TOKEN_SINGLE_QUOTE, $value);
+            return [self::TOKEN_SINGLE_QUOTE, $value];
         }
         if (trim($value) === '') {
-            return array(self::TOKEN_WHITESPACE, $value);
+            return [self::TOKEN_WHITESPACE, $value];
         }
-        return array(self::TOKEN_TEXT, $value);
+
+        return [self::TOKEN_TEXT, $value];
     }
 }

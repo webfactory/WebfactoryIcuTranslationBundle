@@ -3,3 +3,4 @@ composer.phar
 phpunit.xml
 vendor
 build
+.php_cs.cache

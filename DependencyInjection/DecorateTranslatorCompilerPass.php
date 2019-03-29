@@ -12,7 +12,6 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class DecorateTranslatorCompilerPass implements CompilerPassInterface
 {
-
     /**
      * Decorates the registered translator if available.
      *
@@ -28,10 +27,10 @@ class DecorateTranslatorCompilerPass implements CompilerPassInterface
         // Define the decorator...
         $decorated = new Definition(
             'Webfactory\IcuTranslationBundle\Translator\FormatterDecorator',
-            array(
+            [
                 new Reference('webfactory_icu_translation.decorator.inner'),
-                new Reference('webfactory_icu_translation.formatter')
-            )
+                new Reference('webfactory_icu_translation.formatter'),
+            ]
         );
         $container->setDefinition('webfactory_icu_translation.decorator', $decorated);
 
@@ -51,18 +50,19 @@ class DecorateTranslatorCompilerPass implements CompilerPassInterface
      * This method also resolves aliases.
      *
      * @param ContainerBuilder $container
-     * @param string $id
+     * @param string           $id
+     *
      * @return \Symfony\Component\DependencyInjection\Definition|null
      */
     protected function getDefinition(ContainerBuilder $container, $id)
     {
         while ($container->hasAlias($id)) {
-            $id = (string)$container->getAlias($id);
+            $id = (string) $container->getAlias($id);
         }
         if (!$container->hasDefinition($id)) {
             return null;
         }
+
         return $container->getDefinition($id);
     }
-
 }

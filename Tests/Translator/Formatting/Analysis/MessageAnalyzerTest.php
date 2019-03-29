@@ -73,30 +73,30 @@ class MessageAnalyzerTest extends \PHPUnit_Framework_TestCase
 
     public function testAnalyzerDetectsParameterThatIsUsedInCondition()
     {
-        $message = '{tries, plural,' . PHP_EOL
-                 . '    =0 {First try}' . PHP_EOL
-                 . '    other {Try #}' . PHP_EOL
-                 . '}';
+        $message = '{tries, plural,'.PHP_EOL
+                 .'    =0 {First try}'.PHP_EOL
+                 .'    other {Try #}'.PHP_EOL
+                 .'}';
 
         $this->assertParameterDetected($message, 'tries');
     }
 
     public function testAnalyzerDetectsNestedParameter()
     {
-        $message = '{tries, plural,' . PHP_EOL
-                 . '    =0 {Hello {name}, this is your first try.}' . PHP_EOL
-                 . '    other {Hello {name}, this is your # try.}' . PHP_EOL
-                 . '}';
+        $message = '{tries, plural,'.PHP_EOL
+                 .'    =0 {Hello {name}, this is your first try.}'.PHP_EOL
+                 .'    other {Hello {name}, this is your # try.}'.PHP_EOL
+                 .'}';
 
         $this->assertParameterDetected($message, 'name');
     }
 
     public function testAnalyzerDoesNotDetectMessageStringInBracesAsParameter()
     {
-        $message = '{tries, plural,' . PHP_EOL
-                 . '    =0 {This is a message}' . PHP_EOL
-                 . '    other {This is also a message}' . PHP_EOL
-                 . '}';
+        $message = '{tries, plural,'.PHP_EOL
+                 .'    =0 {This is a message}'.PHP_EOL
+                 .'    other {This is also a message}'.PHP_EOL
+                 .'}';
 
         $this->assertParameterNotDetected($message, 'This is a message');
         $this->assertParameterNotDetected($message, 'This is also a message');
@@ -112,36 +112,36 @@ class MessageAnalyzerTest extends \PHPUnit_Framework_TestCase
 
     public function testAnalyzerDoesNotRecognizeMessageFromConditionPartAsParameter()
     {
-        $message = '{tries, plural,' . PHP_EOL
-                 . '    =0 {This is a message}' . PHP_EOL
-                 . '    other {looks_like_a_parameter}' . PHP_EOL
-                 . '}';
+        $message = '{tries, plural,'.PHP_EOL
+                 .'    =0 {This is a message}'.PHP_EOL
+                 .'    other {looks_like_a_parameter}'.PHP_EOL
+                 .'}';
 
         $this->assertParameterNotDetected($message, 'looks_like_a_parameter');
     }
 
     public function testAnalyzerDoesNotRecognizeMessageFromNestedConditionPartAsParameter()
     {
-        $message = '{tries, plural,' . PHP_EOL
-                 . '    =0 {This is a message}' . PHP_EOL
-                 . '    other {{name, select,' . PHP_EOL
-                 . '        matthias {it is not that bad!}' . PHP_EOL
-                 . '        other {looks_like_a_parameter}' . PHP_EOL
-                 . '    }}' . PHP_EOL
-                 . '}';
+        $message = '{tries, plural,'.PHP_EOL
+                 .'    =0 {This is a message}'.PHP_EOL
+                 .'    other {{name, select,'.PHP_EOL
+                 .'        matthias {it is not that bad!}'.PHP_EOL
+                 .'        other {looks_like_a_parameter}'.PHP_EOL
+                 .'    }}'.PHP_EOL
+                 .'}';
 
         $this->assertParameterNotDetected($message, 'looks_like_a_parameter');
     }
 
     public function testAnalyzerDetectsParameterIfPreviousConditionBranchContainsAnotherCondition()
     {
-        $message = '{tries, plural,' . PHP_EOL
-                 . '    =0 {{name, select,' . PHP_EOL
-                 . '        matthias {Great!}' . PHP_EOL
-                 . '        other {Could have been better!}' . PHP_EOL
-                 . '    }}' . PHP_EOL
-                 . '    other {Nice try, {salutation}!}' . PHP_EOL
-                 . '}';
+        $message = '{tries, plural,'.PHP_EOL
+                 .'    =0 {{name, select,'.PHP_EOL
+                 .'        matthias {Great!}'.PHP_EOL
+                 .'        other {Could have been better!}'.PHP_EOL
+                 .'    }}'.PHP_EOL
+                 .'    other {Nice try, {salutation}!}'.PHP_EOL
+                 .'}';
 
         $this->assertParameterDetected($message, 'salutation');
     }
@@ -178,6 +178,7 @@ class MessageAnalyzerTest extends \PHPUnit_Framework_TestCase
      * Returns the names of the parameters that the analyzer finds in the given message.
      *
      * @param string $message
+     *
      * @return string[]
      */
     private function getParametersFrom($message)

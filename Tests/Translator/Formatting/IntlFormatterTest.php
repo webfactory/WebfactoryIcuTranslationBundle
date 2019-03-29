@@ -44,7 +44,7 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
 
         $expected = '\Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\CannotInstantiateFormatterException';
         $this->setExpectedException($expected);
-        $this->formatter->format('en', $invalidMessage, array());
+        $this->formatter->format('en', $invalidMessage, []);
     }
 
     /**
@@ -53,7 +53,7 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
     public function testFormatterDoesNotSubstituteMissingParameters()
     {
         // The required parameter is missing.
-        $message = $this->formatter->format('en', 'Hello {0}!', array());
+        $message = $this->formatter->format('en', 'Hello {0}!', []);
         $this->assertEquals('Hello {0}!', $message);
     }
 
@@ -62,7 +62,7 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormatterSubstitutesNamedParameters()
     {
-        $message = $this->formatter->format('en', 'Hello {name}!', array('name' => 'Matthias'));
+        $message = $this->formatter->format('en', 'Hello {name}!', ['name' => 'Matthias']);
         $this->assertEquals('Hello Matthias!', $message);
     }
 
@@ -71,7 +71,7 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormatterCanHandleEmptyString()
     {
-        $formatted = $this->formatter->format('en', '', array());
+        $formatted = $this->formatter->format('en', '', []);
 
         $this->assertInternalType('string', $formatted);
         $this->assertEquals('', $formatted);
@@ -83,7 +83,7 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormatterSubstitutesPlaceholders()
     {
-        $formatted = $this->formatter->format('en', 'Hello {0}!', array(0 => 'Matthias'));
+        $formatted = $this->formatter->format('en', 'Hello {0}!', [0 => 'Matthias']);
 
         $this->assertEquals('Hello Matthias!', $formatted);
     }

@@ -9,7 +9,6 @@ use Webfactory\IcuTranslationBundle\Translator\FormattingException;
  */
 class FormattingExceptionTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * System under test.
      *
@@ -31,13 +30,13 @@ class FormattingExceptionTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->innerException = new \RuntimeException('Inner exception.', 42);
-        $this->exception      = new FormattingException(
+        $this->exception = new FormattingException(
             'en_US',
             'translation_id',
             'Hello {test}!',
-            array(
-                'test' => 'Albert'
-            ),
+            [
+                'test' => 'Albert',
+            ],
             $this->innerException
         );
     }
@@ -47,7 +46,7 @@ class FormattingExceptionTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        $this->exception      = null;
+        $this->exception = null;
         $this->innerException = null;
         parent::tearDown();
     }
@@ -121,7 +120,7 @@ class FormattingExceptionTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetParametersReturnsCorrectValue()
     {
-        $expected = array('test' => 'Albert');
+        $expected = ['test' => 'Albert'];
         $this->assertEquals($expected, $this->exception->getParameters());
     }
 
@@ -132,5 +131,4 @@ class FormattingExceptionTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame($this->innerException, $this->exception->getPrevious());
     }
-
 }

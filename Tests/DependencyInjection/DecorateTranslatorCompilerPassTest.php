@@ -12,7 +12,6 @@ use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslation
  */
 class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * System under test.
      *
@@ -33,7 +32,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->container    = $this->createContainer();
+        $this->container = $this->createContainer();
         $this->compilerPass = new DecorateTranslatorCompilerPass();
         $this->container->addCompilerPass($this->compilerPass);
     }
@@ -44,7 +43,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
     protected function tearDown()
     {
         $this->compilerPass = null;
-        $this->container    = null;
+        $this->container = null;
         parent::tearDown();
     }
 
@@ -71,7 +70,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
      */
     public function testPassDecoratesExistingTranslator()
     {
-        $translatorClass      = $this->getMockClass('Symfony\Component\Translation\TranslatorInterface');
+        $translatorClass = $this->getMockClass('Symfony\Component\Translation\TranslatorInterface');
         $translatorDefinition = new Definition($translatorClass);
         $this->container->setDefinition('translator', $translatorDefinition);
 
@@ -86,7 +85,7 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
      */
     public function testPassDecoratesAliasedTranslator()
     {
-        $translatorClass      = $this->getMockClass('Symfony\Component\Translation\TranslatorInterface');
+        $translatorClass = $this->getMockClass('Symfony\Component\Translation\TranslatorInterface');
         $translatorDefinition = new Definition($translatorClass);
         $this->container->setDefinition('translator.default', $translatorDefinition);
         $this->container->setAlias('translator', 'translator.default');
@@ -107,8 +106,8 @@ class DecorateTranslatorCompilerPassTest extends \PHPUnit_Framework_TestCase
         $container = new ContainerBuilder();
         // Load the services that are provided by the bundle.
         $extension = new WebfactoryIcuTranslationExtension();
-        $extension->load(array(), $container);
+        $extension->load([], $container);
+
         return $container;
     }
-
 }

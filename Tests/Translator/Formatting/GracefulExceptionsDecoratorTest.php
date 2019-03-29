@@ -10,7 +10,7 @@ use Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\FormattingEx
 /**
  * Tests for the decorator that deals gracefully with exceptions.
  */
-final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase 
+final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * System under test.
@@ -40,8 +40,8 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->innerFormatter = $this->createMock('\Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface');
-        $this->logger         = $this->createMock('\Psr\Log\LoggerInterface');
-        $this->decorator      = new GracefulExceptionsDecorator($this->innerFormatter, $this->logger);
+        $this->logger = $this->createMock('\Psr\Log\LoggerInterface');
+        $this->decorator = new GracefulExceptionsDecorator($this->innerFormatter, $this->logger);
     }
 
     /**
@@ -64,7 +64,7 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
         $this->innerFormatter->expects($this->once())
                              ->method('format')
                              ->will($this->returnValue($innerResponse));
-        $this->assertSame($innerResponse, $this->decorator->format('', '', array()));
+        $this->assertSame($innerResponse, $this->decorator->format('', '', []));
     }
 
     /**
@@ -77,13 +77,14 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
         $this->simulateFormatterException($innerException);
         $this->assertWillLogException($innerException);
 
-        $this->decorator->format('', '', array());
+        $this->decorator->format('', '', []);
     }
 
     /**
      * Checks if none-formatting exceptions are logged.
      *
      * @test
+     *
      * @see https://github.com/webfactory/icu-translation-bundle/issues/4
      */
     public function logsOtherExceptionTypes()
@@ -92,7 +93,7 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
         $this->simulateFormatterException($innerException);
         $this->assertWillLogException($innerException);
 
-        $this->decorator->format('', '', array());
+        $this->decorator->format('', '', []);
     }
 
     /**
@@ -103,7 +104,7 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
     {
         $this->simulateFormatterException(new FormattingException());
 
-        $this->assertInternalType('string', $this->decorator->format('', '', array()));
+        $this->assertInternalType('string', $this->decorator->format('', '', []));
     }
 
     /**
@@ -118,7 +119,7 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
 
         $this->setExpectedException(null);
 
-        $decorator->format('', '', array());
+        $decorator->format('', '', []);
     }
 
     /**
@@ -136,7 +137,7 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
     /**
      * Asserts that the given exception will be logged.
      *
-     * @param \Exception  $exception
+     * @param \Exception $exception
      */
     private function assertWillLogException(\Exception $exception)
     {

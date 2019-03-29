@@ -40,7 +40,7 @@ class MessageAnalyzer
      */
     public function getParameters()
     {
-        $parameters = array();
+        $parameters = [];
         $tokens = (new MessageParser(new MessageLexer()))->parse($this->message);
         foreach ($tokens as $token) {
             /* @var $token array */
@@ -48,6 +48,7 @@ class MessageAnalyzer
                 $parameters[] = $token[1];
             }
         }
+
         return array_values(array_unique($parameters));
     }
 }
