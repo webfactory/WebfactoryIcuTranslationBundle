@@ -9,7 +9,6 @@ use Webfactory\IcuTranslationBundle\Translator\FormatterDecorator;
  */
 class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * System under test.
      *
@@ -38,8 +37,8 @@ class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $this->translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
-        $this->formatter  = $this->createMock('Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface');
-        $this->decorator  = new FormatterDecorator(
+        $this->formatter = $this->createMock('Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface');
+        $this->decorator = new FormatterDecorator(
             $this->translator,
             $this->formatter
         );
@@ -50,8 +49,8 @@ class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        $this->decorator  = null;
-        $this->formatter  = null;
+        $this->decorator = null;
+        $this->formatter = null;
         $this->translator = null;
         parent::tearDown();
     }
@@ -158,7 +157,6 @@ class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
                          ->will($this->returnValue('any'));
 
         $this->setExpectedException('Webfactory\IcuTranslationBundle\Translator\FormattingException');
-        $this->decorator->trans('test', array('test' => 'value'), 'messages', 'en');
+        $this->decorator->trans('test', ['test' => 'value'], 'messages', 'en');
     }
-
 }

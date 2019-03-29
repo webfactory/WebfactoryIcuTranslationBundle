@@ -24,7 +24,7 @@ class MissingParameterWarningDecorator extends AbstractFormatterDecorator
      * Creates a decorator for the provided formatter.
      *
      * @param \Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface $innerFormatter
-     * @param LoggerInterface $logger
+     * @param LoggerInterface                                                           $logger
      */
     public function __construct(FormatterInterface $innerFormatter, LoggerInterface $logger = null)
     {
@@ -35,20 +35,22 @@ class MissingParameterWarningDecorator extends AbstractFormatterDecorator
     /**
      * Checks if all mentioned parameters are provided.
      *
-     * @param string $locale
-     * @param string $message
+     * @param string               $locale
+     * @param string               $message
      * @param array(string=>mixed) $parameters
-     * @return string The formatted message.
+     *
+     * @return string the formatted message
      */
     public function format($locale, $message, array $parameters)
     {
         $this->logIfParameterIsMissing($locale, $message, $parameters);
+
         return parent::format($locale, $message, $parameters);
     }
 
     /**
-     * @param string $locale
-     * @param string $message
+     * @param string               $locale
+     * @param string               $message
      * @param array(string=>mixed) $parameters
      */
     private function logIfParameterIsMissing($locale, $message, array $parameters)
@@ -64,15 +66,15 @@ class MissingParameterWarningDecorator extends AbstractFormatterDecorator
         $logMessage = sprintf($logMessage, implode(',', $missingParameters), $locale, $message);
         $this->logger->warning(
             $logMessage,
-            array(
+            [
                 'locale' => $locale,
                 'message' => $message,
                 'parameters' => $parameters,
                 'usedParameters' => $usedParameters,
                 'missingParameters' => $missingParameters,
                 // Add an exception (but do not throw it) to ensure that we get a stack trace.
-                'exception' => new FormattingException('Some message parameters are missing.')
-            )
+                'exception' => new FormattingException('Some message parameters are missing.'),
+            ]
         );
     }
 }

@@ -15,7 +15,6 @@ use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslation
  */
 class ContainerTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * System under test.
      *
@@ -69,7 +68,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     {
         $container->compile();
 
-        $errors  = $this->validateContainer($container);
+        $errors = $this->validateContainer($container);
         $printer = new SimpleErrorListPrinter();
         $this->assertCount(0, $errors, $printer->printErrorList($errors));
     }
@@ -83,8 +82,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     {
         $builder = new ContainerBuilder();
         $extension = new WebfactoryIcuTranslationExtension();
-        $extension->load(array(), $builder);
+        $extension->load([], $builder);
         $builder->addCompilerPass(new DecorateTranslatorCompilerPass());
+
         return $builder;
     }
 
@@ -92,6 +92,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
      * Validates the definitions in the provided container and returns a list of errors.
      *
      * @param ContainerBuilder $container
+     *
      * @return ValidationErrorList
      */
     protected function validateContainer(ContainerBuilder $container)
@@ -102,14 +103,14 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
         foreach ($container->getDefinitions() as $serviceId => $definition) {
             try {
                 $validator->validate($definition);
+
                 return $errors;
             } catch (\Exception $exception) {
                 $error = new ValidationError($serviceId, $definition, $exception);
                 $errors->add($error);
             }
         }
+
         return $errors;
     }
-
 }
- 

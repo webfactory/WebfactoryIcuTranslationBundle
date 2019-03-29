@@ -12,13 +12,15 @@ class IntlFormatter implements FormatterInterface
 {
     /**
      * Formats the message with the help of php intl extension.
-     * 
-     * @param string $locale
-     * @param string $message
+     *
+     * @param string               $locale
+     * @param string               $message
      * @param array(string=>mixed) $parameters
+     *
      * @return string
-     * @throws CannotInstantiateFormatterException If the message pattern cannot be used.
-     * @throws CannotFormatException If an error occurs during formatting.
+     *
+     * @throws CannotInstantiateFormatterException if the message pattern cannot be used
+     * @throws CannotFormatException               if an error occurs during formatting
      */
     public function format($locale, $message, array $parameters)
     {

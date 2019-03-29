@@ -7,7 +7,6 @@ namespace Webfactory\IcuTranslationBundle\Tests\Translator\Formatting;
  */
 class AbstractFormatterDecoratorTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * System under test.
      *
@@ -28,10 +27,10 @@ class AbstractFormatterDecoratorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $formatterInterface   = 'Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface';
+        $formatterInterface = 'Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface';
         $this->innerFormatter = $this->createMock($formatterInterface);
-        $decoratorClass  = 'Webfactory\IcuTranslationBundle\Translator\Formatting\AbstractFormatterDecorator';
-        $this->decorator = $this->getMockForAbstractClass($decoratorClass, array($this->innerFormatter));
+        $decoratorClass = 'Webfactory\IcuTranslationBundle\Translator\Formatting\AbstractFormatterDecorator';
+        $this->decorator = $this->getMockForAbstractClass($decoratorClass, [$this->innerFormatter]);
     }
 
     /**
@@ -39,7 +38,7 @@ class AbstractFormatterDecoratorTest extends \PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
-        $this->decorator      = null;
+        $this->decorator = null;
         $this->innerFormatter = null;
         parent::tearDown();
     }
@@ -60,7 +59,6 @@ class AbstractFormatterDecoratorTest extends \PHPUnit_Framework_TestCase
     {
         $this->innerFormatter->expects($this->once())->method('format');
 
-        $this->decorator->format('de_DE', 'test message', array());
+        $this->decorator->format('de_DE', 'test message', []);
     }
-
 }

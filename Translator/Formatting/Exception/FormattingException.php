@@ -7,5 +7,4 @@ namespace Webfactory\IcuTranslationBundle\Translator\Formatting\Exception;
  */
 class FormattingException extends \Exception
 {
-
 }

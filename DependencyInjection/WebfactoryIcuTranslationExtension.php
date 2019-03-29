@@ -12,17 +12,15 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  */
 class WebfactoryIcuTranslationExtension extends Extension
 {
-
     /**
      * Adds service definitions to the container.
      *
-     * @param array(string) $config
+     * @param array(string)    $config
      * @param ContainerBuilder $container
      */
     public function load(array $config, ContainerBuilder $container)
     {
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
     }
-
 }

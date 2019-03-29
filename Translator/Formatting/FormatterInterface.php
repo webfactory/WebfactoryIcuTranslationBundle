@@ -9,12 +9,12 @@ interface FormatterInterface
 {
     /**
      * Formats the provided message.
-     * 
-     * @param string $locale
-     * @param string $message
+     *
+     * @param string               $locale
+     * @param string               $message
      * @param array(string=>mixed) $parameters
-     * @return string The formatted message.
+     *
+     * @return string the formatted message
      */
     public function format($locale, $message, array $parameters);
-
 }

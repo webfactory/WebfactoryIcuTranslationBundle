@@ -11,7 +11,6 @@ use Webfactory\IcuTranslationBundle\DependencyInjection\DecorateTranslatorCompil
  */
 class WebfactoryIcuTranslationBundle extends Bundle
 {
-
     /**
      * Ensures that the translator will be decorated.
      *
@@ -22,5 +21,4 @@ class WebfactoryIcuTranslationBundle extends Bundle
         parent::build($container);
         $container->addCompilerPass(new DecorateTranslatorCompilerPass());
     }
-
 }

@@ -36,25 +36,26 @@ class SymfonyIntegrationTest extends \PHPUnit_Framework_TestCase
      */
     protected function createKernel()
     {
-        $mockedMethods = array('registerBundles', 'registerContainerConfiguration');
+        $mockedMethods = ['registerBundles', 'registerContainerConfiguration'];
         $kernel = $this->getMockBuilder('Symfony\Component\HttpKernel\Kernel')
                        ->setMethods($mockedMethods)
                        ->setConstructorArgs(['test', true])
                        ->getMock();
-        $activeBundles = array(
+        $activeBundles = [
             new FrameworkBundle(),
             new MonologBundle(),
-            new WebfactoryIcuTranslationBundle()
-        );
+            new WebfactoryIcuTranslationBundle(),
+        ];
         $kernel->expects($this->any())
             ->method('registerBundles')
             ->will($this->returnValue($activeBundles));
         $loadConfiguration = function (LoaderInterface $loader) {
-            $loader->load(__DIR__ . '/_files/SymfonyIntegration/config.yml');
+            $loader->load(__DIR__.'/_files/SymfonyIntegration/config.yml');
         };
         $kernel->expects($this->any())
             ->method('registerContainerConfiguration')
             ->will($this->returnCallback($loadConfiguration));
+
         return $kernel;
     }
 }

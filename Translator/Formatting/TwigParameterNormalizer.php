@@ -12,6 +12,7 @@ class TwigParameterNormalizer extends AbstractFormatterDecorator
      * Transforms parameter names if necessary.
      *
      * @param array(string=>mixed) $parameters
+     *
      * @return array(string=>mixed)
      */
     protected function preProcessParameters(array $parameters)
@@ -35,6 +36,7 @@ class TwigParameterNormalizer extends AbstractFormatterDecorator
             }
             unset($parameters[$name]);
         }
+
         return $parameters;
     }
 }

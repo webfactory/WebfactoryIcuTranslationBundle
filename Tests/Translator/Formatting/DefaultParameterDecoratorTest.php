@@ -43,94 +43,94 @@ class DefaultParameterDecoratorTest extends \PHPUnit_Framework_TestCase
     {
         $message = 'Hello {name}!';
 
-        $this->assertExpectedParameters(array('name' => null));
-        $this->decorator->format('en', $message, array());
+        $this->assertExpectedParameters(['name' => null]);
+        $this->decorator->format('en', $message, []);
     }
 
     public function testInjectsDefaultForAlphanumericPlaceholder()
     {
         $message = 'Hello {name42}!';
 
-        $this->assertExpectedParameters(array('name42' => null));
-        $this->decorator->format('en', $message, array());
+        $this->assertExpectedParameters(['name42' => null]);
+        $this->decorator->format('en', $message, []);
     }
 
     public function testInjectsDefaultForNumericPlaceholder()
     {
         $message = 'Hello {0}!';
 
-        $this->assertExpectedParameters(array('0' => null));
-        $this->decorator->format('en', $message, array());
+        $this->assertExpectedParameters(['0' => null]);
+        $this->decorator->format('en', $message, []);
     }
 
     public function testInjectsDefaultForPlaceholderWithUnderscore()
     {
         $message = 'Hello {your_name}!';
 
-        $this->assertExpectedParameters(array('your_name' => null));
-        $this->decorator->format('en', $message, array());
+        $this->assertExpectedParameters(['your_name' => null]);
+        $this->decorator->format('en', $message, []);
     }
 
     public function testInjectsDefaultIfPlaceholderIsUsedMultipleTimes()
     {
         $message = 'Hello {name}! Nice to see you, {name}.';
 
-        $this->assertExpectedParameters(array('name' => null));
-        $this->decorator->format('en', $message, array());
+        $this->assertExpectedParameters(['name' => null]);
+        $this->decorator->format('en', $message, []);
     }
 
     public function testInjectsDefaultsForMultiplePlaceholders()
     {
         $message = 'Hello {name}! You are assigned to {group}.';
 
-        $this->assertExpectedParameters(array('name' => null, 'group' => null));
-        $this->decorator->format('en', $message, array());
+        $this->assertExpectedParameters(['name' => null, 'group' => null]);
+        $this->decorator->format('en', $message, []);
     }
 
     public function testWorksForTypedPlaceholder()
     {
         $message = 'We need {tests,number,integer} tests.';
 
-        $this->assertExpectedParameters(array('tests' => null));
-        $this->decorator->format('en', $message, array());
+        $this->assertExpectedParameters(['tests' => null]);
+        $this->decorator->format('en', $message, []);
     }
 
     public function testWorksForPlaceholderThatIsUsedInCondition()
     {
-        $message = '{tries, plural,' . PHP_EOL
-                 . '    =0 {First try}' . PHP_EOL
-                 . '    other {Try #}' . PHP_EOL
-                 . '}';
+        $message = '{tries, plural,'.PHP_EOL
+                 .'    =0 {First try}'.PHP_EOL
+                 .'    other {Try #}'.PHP_EOL
+                 .'}';
 
-        $this->assertExpectedParameters(array('tries' => null));
-        $this->decorator->format('en', $message, array());
+        $this->assertExpectedParameters(['tries' => null]);
+        $this->decorator->format('en', $message, []);
     }
 
     public function testWorksForNestedPlaceholder()
     {
-        $message = '{tries, plural,' . PHP_EOL
-                 . '    =0 {Hello {name}, this is your first try.}' . PHP_EOL
-                 . '    other {Hello {name}, this is your # try.}' . PHP_EOL
-                 . '}';
+        $message = '{tries, plural,'.PHP_EOL
+                 .'    =0 {Hello {name}, this is your first try.}'.PHP_EOL
+                 .'    other {Hello {name}, this is your # try.}'.PHP_EOL
+                 .'}';
 
-        $this->assertExpectedParameters(array('name' => null));
-        $this->decorator->format('en', $message, array());
+        $this->assertExpectedParameters(['name' => null]);
+        $this->decorator->format('en', $message, []);
     }
 
     public function testDoesNotSetDefaultIfParameterForAlphabeticPlaceholderIsPassed()
     {
         $message = 'Hello {name}!';
 
-        $this->assertExpectedParameters(array('name' => 'Matthias'));
-        $this->decorator->format('en', $message, array('name' => 'Matthias'));
+        $this->assertExpectedParameters(['name' => 'Matthias']);
+        $this->decorator->format('en', $message, ['name' => 'Matthias']);
     }
 
     public function testDoesNotSetDefaultIfParameterForNumericPlaceholderIsPassed()
     {
         $message = 'Hello {0}!';
 
-        $this->assertExpectedParameters(array('0' => 'Matthias'));
-        $this->decorator->format('en', $message, array('0' => 'Matthias'));
+        $this->assertExpectedParameters(['0' => 'Matthias']);
+        $this->decorator->format('en', $message, ['0' => 'Matthias']);
     }
 
     /**
@@ -156,6 +156,7 @@ class DefaultParameterDecoratorTest extends \PHPUnit_Framework_TestCase
                     sprintf('Parameter "%s" does not have the expected value.', $name)
                 );
             }
+
             return true;
         };
         $this->innerFormatter->expects($this->atLeastOnce())
