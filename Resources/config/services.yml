@@ -1,4 +1,9 @@
 services:
+    webfactory_icu_translation.translator:
+        decorates: translator
+        class: Webfactory\IcuTranslationBundle\Translator\FormatterDecorator
+        arguments: ["@webfactory_icu_translation.translator.inner", "@webfactory_icu_translation.formatter"]
+
     webfactory_icu_translation.formatter.intl_formatter:
         class: Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter
 
