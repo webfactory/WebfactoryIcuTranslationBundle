@@ -25,7 +25,7 @@ class DefaultParameterDecoratorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->innerFormatter = $this->getMock(FormatterInterface::class);
+        $this->innerFormatter = $this->createMock(FormatterInterface::class);
         $this->decorator = new DefaultParameterDecorator($this->innerFormatter);
     }
 

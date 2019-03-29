@@ -101,7 +101,7 @@ class MissingParameterWarningDecoratorTest extends \PHPUnit_Framework_TestCase
      */
     private function createInnerFormatter()
     {
-        $formatter = $this->getMock(FormatterInterface::class);
+        $formatter = $this->createMock(FormatterInterface::class);
         $formatter->expects($this->any())
             ->method('format')
             ->will($this->returnValue('inner message'));

@@ -37,7 +37,10 @@ class SymfonyIntegrationTest extends \PHPUnit_Framework_TestCase
     protected function createKernel()
     {
         $mockedMethods = array('registerBundles', 'registerContainerConfiguration');
-        $kernel = $this->getMock('Symfony\Component\HttpKernel\Kernel', $mockedMethods, array('test', true));
+        $kernel = $this->getMockBuilder('Symfony\Component\HttpKernel\Kernel')
+                       ->setMethods($mockedMethods)
+                       ->setConstructorArgs(['test', true])
+                       ->getMock();
         $activeBundles = array(
             new FrameworkBundle(),
             new MonologBundle(),

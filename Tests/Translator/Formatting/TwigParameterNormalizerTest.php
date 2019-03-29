@@ -30,7 +30,7 @@ class TwigParameterNormalizerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->innerFormatter = $this->getMock('\Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface');
+        $this->innerFormatter = $this->createMock('\Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface');
         $this->formatter      = new TwigParameterNormalizer($this->innerFormatter);
     }
 

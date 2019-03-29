@@ -29,7 +29,7 @@ class AbstractFormatterDecoratorTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
         $formatterInterface   = 'Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface';
-        $this->innerFormatter = $this->getMock($formatterInterface);
+        $this->innerFormatter = $this->createMock($formatterInterface);
         $decoratorClass  = 'Webfactory\IcuTranslationBundle\Translator\Formatting\AbstractFormatterDecorator';
         $this->decorator = $this->getMockForAbstractClass($decoratorClass, array($this->innerFormatter));
     }
