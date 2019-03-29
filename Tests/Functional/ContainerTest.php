@@ -7,7 +7,7 @@ use Matthias\SymfonyServiceDefinitionValidator\Error\ValidationError;
 use Matthias\SymfonyServiceDefinitionValidator\Error\ValidationErrorList;
 use Matthias\SymfonyServiceDefinitionValidator\ServiceDefinitionValidatorFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Webfactory\IcuTranslationBundle\DependencyInjection\DecorateTranslatorCompilerPass;
+use Symfony\Component\Translation\TranslatorInterface;
 use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslationExtension;
 
 /**
@@ -81,9 +81,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     protected function createContainer()
     {
         $builder = new ContainerBuilder();
+        $builder->register('translator', TranslatorInterface::class);
         $extension = new WebfactoryIcuTranslationExtension();
         $extension->load([], $builder);
-        $builder->addCompilerPass(new DecorateTranslatorCompilerPass());
 
         return $builder;
     }

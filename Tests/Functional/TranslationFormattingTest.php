@@ -386,7 +386,6 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
         $builder->register('translator', '\Symfony\Component\Translation\Translator')->addArgument('en');
         $extension = new WebfactoryIcuTranslationExtension();
         $extension->load([], $builder);
-        $builder->addCompilerPass(new DecorateTranslatorCompilerPass());
         $builder->compile();
         $translator = $builder->get('translator');
         $this->assertInstanceOf('\Symfony\Component\Translation\TranslatorInterface', $translator);
