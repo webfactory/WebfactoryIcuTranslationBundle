@@ -137,7 +137,7 @@ The ``GracefulExceptionsDecorator`` logs all types of exception now, not just in
 
 Credits, Copyright and License
 ------------------------------
-Copyright 2012-2018 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
+Copyright 2012-2019 webfactory GmbH, Bonn. Code released under [the MIT license](LICENSE).
 
 - <https://www.webfactory.de>
 - <https://twitter.com/webfactory>
