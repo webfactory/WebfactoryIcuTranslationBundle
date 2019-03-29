@@ -28,18 +28,16 @@ class IntlFormatter implements FormatterInterface
         }
 
         try {
+            $useExceptions = ini_set('intl.use_exceptions', true);
             $formatter = new \MessageFormatter($locale, $message);
         } catch (\Exception $e) {
-            throw new CannotInstantiateFormatterException($e->getMessage(), $e->getCode(), $e);
-        }
-        if (!$formatter) {
-            throw new CannotInstantiateFormatterException(
-                intl_get_error_message(),
-                intl_get_error_code()
-            );
+            throw new CannotInstantiateFormatterException("Error creating the MessageFormatter, probably the message is not valid: \"$message\"", 0, $e);
+        } finally {
+            ini_set('intl.use_exceptions', $useExceptions);
         }
 
         $result = $formatter->format($parameters);
+
         if ($result === false) {
             throw new CannotFormatException(
                 $formatter->getErrorMessage(),
