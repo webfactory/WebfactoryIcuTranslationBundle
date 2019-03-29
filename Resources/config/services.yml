@@ -29,3 +29,9 @@ services:
 
     webfactory_icu_translation.formatter:
         alias: webfactory_icu_translation.formatter.graceful_exceptions
+
+    webfactory_icu_translation.twig_extension:
+        class: Webfactory\IcuTranslationBundle\Twig\IcuFormattingExtension
+        arguments: ["@webfactory_icu_translation.formatter.intl_formatter", "@translator"]
+        tags:
+            - { name: twig.extension }
