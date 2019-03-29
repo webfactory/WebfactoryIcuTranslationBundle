@@ -1,7 +1,15 @@
 {
     "name": "webfactory/icu-translation-bundle",
     "description": "Enables ICU message formatting for translations in Symfony applications.",
-    "keywords": ["symfony", "translator", "translation", "pluralization", "icu", "formatting", "message"],
+    "keywords": [
+        "symfony",
+        "translator",
+        "translation",
+        "pluralization",
+        "icu",
+        "formatting",
+        "message"
+    ],
     "license": "MIT",
     "authors": [
         {
@@ -11,35 +19,28 @@
             "role": "Developer"
         }
     ],
-
     "require": {
-        "php": "^5.5.0 | ^7.0.0",
         "ext-intl": "*",
+        "jms/parser-lib": "^1.0.0",
         "lib-ICU": ">=4.8",
-        "symfony/framework-bundle": "~2.2|~3.0",
-        "psr/log": "^1.0.0",
-        "jms/parser-lib": "^1.0.0"
+        "php": "^5.6 | ^7.0",
+        "psr/log": "^1.0",
+        "symfony/config": "2.8.*|3.4.*|^4.0",
+        "symfony/dependency-injection": "2.8.*|3.4.*|^4.0",
+        "symfony/finder": "2.8.*|3.4.*|^4.0",
+        "symfony/http-kernel": "2.8.*|3.4.*|^4.0",
+        "symfony/translation": "2.8.*|3.4.*|^4.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~3.7",
-        "squizlabs/php_codesniffer": "1.*",
-        "phpmd/phpmd": "1.*",
-        "sebastian/phpcpd": "~2.0",
-        "mayflower/php-codebrowser": "~1.1",
-        "phploc/phploc": "~2.0.0",
-        "pdepend/pdepend": "~1.1.0",
-        "satooshi/php-coveralls": "^1.0.0",
         "matthiasnoback/symfony-service-definition-validator": "~1.0",
-        "symfony/monolog-bundle": "~2.0"
+        "phpunit/phpunit": "^5.7.26",
+        "satooshi/php-coveralls": "^1.0.0",
+        "symfony/framework-bundle": "2.8.*|3.4.*|^4.0",
+        "symfony/monolog-bundle": "2.8.*|3.4.*|^4.0"
     },
-
     "autoload": {
-        "psr-4": { "Webfactory\\IcuTranslationBundle\\": "" }
-    },
-
-    "config": {
-        "platform": {
-            "php": "5.5.9"
+        "psr-4": {
+            "Webfactory\\IcuTranslationBundle\\": ""
         }
     }
 }

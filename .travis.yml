@@ -7,28 +7,24 @@ cache:
     - $HOME/.composer/cache
 
 php:
-  - '5.5'
   - '5.6'
-  - '7.0'
-  - 'hhvm'
+  - '7.1'
+  - '7.2'
+  - '7.3'
 
 env:
-  - SYMFONY_VERSION=locked # Use the versions that are given in composer.lock.
-  - SYMFONY_VERSION="2.3.*"
-  - SYMFONY_VERSION="2.4.*"
-  - SYMFONY_VERSION="2.5.*"
-  - SYMFONY_VERSION="2.6.*"
-  - SYMFONY_VERSION="2.7.*"
   - SYMFONY_VERSION="2.8.*"
-  - SYMFONY_VERSION="3.0.*"
+  - SYMFONY_VERSION="3.4.*"
+  - SYMFONY_VERSION="highest"
+  - SYMFONY_VERSION="lowest"
 
 before_script:
   - composer self-update --no-interaction
-  - sh -c "if [ '$SYMFONY_VERSION' = 'locked' ]; then COMPOSER_MEMORY_LIMIT=-1 composer install --no-interaction --prefer-source; fi"
-  # Register a specific dependency version if necessary...
-  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then COMPOSER_MEMORY_LIMIT=-1 composer require --no-update symfony/symfony:${SYMFONY_VERSION}; fi"
-  # ... and update the dependencies accordingly, without restrictions regarding the PHP version.
-  - sh -c "if [ '$SYMFONY_VERSION' != 'locked' ]; then COMPOSER_MEMORY_LIMIT=-1 composer config --unset platform.php; COMPOSER_MEMORY_LIMIT=-1 composer update --no-interaction --prefer-source; fi"
+  - composer config --unset platform.php
+  # Register a specific dependency version if necessary. This is not 100% accurate, as it might pull in dependencies we've overlooked - but hopefully the lowest/highest tests would catch that.
+  - sh -c "if [ '$SYMFONY_VERSION' != 'highest' -a '$SYMFONY_VERSION' != 'lowest' ]; then composer require --no-update symfony/symfony:${SYMFONY_VERSION}; fi"
+  - sh -c "if [ '$SYMFONY_VERSION' = 'lowest' ]; then COMPOSER_MEMORY_LIMIT=-1 composer update --no-interaction --prefer-lowest; fi"
+  - sh -c "if [ '$SYMFONY_VERSION' != 'lowest' ]; then COMPOSER_MEMORY_LIMIT=-1 composer update --no-interaction; fi"
   # List the installed dependency versions.
   - composer show
   - mkdir -p build/logs
@@ -38,7 +34,3 @@ script:
 
 after_script:
   - php vendor/bin/coveralls
-
-matrix:
-  allow_failures:
-    - php: hhvm

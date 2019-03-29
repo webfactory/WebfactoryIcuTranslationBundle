@@ -37,8 +37,8 @@ class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->translator = $this->getMock('Symfony\Component\Translation\TranslatorInterface');
-        $this->formatter  = $this->getMock('Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface');
+        $this->translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
+        $this->formatter  = $this->createMock('Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface');
         $this->decorator  = new FormatterDecorator(
             $this->translator,
             $this->formatter

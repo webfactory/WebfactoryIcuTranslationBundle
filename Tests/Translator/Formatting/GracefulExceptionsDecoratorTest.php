@@ -39,8 +39,8 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->innerFormatter = $this->getMock('\Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface');
-        $this->logger         = $this->getMock('\Psr\Log\LoggerInterface');
+        $this->innerFormatter = $this->createMock('\Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface');
+        $this->logger         = $this->createMock('\Psr\Log\LoggerInterface');
         $this->decorator      = new GracefulExceptionsDecorator($this->innerFormatter, $this->logger);
     }
 
