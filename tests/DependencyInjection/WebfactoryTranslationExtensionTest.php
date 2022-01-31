@@ -22,7 +22,7 @@ class WebfactoryIcuTranslationExtensionTest extends TestCase
     /**
      * Initializes the test environment.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->extension = new WebfactoryIcuTranslationExtension();
@@ -31,7 +31,7 @@ class WebfactoryIcuTranslationExtensionTest extends TestCase
     /**
      * Cleans up the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->extension = null;
         parent::tearDown();

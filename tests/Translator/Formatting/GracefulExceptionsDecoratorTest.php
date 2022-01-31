@@ -2,6 +2,7 @@
 
 namespace Webfactory\TranslationBundle\Tests\Translator\Formatting;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\FormattingException;
@@ -23,25 +24,25 @@ final class GracefulExceptionsDecoratorTest extends TestCase
     /**
      * Mocked inner formatter.
      *
-     * @var \PHPUnit_Framework_MockObject_MockObject|FormatterInterface
+     * @var MockObject|FormatterInterface
      */
     protected $innerFormatter = null;
 
     /**
      * Mocked injected logger.
      *
-     * @var \PHPUnit_Framework_MockObject_MockObject|LoggerInterface
+     * @var MockObject|LoggerInterface
      */
     protected $logger = null;
 
     /**
      * Initializes the test environment.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
-        $this->innerFormatter = $this->createMock('\Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface');
-        $this->logger = $this->createMock('\Psr\Log\LoggerInterface');
+        $this->innerFormatter = $this->createMock(FormatterInterface::class);
+        $this->logger = $this->createMock(LoggerInterface::class);
         $this->decorator = new GracefulExceptionsDecorator($this->innerFormatter, $this->logger);
     }
 
@@ -51,8 +52,7 @@ final class GracefulExceptionsDecoratorTest extends TestCase
      */
     public function implementsFormatterInterface()
     {
-        $expectedType = '\Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface';
-        $this->assertInstanceOf($expectedType, $this->decorator);
+        $this->assertInstanceOf(FormatterInterface::class, $this->decorator);
     }
 
     /**
@@ -105,12 +105,11 @@ final class GracefulExceptionsDecoratorTest extends TestCase
     {
         $this->simulateFormatterException(new FormattingException());
 
-        $this->assertInternalType('string', $this->decorator->format('', '', []));
+        self::assertIsString($this->decorator->format('', '', []));
     }
 
     /**
      * @test
-     * @doesNotPerformAssertions
      * Checks the constructor parameter for the logger is optional, i.e. nothing breaks if it was not set and the inner
      * formatter throws an exception.
      */

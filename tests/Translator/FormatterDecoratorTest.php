@@ -35,7 +35,7 @@ class FormatterDecoratorTest extends TestCase
     /**
      * Initializes the test environment.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
@@ -49,7 +49,7 @@ class FormatterDecoratorTest extends TestCase
     /**
      * Cleans up the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->decorator = null;
         $this->formatter = null;

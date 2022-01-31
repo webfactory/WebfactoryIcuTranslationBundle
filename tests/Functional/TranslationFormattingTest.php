@@ -4,6 +4,7 @@ namespace Webfactory\TranslationBundle\Tests\Functional;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\Translation\TranslatorInterface;
 use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslationExtension;
 
 /**
@@ -21,7 +22,7 @@ class TranslationFormattingTest extends TestCase
     /**
      * Initializes the test environment.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->translator = $this->createTranslator();
@@ -30,7 +31,7 @@ class TranslationFormattingTest extends TestCase
     /**
      * Cleans up the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->translator = null;
         parent::tearDown();
@@ -231,7 +232,6 @@ class TranslationFormattingTest extends TestCase
      * Checks if the translator resolves nested select expressions correctly.
      *
      * @test
-     * @doesNotPerformAssertions
      */
     public function translatorCanHandleNestedSelectExpressions()
     {
@@ -429,10 +429,8 @@ class TranslationFormattingTest extends TestCase
 
     /**
      * Creates the translator that is used for in the tests.
-     *
-     * @return \Symfony\Component\Translation\TranslatorInterface
      */
-    protected function createTranslator()
+    protected function createTranslator(): TranslatorInterface
     {
         $builder = new ContainerBuilder();
         $builder->register('translator', '\Symfony\Component\Translation\Translator')->addArgument('en');
@@ -440,7 +438,6 @@ class TranslationFormattingTest extends TestCase
         $extension->load([], $builder);
         $builder->compile();
         $translator = $builder->get('translator');
-        $this->assertInstanceOf('\Symfony\Component\Translation\TranslatorInterface', $translator);
 
         return $translator;
     }

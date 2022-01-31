@@ -27,7 +27,7 @@ class TwigParameterNormalizerTest extends TestCase
     /**
      * Initializes the test environment.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->innerFormatter = $this->createMock('\Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface');
@@ -37,7 +37,7 @@ class TwigParameterNormalizerTest extends TestCase
     /**
      * Cleans up the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->formatter = null;
         $this->innerFormatter = null;

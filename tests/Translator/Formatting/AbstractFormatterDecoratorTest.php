@@ -26,7 +26,7 @@ class AbstractFormatterDecoratorTest extends TestCase
     /**
      * Initializes the test environment.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $formatterInterface = 'Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface';
@@ -38,7 +38,7 @@ class AbstractFormatterDecoratorTest extends TestCase
     /**
      * Cleans up the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->decorator = null;
         $this->innerFormatter = null;

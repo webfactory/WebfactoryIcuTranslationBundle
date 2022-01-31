@@ -56,7 +56,7 @@ class MessageAnalyzerTest extends TestCase
 
         $parameters = $this->getParametersFrom($message);
 
-        $this->assertInternalType('array', $parameters);
+        self::assertIsArray($parameters);
         $this->assertCount(1, $parameters);
     }
 
@@ -69,7 +69,7 @@ class MessageAnalyzerTest extends TestCase
 
         $parameters = $this->getParametersFrom($message);
 
-        $this->assertInternalType('array', $parameters);
+        self::assertIsArray($parameters);
         $this->assertArrayHasKey(0, $parameters);
         $this->assertArrayHasKey(1, $parameters);
         $this->assertArrayHasKey(2, $parameters);
@@ -202,8 +202,8 @@ class MessageAnalyzerTest extends TestCase
     {
         $parameters = $this->getParametersFrom($message);
 
-        $this->assertInternalType('array', $parameters);
-        $this->assertContains($parameter, $parameters);
+        self::assertIsArray($parameters);
+        self::assertContains($parameter, $parameters);
     }
 
     /**
@@ -216,7 +216,7 @@ class MessageAnalyzerTest extends TestCase
     {
         $parameters = $this->getParametersFrom($message);
 
-        $this->assertInternalType('array', $parameters);
+        self::assertIsArray($parameters);
         $this->assertNotContains($parameter, $parameters);
     }
 

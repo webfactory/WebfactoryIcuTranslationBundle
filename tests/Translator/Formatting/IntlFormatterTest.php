@@ -20,7 +20,7 @@ class IntlFormatterTest extends TestCase
     /**
      * Initializes the test environment.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->formatter = new IntlFormatter();
@@ -29,7 +29,7 @@ class IntlFormatterTest extends TestCase
     /**
      * Cleans up the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->formatter = null;
         parent::tearDown();
@@ -82,7 +82,7 @@ class IntlFormatterTest extends TestCase
     {
         $formatted = $this->formatter->format('en', '', []);
 
-        $this->assertInternalType('string', $formatted);
+        self::assertIsString($formatted);
         $this->assertEquals('', $formatted);
     }
 

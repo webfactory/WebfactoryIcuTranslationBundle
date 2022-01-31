@@ -26,7 +26,7 @@ class ContainerTest extends TestCase
     /**
      * Initializes the test environment.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->container = $this->createContainer();
@@ -35,7 +35,7 @@ class ContainerTest extends TestCase
     /**
      * Cleans up the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->container = null;
         parent::tearDown();

@@ -27,7 +27,7 @@ class FormattingExceptionTest extends TestCase
     /**
      * Initializes the test environment.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->innerException = new \RuntimeException('Inner exception.', 42);
@@ -45,7 +45,7 @@ class FormattingExceptionTest extends TestCase
     /**
      * Cleans up the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->exception = null;
         $this->innerException = null;
@@ -69,7 +69,7 @@ class FormattingExceptionTest extends TestCase
      */
     public function messageContainsMessageId()
     {
-        $this->assertContains('translation_id', $this->exception->getMessage());
+        self::assertStringContainsString('translation_id', $this->exception->getMessage());
     }
 
     /**
@@ -79,7 +79,7 @@ class FormattingExceptionTest extends TestCase
      */
     public function messageContainsMessagePattern()
     {
-        $this->assertContains('Hello {test}!', $this->exception->getMessage());
+        self::assertStringContainsString('Hello {test}!', $this->exception->getMessage());
     }
 
     /**
@@ -89,7 +89,7 @@ class FormattingExceptionTest extends TestCase
      */
     public function messageContainsLocale()
     {
-        $this->assertContains('en_US', $this->exception->getMessage());
+        self::assertStringContainsString('en_US', $this->exception->getMessage());
     }
 
     /**
@@ -99,7 +99,7 @@ class FormattingExceptionTest extends TestCase
      */
     public function messageContainsParameters()
     {
-        $this->assertContains('Albert', $this->exception->getMessage());
+        self::assertStringContainsString('Albert', $this->exception->getMessage());
     }
 
     /**

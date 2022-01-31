@@ -23,7 +23,7 @@ class DefaultParameterDecoratorTest extends TestCase
     /**
      * Initializes the test environment.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->innerFormatter = $this->createMock(FormatterInterface::class);
@@ -33,7 +33,7 @@ class DefaultParameterDecoratorTest extends TestCase
     /**
      * Cleans up the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->decorator = null;
         $this->innerFormatter = null;

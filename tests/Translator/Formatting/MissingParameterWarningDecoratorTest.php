@@ -25,7 +25,7 @@ class MissingParameterWarningDecoratorTest extends TestCase
     /**
      * Initializes the test environment.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->logEntries = [];
@@ -35,7 +35,7 @@ class MissingParameterWarningDecoratorTest extends TestCase
     /**
      * Cleans up the test environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->decorator = null;
         $this->logEntries = null;
