@@ -6,6 +6,9 @@ services:
     Webfactory\IcuTranslationBundle\Translator\Formatting\:
         resource: '../../Translator/Formatting/*.php'
 
+    Webfactory\IcuTranslationBundle\Twig\:
+        resource: '../../Twig'
+
     webfactory_icu_translation.formatter.intl_formatter:
         alias: Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter
         deprecated: ~

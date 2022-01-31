@@ -3,9 +3,11 @@
 namespace Webfactory\IcuTranslationBundle\Twig;
 
 use Symfony\Component\Translation\TranslatorInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;
 
-class IcuFormattingExtension extends \Twig_Extension
+class IcuFormattingExtension extends AbstractExtension
 {
     /**
      * @var FormatterInterface
@@ -26,11 +28,11 @@ class IcuFormattingExtension extends \Twig_Extension
     public function getFilters()
     {
         return [
-            new \Twig_SimpleFilter('icu_format', [$this, 'format']),
+            new TwigFilter('icu_format', [$this, 'format']),
         ];
     }
 
-    public function format($message = '', $parameters = [], $locale = null)
+    public function format(string $message = '', array $parameters = [], string $locale = null): string
     {
         return $this->formatter->format($locale ?: $this->translator->getLocale(), $message, $parameters);
     }
