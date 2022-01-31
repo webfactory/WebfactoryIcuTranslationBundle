@@ -1,31 +1,62 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Webfactory\IcuTranslationBundle\Translator\Formatting\:
+        resource: '../../Translator/Formatting/*.php'
+
     webfactory_icu_translation.translator:
-        decorates: translator
-        class: Webfactory\IcuTranslationBundle\Translator\FormatterDecorator
-        arguments: ["@webfactory_icu_translation.translator.inner", "@webfactory_icu_translation.formatter"]
-
-    webfactory_icu_translation.formatter.intl_formatter:
-        class: Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter
-
-    webfactory_icu_translation.formatter.default_parameters:
-        class: Webfactory\IcuTranslationBundle\Translator\Formatting\DefaultParameterDecorator
-        arguments: ["@webfactory_icu_translation.formatter.intl_formatter"]
-
-    webfactory_icu_translation.formatter.missing_parameters:
-        class: Webfactory\IcuTranslationBundle\Translator\Formatting\MissingParameterWarningDecorator
-        arguments: ["@webfactory_icu_translation.formatter.default_parameters", "@?logger"]
-        tags:
-            - { name: monolog.logger, channel: webfactory_icu_translation }
-
-    webfactory_icu_translation.formatter.twig_parameter_normalizer:
-        class: Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalizer
-        arguments: ["@webfactory_icu_translation.formatter.missing_parameters"]
-
-    webfactory_icu_translation.formatter.graceful_exceptions:
-        class: Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator
-        arguments: ["@webfactory_icu_translation.formatter.twig_parameter_normalizer", "@?logger"]
-        tags:
-            - { name: monolog.logger, channel: webfactory_icu_translation }
+        alias: Webfactory\IcuTranslationBundle\Translator\FormatterDecorator
 
     webfactory_icu_translation.formatter:
-        alias: webfactory_icu_translation.formatter.graceful_exceptions
+        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator
+
+    webfactory_icu_translation.formatter.intl_formatter:
+        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter
+        deprecated: ~
+
+    Webfactory\IcuTranslationBundle\Translator\Formatting\DefaultParameterDecorator:
+        arguments:
+            - '@Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter'
+
+    webfactory_icu_translation.formatter.default_parameters:
+        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\DefaultParameterDecorator
+        deprecated: ~
+
+    Webfactory\IcuTranslationBundle\Translator\Formatting\MissingParameterWarningDecorator:
+        arguments:
+            - '@Webfactory\IcuTranslationBundle\Translator\Formatting\DefaultParameterDecorator'
+            - '@?logger'
+        tags:
+            - { name: monolog.logger, channel: webfactory_icu_translation }
+
+    webfactory_icu_translation.formatter.missing_parameters:
+        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\MissingParameterWarningDecorator
+        deprecated: ~
+
+    Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalizer:
+        arguments:
+            - '@Webfactory\IcuTranslationBundle\Translator\Formatting\MissingParameterWarningDecorator'
+
+    webfactory_icu_translation.formatter.twig_parameter_normalizer:
+        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalizer
+        deprecated: ~
+
+    Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator:
+        class: Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator
+        arguments:
+            - '@Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalizer'
+            - '@?logger'
+        tags:
+            - { name: monolog.logger, channel: webfactory_icu_translation }
+
+    webfactory_icu_translation.formatter.graceful_exceptions:
+        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator
+        deprecated: ~
+
+    Webfactory\IcuTranslationBundle\Translator\FormatterDecorator:
+        decorates: translator
+        arguments:
+            - '@Webfactory\IcuTranslationBundle\Translator\FormatterDecorator.inner'
+            - '@webfactory_icu_translation.formatter'
