@@ -6,12 +6,6 @@ services:
     Webfactory\IcuTranslationBundle\Translator\Formatting\:
         resource: '../../Translator/Formatting/*.php'
 
-    webfactory_icu_translation.translator:
-        alias: Webfactory\IcuTranslationBundle\Translator\FormatterDecorator
-
-    webfactory_icu_translation.formatter:
-        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator
-
     webfactory_icu_translation.formatter.intl_formatter:
         alias: Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter
         deprecated: ~
@@ -60,3 +54,15 @@ services:
         arguments:
             - '@Webfactory\IcuTranslationBundle\Translator\FormatterDecorator.inner'
             - '@webfactory_icu_translation.formatter'
+
+    # Then top/end of the decoration stack set up by this bundle:
+    webfactory_icu_translation.translator:
+        alias: Webfactory\IcuTranslationBundle\Translator\FormatterDecorator
+
+    # The top end of the Formatter stack set up by this bundle:
+    Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface:
+        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator
+
+    webfactory_icu_translation.formatter:
+        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface
+        deprecated: ~
