@@ -2,12 +2,13 @@
 
 namespace Webfactory\TranslationBundle\Tests\Translator\Formatting;
 
+use PHPUnit\Framework\TestCase;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter;
 
 /**
  * Tests the Intl formatter.
  */
-class IntlFormatterTest extends \PHPUnit_Framework_TestCase
+class IntlFormatterTest extends TestCase
 {
     /**
      * System under test.
@@ -45,7 +46,7 @@ class IntlFormatterTest extends \PHPUnit_Framework_TestCase
         $invalidMessage = 'Hello {name, number,';
 
         $expected = '\Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\CannotInstantiateFormatterException';
-        $this->setExpectedException($expected);
+        self::expectException($expected);
         $this->formatter->format('en', $invalidMessage, []);
     }
 

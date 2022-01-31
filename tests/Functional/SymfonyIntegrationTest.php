@@ -2,6 +2,7 @@
 
 namespace Webfactory\TranslationBundle\Tests\Functional;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\MonologBundle\MonologBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -11,7 +12,7 @@ use Webfactory\IcuTranslationBundle\WebfactoryIcuTranslationBundle;
 /**
  * Tests if the bundle is usable with the Symfony application stack.
  */
-class SymfonyIntegrationTest extends \PHPUnit_Framework_TestCase
+class SymfonyIntegrationTest extends TestCase
 {
     /**
      * Checks if it is possible to load the translator from the container

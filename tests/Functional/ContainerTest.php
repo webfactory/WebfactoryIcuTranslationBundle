@@ -6,6 +6,7 @@ use Matthias\SymfonyServiceDefinitionValidator\Error\Printer\SimpleErrorListPrin
 use Matthias\SymfonyServiceDefinitionValidator\Error\ValidationError;
 use Matthias\SymfonyServiceDefinitionValidator\Error\ValidationErrorList;
 use Matthias\SymfonyServiceDefinitionValidator\ServiceDefinitionValidatorFactory;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Translation\TranslatorInterface;
 use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslationExtension;
@@ -13,7 +14,7 @@ use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslation
 /**
  * Tests the service container configuration.
  */
-class ContainerTest extends \PHPUnit_Framework_TestCase
+class ContainerTest extends TestCase
 {
     /**
      * System under test.

@@ -2,6 +2,7 @@
 
 namespace Webfactory\TranslationBundle\Tests\Translator\Formatting;
 
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\Exception\FormattingException;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;
@@ -10,7 +11,7 @@ use Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDeco
 /**
  * Tests for the decorator that deals gracefully with exceptions.
  */
-final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
+final class GracefulExceptionsDecoratorTest extends TestCase
 {
     /**
      * System under test.
@@ -109,6 +110,7 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @test
+     * @doesNotPerformAssertions
      * Checks the constructor parameter for the logger is optional, i.e. nothing breaks if it was not set and the inner
      * formatter throws an exception.
      */
@@ -116,8 +118,6 @@ final class GracefulExceptionsDecoratorTest extends \PHPUnit_Framework_TestCase
     {
         $decorator = new GracefulExceptionsDecorator($this->innerFormatter);
         $this->simulateFormatterException(new FormattingException());
-
-        $this->setExpectedException(null);
 
         $decorator->format('', '', []);
     }

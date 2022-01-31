@@ -2,6 +2,7 @@
 
 namespace Webfactory\IcuTranslationBundle\Tests\DependencyInjection;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Translation\TranslatorInterface;
 use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslationExtension;
@@ -9,7 +10,7 @@ use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslation
 /**
  * Tests the bundle extension.
  */
-class WebfactoryIcuTranslationExtensionTest extends \PHPUnit_Framework_TestCase
+class WebfactoryIcuTranslationExtensionTest extends TestCase
 {
     /**
      * System under test.
@@ -41,6 +42,7 @@ class WebfactoryIcuTranslationExtensionTest extends \PHPUnit_Framework_TestCase
      * by the extension.
      *
      * @test
+     * @doesNotPerformAssertions
      */
     public function configuredContainerIsCompilable()
     {
@@ -48,7 +50,6 @@ class WebfactoryIcuTranslationExtensionTest extends \PHPUnit_Framework_TestCase
         $builder->register('translator', TranslatorInterface::class);
         $this->extension->load([], $builder);
 
-        $this->setExpectedException(null);
         $builder->compile();
     }
 }

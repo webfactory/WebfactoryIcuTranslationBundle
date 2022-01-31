@@ -2,10 +2,11 @@
 
 namespace Webfactory\TranslationBundle\Tests\Translator\Formatting;
 
+use PHPUnit\Framework\TestCase;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\DefaultParameterDecorator;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;
 
-class DefaultParameterDecoratorTest extends \PHPUnit_Framework_TestCase
+class DefaultParameterDecoratorTest extends TestCase
 {
     /**
      * System under test.

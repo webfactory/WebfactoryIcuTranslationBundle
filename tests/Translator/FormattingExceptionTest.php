@@ -2,12 +2,13 @@
 
 namespace Webfactory\IcuTranslationBundle\Tests\Translator;
 
+use PHPUnit\Framework\TestCase;
 use Webfactory\IcuTranslationBundle\Translator\FormattingException;
 
 /**
  * Tests the formatting exception.
  */
-class FormattingExceptionTest extends \PHPUnit_Framework_TestCase
+class FormattingExceptionTest extends TestCase
 {
     /**
      * System under test.

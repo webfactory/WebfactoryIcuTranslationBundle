@@ -2,13 +2,14 @@
 
 namespace Webfactory\TranslationBundle\Tests\Functional;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Webfactory\IcuTranslationBundle\DependencyInjection\WebfactoryIcuTranslationExtension;
 
 /**
  * Tests the translation formatting features of the translator that is provided by this bundle.
  */
-class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
+class TranslationFormattingTest extends TestCase
 {
     /**
      * System under test.
@@ -130,10 +131,10 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      * Ensures that the translator can handle empty messages without raising errors.
      *
      * @test
+     * @doesNotPerformAssertions
      */
     public function translatorCanHandleEmptyMessages()
     {
-        $this->setExpectedException(null);
         $this->translator->trans('');
     }
 
@@ -142,10 +143,10 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      * without raising errors.
      *
      * @test
+     * @doesNotPerformAssertions
      */
     public function translatorCanHandleMessagesThatContainOnlyBlanks()
     {
-        $this->setExpectedException(null);
         $this->translator->trans('   ');
     }
 
@@ -204,12 +205,12 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      * Checks if the translator can handle umlauts in messages.
      *
      * @test
+     * @doesNotPerformAssertions
      */
     public function translatorCanHandleUmlautsInMessages()
     {
         $message = 'Schlüsselkompetenzen sind bei {name} vorhanden.';
 
-        $this->setExpectedException(null);
         $this->translator->trans($message, ['%name%' => 'Eddy']);
     }
 
@@ -217,12 +218,12 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      * Checks if the translator supports slashes in messages.
      *
      * @test
+     * @doesNotPerformAssertions
      */
     public function translatorCanHandleSlashesInMessages()
     {
         $message = 'He/she is called {name}.';
 
-        $this->setExpectedException(null);
         $this->translator->trans($message, ['%name%' => 'Eddy']);
     }
 
@@ -230,6 +231,7 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
      * Checks if the translator resolves nested select expressions correctly.
      *
      * @test
+     * @doesNotPerformAssertions
      */
     public function translatorCanHandleNestedSelectExpressions()
     {
@@ -241,7 +243,6 @@ class TranslationFormattingTest extends \PHPUnit_Framework_TestCase
                  .'    other {none}'.\PHP_EOL
                  .'}';
 
-        $this->setExpectedException(null);
         $this->assertEquals('ab', $this->translator->trans($message, ['%a%' => 'yes', '%b%' => 'yes']));
     }
 

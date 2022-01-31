@@ -2,9 +2,10 @@
 
 namespace Webfactory\IcuTranslationBundle\Tests\Translator\Formatting\Analysis;
 
+use PHPUnit\Framework\TestCase;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\Analysis\MessageAnalyzer;
 
-class MessageAnalyzerTest extends \PHPUnit_Framework_TestCase
+class MessageAnalyzerTest extends TestCase
 {
     /**
      * @test

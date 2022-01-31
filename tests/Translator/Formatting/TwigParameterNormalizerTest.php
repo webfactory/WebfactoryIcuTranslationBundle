@@ -2,12 +2,13 @@
 
 namespace Webfactory\IcuTranslationBundle\Tests\Translator\Formatting;
 
+use PHPUnit\Framework\TestCase;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalizer;
 
 /**
  * Tests the Twig parameter normalizer.
  */
-class TwigParameterNormalizerTest extends \PHPUnit_Framework_TestCase
+class TwigParameterNormalizerTest extends TestCase
 {
     /**
      * System under test.
@@ -47,10 +48,10 @@ class TwigParameterNormalizerTest extends \PHPUnit_Framework_TestCase
      * Checks if the formatter works with an empty parameter list.
      *
      * @test
+     * @doesNotPerformAssertions
      */
     public function formatterWorksIfParameterListIsEmpty()
     {
-        $this->setExpectedException(null);
         $this->formatter->format('de', 'test', []);
     }
 

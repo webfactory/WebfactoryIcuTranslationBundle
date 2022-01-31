@@ -2,10 +2,12 @@
 
 namespace Webfactory\IcuTranslationBundle\Tests\Translator\Formatting;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests the abstract formatter decorator.
  */
-class AbstractFormatterDecoratorTest extends \PHPUnit_Framework_TestCase
+class AbstractFormatterDecoratorTest extends TestCase
 {
     /**
      * System under test.

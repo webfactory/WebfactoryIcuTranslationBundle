@@ -2,12 +2,14 @@
 
 namespace Webfactory\IcuTranslationBundle\Tests\Translator;
 
+use PHPUnit\Framework\TestCase;
 use Webfactory\IcuTranslationBundle\Translator\FormatterDecorator;
+use Webfactory\IcuTranslationBundle\Translator\FormattingException;
 
 /**
  * Tests the formatter decorator for translators.
  */
-class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
+class FormatterDecoratorTest extends TestCase
 {
     /**
      * System under test.
@@ -172,7 +174,7 @@ class FormatterDecoratorTest extends \PHPUnit_Framework_TestCase
                          ->method('trans')
                          ->willReturn('any');
 
-        $this->setExpectedException('Webfactory\IcuTranslationBundle\Translator\FormattingException');
+        self::expectException(FormattingException::class);
         $this->decorator->trans('test', ['test' => 'value'], 'messages', 'en');
     }
 }

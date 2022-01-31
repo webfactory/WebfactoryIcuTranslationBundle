@@ -2,12 +2,13 @@
 
 namespace Webfactory\TranslationBundle\Tests\Translator\Formatting;
 
+use PHPUnit\Framework\TestCase;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LoggerInterface;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\MissingParameterWarningDecorator;
 
-class MissingParameterWarningDecoratorTest extends \PHPUnit_Framework_TestCase
+class MissingParameterWarningDecoratorTest extends TestCase
 {
     /**
      * System under test.
