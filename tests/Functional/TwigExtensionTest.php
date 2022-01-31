@@ -24,10 +24,21 @@ class TwigExtensionTest extends KernelTestCase
 
     /**
      * @test
+     * @dataProvider provideTranslationMessages
      */
-    public function icu_format_filter_expands_parameters_in_curly_braced(): void
+    public function icu_format_filter_expands_parameters_in_curly_braces(string $expected, string $twigCode): void
     {
-        self::assertSame('Peter will arrive shortly.', $this->renderTemplate('{{ "{name} will arrive shortly." | icu_format({name: "Peter"}) }}'));
+        self::assertSame($expected, $this->renderTemplate($twigCode));
+    }
+
+    public function provideTranslationMessages(): iterable
+    {
+        yield 'no-op translation' => ['test', '{{ "test" |icu_format }}'];
+        yield 'substitute placeholders with curly braces' => ['test', '{{ "{param}" |icu_format({ param: "test" }) }}'];
+
+        // Parameters passed may be surrounded by '%' signs (why is that a use-case? https://symfony.com/doc/current/translation.html#message-format)
+        // and should be recognized anyway.
+        yield 'strip percent signs from parameter names' => ['test', '{{ "{param}" |icu_format({ "%param%": "test" }) }}'];
     }
 
     private function renderTemplate(string $template): string
