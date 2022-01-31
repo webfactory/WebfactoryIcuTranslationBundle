@@ -4,6 +4,7 @@ namespace Webfactory\IcuTranslationBundle\Tests\Translator;
 
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Webfactory\IcuTranslationBundle\Translator\FormatterDecorator;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;
@@ -41,7 +42,7 @@ class FormatterDecoratorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->translator = $this->getMockBuilder(TranslatorInterface::class)->onlyMethods(['trans'])->addMethods(['getLocale'])->getMock();
+        $this->translator = $this->createMock(LocaleAwareTranslator::class);
         $this->formatter = $this->createMock(FormatterInterface::class);
         $this->decorator = new FormatterDecorator(
             $this->translator,
@@ -160,4 +161,8 @@ class FormatterDecoratorTest extends TestCase
         self::expectException(FormattingException::class);
         $this->decorator->trans('test', ['test' => 'value'], 'messages', 'en');
     }
+}
+
+interface LocaleAwareTranslator extends TranslatorInterface, LocaleAwareInterface
+{
 }
