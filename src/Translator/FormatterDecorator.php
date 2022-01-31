@@ -2,6 +2,7 @@
 
 namespace Webfactory\IcuTranslationBundle\Translator;
 
+use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter;
@@ -9,7 +10,7 @@ use Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter;
 /**
  * Decorates a Symfony translator and adds support for message formatting.
  */
-class FormatterDecorator implements TranslatorInterface
+class FormatterDecorator implements TranslatorInterface, LocaleAwareInterface
 {
     /**
      * The inner translator.
@@ -27,6 +28,10 @@ class FormatterDecorator implements TranslatorInterface
 
     public function __construct(TranslatorInterface $translator, FormatterInterface $formatter)
     {
+        if (!$translator instanceof LocaleAwareInterface) {
+            throw new \InvalidArgumentException(sprintf('The translator passed to "%s()" must implement "%s".', __METHOD__, LocaleAwareInterface::class));
+        }
+
         $this->translator = $translator;
         $this->formatter = $formatter;
     }
@@ -46,15 +51,15 @@ class FormatterDecorator implements TranslatorInterface
         return $this->handleFormatting($id, $message, $parameters, $locale);
     }
 
-//    /**
-//     * Sets the current locale.
-//     *
-//     * @param string $locale The locale
-//     */
-//    public function setLocale($locale)
-//    {
-//        $this->translator->setLocale($locale);
-//    }
+    /**
+     * Sets the current locale.
+     *
+     * @param string $locale The locale
+     */
+    public function setLocale($locale)
+    {
+        $this->translator->setLocale($locale);
+    }
 
     public function getLocale(): string
     {
