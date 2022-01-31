@@ -20,27 +20,36 @@
         }
     ],
     "require": {
+        "php": "^7.2",
         "ext-intl": "*",
-        "jms/parser-lib": "^1.0.0",
         "lib-ICU": ">=4.8",
-        "php": "^5.5 | ^7.0",
+        "jms/parser-lib": "^1.0.0",
         "psr/log": "^1.0",
-        "symfony/config": "2.8.*|3.4.*|^4.0",
-        "symfony/dependency-injection": "2.8.*|3.4.*|^4.0",
-        "symfony/finder": "2.8.*|3.4.*|^4.0",
-        "symfony/http-kernel": "2.8.*|3.4.*|^4.0",
-        "symfony/translation": "2.8.*|3.4.*|^4.0"
+        "symfony/config": "3.4.*|^4.0",
+        "symfony/dependency-injection": "3.4.*|^4.0",
+        "symfony/finder": "3.4.*|^4.0",
+        "symfony/http-kernel": "3.4.*|^4.0",
+        "symfony/translation": "3.4.*|^4.0"
     },
     "require-dev": {
         "matthiasnoback/symfony-service-definition-validator": "~1.0",
         "phpunit/phpunit": "^5.7.26",
         "satooshi/php-coveralls": "^1.0.0",
-        "symfony/framework-bundle": "2.8.*|3.4.*|^4.0",
-        "symfony/monolog-bundle": "2.8.*|3.4.*|^4.0"
+        "symfony/framework-bundle": "3.4.*|^4.0",
+        "symfony/monolog-bundle": "3.4.*|^4.0",
+        "symfony/phpunit-bridge": "> 4.0"
     },
     "autoload": {
         "psr-4": {
-            "Webfactory\\IcuTranslationBundle\\": ""
+            "Webfactory\\IcuTranslationBundle\\": "src"
         }
-    }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Webfactory\\IcuTranslationBundle\\Tests\\": "tests"
+        }
+    },
+    "config": {
+           "sort-packages": true
+       }
 }
