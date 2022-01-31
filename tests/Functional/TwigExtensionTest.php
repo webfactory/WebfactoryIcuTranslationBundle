@@ -39,6 +39,9 @@ class TwigExtensionTest extends KernelTestCase
         // Parameters passed may be surrounded by '%' signs (why is that a use-case? https://symfony.com/doc/current/translation.html#message-format)
         // and should be recognized anyway.
         yield 'strip percent signs from parameter names' => ['test', '{{ "{param}" |icu_format({ "%param%": "test" }) }}'];
+
+        yield 'locale is used to format a number in the German locale' => ['3,141', '{{ "{param,number}" |icu_format({ param: 3.141 }, "de") }}'];
+        yield 'locale is used to format a number in the English locale' => ['3.141', '{{ "{param,number}" |icu_format({ param: 3.141 }, "en") }}'];
     }
 
     private function renderTemplate(string $template): string
