@@ -42,6 +42,9 @@ class TwigExtensionTest extends KernelTestCase
 
         yield 'locale is used to format a number in the German locale' => ['3,141', '{{ "{param,number}" |icu_format({ param: 3.141 }, "de") }}'];
         yield 'locale is used to format a number in the English locale' => ['3.141', '{{ "{param,number}" |icu_format({ param: 3.141 }, "en") }}'];
+
+        yield 'using select expressions' => ['A was used', '{{ "{param, select, a {A was used} other {something else}}" |icu_format({ param: "a"}) }}'];
+
     }
 
     private function renderTemplate(string $template): string
