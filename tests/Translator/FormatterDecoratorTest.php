@@ -2,8 +2,11 @@
 
 namespace Webfactory\IcuTranslationBundle\Tests\Translator;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Webfactory\IcuTranslationBundle\Translator\FormatterDecorator;
+use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;
 use Webfactory\IcuTranslationBundle\Translator\FormattingException;
 
 /**
@@ -14,21 +17,21 @@ class FormatterDecoratorTest extends TestCase
     /**
      * System under test.
      *
-     * @var \Webfactory\IcuTranslationBundle\Translator\FormatterDecorator
+     * @var FormatterDecorator
      */
     protected $decorator = null;
 
     /**
      * The simulated inner translator.
      *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject
      */
     protected $translator = null;
 
     /**
      * The mocked formatter that is used in the tests.
      *
-     * @var \PHPUnit_Framework_MockObject_MockObject
+     * @var MockObject
      */
     protected $formatter = null;
 
@@ -38,23 +41,12 @@ class FormatterDecoratorTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->translator = $this->createMock('Symfony\Component\Translation\TranslatorInterface');
-        $this->formatter = $this->createMock('Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface');
+        $this->translator = $this->getMockBuilder(TranslatorInterface::class)->onlyMethods(['trans'])->addMethods(['getLocale'])->getMock();
+        $this->formatter = $this->createMock(FormatterInterface::class);
         $this->decorator = new FormatterDecorator(
             $this->translator,
             $this->formatter
         );
-    }
-
-    /**
-     * Cleans up the test environment.
-     */
-    protected function tearDown(): void
-    {
-        $this->decorator = null;
-        $this->formatter = null;
-        $this->translator = null;
-        parent::tearDown();
     }
 
     /**
@@ -64,7 +56,7 @@ class FormatterDecoratorTest extends TestCase
      */
     public function implementsTranslatorInterface()
     {
-        $this->assertInstanceOf('Symfony\Component\Translation\TranslatorInterface', $this->decorator);
+        $this->assertInstanceOf(TranslatorInterface::class, $this->decorator);
     }
 
     /**
@@ -76,38 +68,27 @@ class FormatterDecoratorTest extends TestCase
     {
         $this->translator->expects($this->once())
                          ->method('trans')
+                         ->with('test', ['foo' => 'bar'], 'domain', 'locale')
                          ->willReturn('test');
 
-        $this->decorator->trans('test');
+        $this->formatter->method('format')->willReturn('some string');
+
+        $this->decorator->trans('test', ['foo' => 'bar'], 'domain', 'locale');
     }
 
-    /**
-     * Checks if the decorator forwards calls to transChoice() to the inner translator.
-     *
-     * @test
-     */
-    public function decoratorForwardsTransChoiceCalls()
-    {
-        $this->translator->expects($this->once())
-                         ->method('transChoice')
-                         ->willReturn('test');
-
-        $this->decorator->transChoice('test', 42);
-    }
-
-    /**
-     * Checks if the decorator forwards calls to setLocale() to the inner translator.
-     *
-     * @test
-     */
-    public function decoratorForwardsSetLocaleCalls()
-    {
-        $this->translator->expects($this->once())
-                         ->method('setLocale')
-                         ->with('de_DE');
-
-        $this->decorator->setLocale('de_DE');
-    }
+//    /**
+//     * Checks if the decorator forwards calls to setLocale() to the inner translator.
+//     *
+//     * @test
+//     */
+//    public function decoratorForwardsSetLocaleCalls()
+//    {
+//        $this->translator->expects($this->once())
+//                         ->method('setLocale')
+//                         ->with('de_DE');
+//
+//        $this->decorator->setLocale('de_DE');
+//    }
 
     /**
      * Checks if getLocale() returns the locale value from the inner translator.
@@ -130,14 +111,16 @@ class FormatterDecoratorTest extends TestCase
      */
     public function decoratorPassesResultFromTranslatorToFormatter()
     {
+        $this->translator->method('getLocale')->willReturn('some_locale');
         $this->translator->expects($this->once())
                          ->method('trans')
                          ->willReturn('test message');
         $this->formatter->expects($this->once())
                         ->method('format')
-                        ->with($this->anything(), 'test message');
+                        ->with($this->anything(), 'test message')
+                        ->willReturn('some string');
 
-        $this->decorator->trans('message_id');
+        $this->decorator->trans('message_id', ['foo' => 'bar'], 'domain', 'locale');
     }
 
     /**
@@ -155,7 +138,7 @@ class FormatterDecoratorTest extends TestCase
                         ->method('format')
                         ->willReturn('formatted message');
 
-        $translated = $this->decorator->trans('message_id');
+        $translated = $this->decorator->trans('message_id', ['foo' => 'bar'], 'domain', 'locale');
 
         $this->assertEquals('formatted message', $translated);
     }
