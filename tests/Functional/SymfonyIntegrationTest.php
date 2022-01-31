@@ -2,17 +2,11 @@
 
 namespace Webfactory\TranslationBundle\Tests\Functional;
 
-use PHPUnit\Framework\TestCase;
-use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
-use Symfony\Bundle\MonologBundle\MonologBundle;
-use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\HttpKernel\KernelInterface;
-use Webfactory\IcuTranslationBundle\WebfactoryIcuTranslationBundle;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Translation\TranslatorInterface;
+use Webfactory\IcuTranslationBundle\Translator\FormatterDecorator;
 
-/**
- * Tests if the bundle is usable with the Symfony application stack.
- */
-class SymfonyIntegrationTest extends TestCase
+class SymfonyIntegrationTest extends KernelTestCase
 {
     /**
      * Checks if it is possible to load the translator from the container
@@ -24,41 +18,11 @@ class SymfonyIntegrationTest extends TestCase
      */
     public function translatorCanBeRetrievedFromContainer()
     {
-        $kernel = $this->createKernel();
-        $kernel->boot();
-
+        $kernel = static::bootKernel();
         $container = $kernel->getContainer();
         $translator = $container->get('translator');
-        $this->assertInstanceOf('Symfony\Component\Translation\TranslatorInterface', $translator);
-    }
 
-    /**
-     * Creates an application kernel for testing.
-     *
-     * @return KernelInterface
-     */
-    protected function createKernel()
-    {
-        $mockedMethods = ['registerBundles', 'registerContainerConfiguration'];
-        $kernel = $this->getMockBuilder('Symfony\Component\HttpKernel\Kernel')
-                       ->setMethods($mockedMethods)
-                       ->setConstructorArgs(['test', true])
-                       ->getMock();
-        $activeBundles = [
-            new FrameworkBundle(),
-            new MonologBundle(),
-            new WebfactoryIcuTranslationBundle(),
-        ];
-        $kernel->expects($this->any())
-            ->method('registerBundles')
-            ->willReturn($activeBundles);
-        $loadConfiguration = function (LoaderInterface $loader) {
-            $loader->load(__DIR__.'/_files/SymfonyIntegration/config.yml');
-        };
-        $kernel->expects($this->any())
-            ->method('registerContainerConfiguration')
-            ->willReturnCallback($loadConfiguration);
-
-        return $kernel;
+        self::assertInstanceOf(TranslatorInterface::class, $translator);
+        self::assertInstanceOf(FormatterDecorator::class, $translator);
     }
 }

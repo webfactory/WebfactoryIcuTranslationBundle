@@ -140,7 +140,7 @@ final class GracefulExceptionsDecoratorTest extends TestCase
             ->method('error')
             ->with(
                 $this->anything(),
-                $this->contains($exception)
+                $this->containsIdentical($exception)
             );
     }
 }

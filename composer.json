@@ -20,24 +20,23 @@
         }
     ],
     "require": {
-        "php": "^7.2",
+        "php": "^7.2 | 8.0.* | 8.1.*",
         "ext-intl": "*",
-        "lib-ICU": ">=4.8",
+        "lib-icu": ">=4.8",
         "jms/parser-lib": "^1.0.0",
         "psr/log": "^1.0",
-        "symfony/config": "3.4.*|^4.0",
-        "symfony/dependency-injection": "3.4.*|^4.0",
-        "symfony/finder": "3.4.*|^4.0",
-        "symfony/http-kernel": "3.4.*|^4.0",
-        "symfony/translation": "3.4.*|^4.0"
+        "symfony/config": "^3.4.31|^4.0",
+        "symfony/dependency-injection": "^3.4.31|^4.0",
+        "symfony/finder": "^3.4.31|^4.0",
+        "symfony/http-kernel": "^3.4.31|^4.0",
+        "symfony/translation": "^3.4.31|^4.0"
     },
     "require-dev": {
-        "matthiasnoback/symfony-service-definition-validator": "~1.0",
-        "phpunit/phpunit": "^8.5",
-        "satooshi/php-coveralls": "^1.0.0",
-        "symfony/framework-bundle": "3.4.*|^4.0",
-        "symfony/monolog-bundle": "3.4.*|^4.0",
-        "symfony/phpunit-bridge": "> 5.0"
+        "phpunit/phpunit": "^8.5 | ^9.0",
+        "symfony/framework-bundle": "^3.4.31|^4.0",
+        "symfony/monolog-bundle": "^3.4.31|^4.0",
+        "symfony/phpunit-bridge": "> 5.0",
+        "symfony/yaml": "^4.4"
     },
     "autoload": {
         "psr-4": {
@@ -50,6 +49,6 @@
         }
     },
     "config": {
-           "sort-packages": true
-       }
+        "sort-packages": true
+    }
 }

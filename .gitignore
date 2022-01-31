@@ -2,3 +2,5 @@ phpunit.xml
 vendor
 .php_cs.cache
 composer.lock
+.phpunit.result.cache
+tests/Fixtures/cache/
