@@ -4,6 +4,7 @@ namespace Webfactory\IcuTranslationBundle\Tests\Fixtures;
 
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
@@ -26,6 +27,7 @@ final class TestKernel extends Kernel
         return [
             new FrameworkBundle(),
             new WebfactoryIcuTranslationBundle(),
+            new TwigBundle(),
         ];
     }
 
