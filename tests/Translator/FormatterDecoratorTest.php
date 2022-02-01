@@ -77,20 +77,6 @@ class FormatterDecoratorTest extends TestCase
         $this->decorator->trans('test', ['foo' => 'bar'], 'domain', 'locale');
     }
 
-//    /**
-//     * Checks if the decorator forwards calls to setLocale() to the inner translator.
-//     *
-//     * @test
-//     */
-//    public function decoratorForwardsSetLocaleCalls()
-//    {
-//        $this->translator->expects($this->once())
-//                         ->method('setLocale')
-//                         ->with('de_DE');
-//
-//        $this->decorator->setLocale('de_DE');
-//    }
-
     /**
      * Checks if getLocale() returns the locale value from the inner translator.
      *
