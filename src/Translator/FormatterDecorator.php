@@ -2,34 +2,35 @@
 
 namespace Webfactory\IcuTranslationBundle\Translator;
 
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;
 
 /**
  * Decorates a Symfony translator and adds support for message formatting.
  */
-class FormatterDecorator implements TranslatorInterface
+class FormatterDecorator implements LegacyTranslatorInterface, TranslatorInterface
 {
     /**
      * The inner translator.
      *
      * @var \Symfony\Component\Translation\TranslatorInterface
      */
-    protected $translator = null;
+    protected $translator;
 
     /**
      * The formatter that is used to apply message transformations.
      *
      * @var \Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter
      */
-    protected $formatter = null;
+    protected $formatter;
 
     /**
      * Creates a decorator for the provided translator.
      *
      * @param \Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface the formatter that is used
      */
-    public function __construct(TranslatorInterface $translator, FormatterInterface $formatter)
+    public function __construct(LegacyTranslatorInterface $translator, FormatterInterface $formatter)
     {
         $this->translator = $translator;
         $this->formatter = $formatter;
