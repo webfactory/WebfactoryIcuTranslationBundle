@@ -26,12 +26,12 @@
         "jms/parser-lib": "^1.0.0",
         "psr/log": "^1.0",
         "symfony/config": "^3.4.31|^4.0",
-        "symfony/translation-contracts": "^1.0.2|^2.0|^3.0",
         "symfony/dependency-injection": "^3.4.31|^4.0",
         "symfony/finder": "^3.4.31|^4.0",
         "symfony/framework-bundle": "^4.4",
         "symfony/http-kernel": "^3.4.31|^4.0",
         "symfony/translation": "^4.2",
+        "symfony/translation-contracts": "^1.0.2|^2.0|^3.0",
         "twig/twig": "^1.42|^2.0|^3.0"
     },
     "require-dev": {
