@@ -76,17 +76,6 @@ class TranslationFormattingTest extends KernelTestCase
     }
 
     /**
-     * Ensures that the translator formats messages that are returned by transChoice().
-     *
-     * @test
-     */
-    public function translatorFormatsMessagesReturnedByTransChoice()
-    {
-        $message = 'We need {0,number,integer} tests.';
-        self::assertEquals('We need 42 tests.', $this->translator->transChoice($message, 7, ['%0%' => 42]));
-    }
-
-    /**
      * Ensures that the translator resolves an expression as expected when the checked variable
      * is not passed.
      *

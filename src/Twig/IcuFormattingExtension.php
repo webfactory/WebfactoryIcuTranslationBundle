@@ -2,7 +2,7 @@
 
 namespace Webfactory\IcuTranslationBundle\Twig;
 
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;

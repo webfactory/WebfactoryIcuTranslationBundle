@@ -2,36 +2,36 @@
 
 namespace Webfactory\IcuTranslationBundle\Translator;
 
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;
+use Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter;
 
 /**
  * Decorates a Symfony translator and adds support for message formatting.
  */
-class FormatterDecorator implements LegacyTranslatorInterface, TranslatorInterface
+class FormatterDecorator implements TranslatorInterface, LocaleAwareInterface
 {
     /**
      * The inner translator.
      *
-     * @var \Symfony\Component\Translation\TranslatorInterface
+     * @var TranslatorInterface
      */
     protected $translator;
 
     /**
      * The formatter that is used to apply message transformations.
      *
-     * @var \Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter
+     * @var IntlFormatter
      */
     protected $formatter;
 
-    /**
-     * Creates a decorator for the provided translator.
-     *
-     * @param \Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface the formatter that is used
-     */
-    public function __construct(LegacyTranslatorInterface $translator, FormatterInterface $formatter)
+    public function __construct(TranslatorInterface $translator, FormatterInterface $formatter)
     {
+        if (!$translator instanceof LocaleAwareInterface) {
+            throw new \InvalidArgumentException(sprintf('The translator passed to "%s()" must implement "%s".', __METHOD__, LocaleAwareInterface::class));
+        }
+
         $this->translator = $translator;
         $this->formatter = $formatter;
     }
@@ -43,30 +43,10 @@ class FormatterDecorator implements LegacyTranslatorInterface, TranslatorInterfa
      * @param array  $parameters An array of parameters for the message
      * @param string $domain     The domain for the message
      * @param string $locale     The locale
-     *
-     * @return string The translated string
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null)
+    public function trans($id, array $parameters = [], $domain = null, $locale = null): string
     {
         $message = $this->translator->trans($id, $parameters, $domain, $locale);
-
-        return $this->handleFormatting($id, $message, $parameters, $locale);
-    }
-
-    /**
-     * Translates the given choice message by choosing a translation according to a number.
-     *
-     * @param string $id         The message id
-     * @param int    $number     The number to use to find the indice of the message
-     * @param array  $parameters An array of parameters for the message
-     * @param string $domain     The domain for the message
-     * @param string $locale     The locale
-     *
-     * @return string The translated string
-     */
-    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null)
-    {
-        $message = $this->translator->transChoice($id, $number, $parameters, $domain, $locale);
 
         return $this->handleFormatting($id, $message, $parameters, $locale);
     }
@@ -81,12 +61,7 @@ class FormatterDecorator implements LegacyTranslatorInterface, TranslatorInterfa
         $this->translator->setLocale($locale);
     }
 
-    /**
-     * Returns the current locale.
-     *
-     * @return string The locale
-     */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->translator->getLocale();
     }
@@ -94,22 +69,17 @@ class FormatterDecorator implements LegacyTranslatorInterface, TranslatorInterfa
     /**
      * Formats the message if possible and throws a normalized exception in case of error.
      *
-     * @param string       $id         the translation message ID
-     * @param string       $message    the message pattern that will be used for formatting
-     * @param array(mixed) $parameters
-     * @param string|null  $locale
-     *
-     * @return string the formatted message
-     *
      * @throws \Webfactory\IcuTranslationBundle\Translator\FormattingException if formatting fails
      */
-    protected function handleFormatting($id, $message, array $parameters, $locale)
+    protected function handleFormatting(string $id, string $message, array $parameters = [], string $locale = null): string
     {
         if (empty($message)) {
             // No formatting needed.
             return $message;
         }
+
         $locale = $this->toLocale($locale);
+
         try {
             return $this->format($message, $parameters, $locale);
         } catch (\Exception $e) {
@@ -119,14 +89,8 @@ class FormatterDecorator implements LegacyTranslatorInterface, TranslatorInterfa
 
     /**
      * Applies Intl formatting on the provided message.
-     *
-     * @param string       $message
-     * @param array(mixed) $parameters
-     * @param string       $locale
-     *
-     * @return string
      */
-    protected function format($message, array $parameters, $locale)
+    protected function format(string $message, array $parameters = [], string $locale = null): string
     {
         return $this->formatter->format($locale, $message, $parameters);
     }
@@ -136,13 +100,9 @@ class FormatterDecorator implements LegacyTranslatorInterface, TranslatorInterfa
      *
      * If a correct locale is provided that one is used.
      * Otherwise, the default locale is returned.
-     *
-     * @param string|null $locale
-     *
-     * @return string
      */
-    protected function toLocale($locale = null)
+    protected function toLocale(string $locale = null): string
     {
-        return (null === $locale) ? $this->getLocale() : $locale;
+        return $locale ?? $this->getLocale();
     }
 }
