@@ -56,7 +56,7 @@ services:
         decorates: translator
         arguments:
             - '@Webfactory\IcuTranslationBundle\Translator\FormatterDecorator.inner'
-            - '@webfactory_icu_translation.formatter'
+            - '@Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface'
 
     # Then top/end of the decoration stack set up by this bundle:
     webfactory_icu_translation.translator:
