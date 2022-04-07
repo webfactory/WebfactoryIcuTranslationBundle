@@ -15,16 +15,14 @@ class FormatterDecorator implements TranslatorInterface, LocaleAwareInterface
     /**
      * The inner translator.
      *
-     * @var TranslatorInterface
+     * @var TranslatorInterface&LocaleAwareInterface
      */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
     /**
      * The formatter that is used to apply message transformations.
-     *
-     * @var IntlFormatter
      */
-    protected $formatter;
+    protected FormatterInterface $formatter;
 
     public function __construct(TranslatorInterface $translator, FormatterInterface $formatter)
     {
@@ -36,27 +34,14 @@ class FormatterDecorator implements TranslatorInterface, LocaleAwareInterface
         $this->formatter = $formatter;
     }
 
-    /**
-     * Translates the given message.
-     *
-     * @param string $id         The message id
-     * @param array  $parameters An array of parameters for the message
-     * @param string $domain     The domain for the message
-     * @param string $locale     The locale
-     */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null): string
+    public function trans(string $id, array $parameters = [], string $domain = null, string $locale = null): string
     {
         $message = $this->translator->trans($id, $parameters, $domain, $locale);
 
         return $this->handleFormatting($id, $message, $parameters, $locale);
     }
 
-    /**
-     * Sets the current locale.
-     *
-     * @param string $locale The locale
-     */
-    public function setLocale($locale)
+    public function setLocale(string $locale): void
     {
         $this->translator->setLocale($locale);
     }
