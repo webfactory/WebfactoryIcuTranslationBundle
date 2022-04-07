@@ -5,7 +5,6 @@ namespace Webfactory\IcuTranslationBundle\Translator;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface;
-use Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter;
 
 /**
  * Decorates a Symfony translator and adds support for message formatting.
