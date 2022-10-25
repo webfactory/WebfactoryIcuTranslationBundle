@@ -14,32 +14,32 @@ class MessageLexer extends AbstractLexer
     /**
      * Identifies an opening brace.
      */
-    const TOKEN_OPENING_BRACE = 0;
+    public const TOKEN_OPENING_BRACE = 0;
 
     /**
      * Identifies a closing brace.
      */
-    const TOKEN_CLOSING_BRACE = 1;
+    public const TOKEN_CLOSING_BRACE = 1;
 
     /**
      * Identifies a comma.
      */
-    const TOKEN_COMMA = 2;
+    public const TOKEN_COMMA = 2;
 
     /**
      * Identifies whitespace (spaces, newlines, ...).
      */
-    const TOKEN_WHITESPACE = 3;
+    public const TOKEN_WHITESPACE = 3;
 
     /**
      * Identifies any text part.
      */
-    const TOKEN_TEXT = 4;
+    public const TOKEN_TEXT = 4;
 
     /**
      * Identifies a single quote.
      */
-    const TOKEN_SINGLE_QUOTE = 5;
+    public const TOKEN_SINGLE_QUOTE = 5;
 
     /**
      * Regular Expression that splits messages into tokens.

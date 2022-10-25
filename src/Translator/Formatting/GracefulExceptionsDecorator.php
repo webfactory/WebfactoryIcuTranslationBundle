@@ -7,8 +7,6 @@ use Psr\Log\NullLogger;
 
 /**
  * Catches exceptions generated in the decorated formatter to log them and to returns a string gracefully.
- *
- * @final by default.
  */
 final class GracefulExceptionsDecorator extends AbstractFormatterDecorator
 {
@@ -32,8 +30,8 @@ final class GracefulExceptionsDecorator extends AbstractFormatterDecorator
     /**
      * Formats the provided message.
      *
-     * @param string               $locale
-     * @param string               $message
+     * @param string $locale
+     * @param string $message
      * @param array(string=>mixed) $parameters
      *
      * @return string the formatted message

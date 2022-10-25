@@ -24,6 +24,7 @@ class TwigExtensionTest extends KernelTestCase
 
     /**
      * @test
+     *
      * @dataProvider provideTranslationMessages
      */
     public function icu_format_filter_expands_parameters_in_curly_braces(string $expected, string $twigCode): void

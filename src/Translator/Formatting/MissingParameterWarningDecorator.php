@@ -35,8 +35,8 @@ class MissingParameterWarningDecorator extends AbstractFormatterDecorator
     /**
      * Checks if all mentioned parameters are provided.
      *
-     * @param string               $locale
-     * @param string               $message
+     * @param string $locale
+     * @param string $message
      * @param array(string=>mixed) $parameters
      *
      * @return string the formatted message
@@ -49,8 +49,8 @@ class MissingParameterWarningDecorator extends AbstractFormatterDecorator
     }
 
     /**
-     * @param string               $locale
-     * @param string               $message
+     * @param string $locale
+     * @param string $message
      * @param array(string=>mixed) $parameters
      */
     private function logIfParameterIsMissing($locale, $message, array $parameters)

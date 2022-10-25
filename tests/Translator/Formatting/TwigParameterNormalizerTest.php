@@ -48,6 +48,7 @@ class TwigParameterNormalizerTest extends TestCase
      * Checks if the formatter works with an empty parameter list.
      *
      * @test
+     *
      * @doesNotPerformAssertions
      */
     public function formatterWorksIfParameterListIsEmpty()

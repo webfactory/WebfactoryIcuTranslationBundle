@@ -109,6 +109,7 @@ class TranslationFormattingTest extends KernelTestCase
      * Ensures that the translator can handle empty messages without raising errors.
      *
      * @test
+     *
      * @doesNotPerformAssertions
      */
     public function translatorCanHandleEmptyMessages()
@@ -121,6 +122,7 @@ class TranslationFormattingTest extends KernelTestCase
      * without raising errors.
      *
      * @test
+     *
      * @doesNotPerformAssertions
      */
     public function translatorCanHandleMessagesThatContainOnlyBlanks()
@@ -183,6 +185,7 @@ class TranslationFormattingTest extends KernelTestCase
      * Checks if the translator can handle umlauts in messages.
      *
      * @test
+     *
      * @doesNotPerformAssertions
      */
     public function translatorCanHandleUmlautsInMessages()
@@ -196,6 +199,7 @@ class TranslationFormattingTest extends KernelTestCase
      * Checks if the translator supports slashes in messages.
      *
      * @test
+     *
      * @doesNotPerformAssertions
      */
     public function translatorCanHandleSlashesInMessages()

@@ -13,8 +13,8 @@ class IntlFormatter implements FormatterInterface
     /**
      * Formats the message with the help of php intl extension.
      *
-     * @param string               $locale
-     * @param string               $message
+     * @param string $locale
+     * @param string $message
      * @param array(string=>mixed) $parameters
      *
      * @return string

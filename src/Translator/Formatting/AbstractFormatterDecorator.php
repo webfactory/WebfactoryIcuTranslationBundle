@@ -27,8 +27,8 @@ abstract class AbstractFormatterDecorator implements FormatterInterface
     /**
      * Formats the provided message.
      *
-     * @param string               $locale
-     * @param string               $message
+     * @param string $locale
+     * @param string $message
      * @param array(string=>mixed) $parameters
      *
      * @return string the formatted message
