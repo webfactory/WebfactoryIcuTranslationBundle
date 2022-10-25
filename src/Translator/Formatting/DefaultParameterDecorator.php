@@ -21,8 +21,8 @@ class DefaultParameterDecorator extends AbstractFormatterDecorator
     /**
      * Injects default parameters before forwarding to the inner formatter.
      *
-     * @param string               $locale
-     * @param string               $message
+     * @param string $locale
+     * @param string $message
      * @param array(string=>mixed) $parameters
      *
      * @return string the formatted message
