@@ -1,6 +1,6 @@
 phpunit.xml
 vendor
-.php_cs.cache
+.php-cs-fixer.cache
 composer.lock
 .phpunit.result.cache
 tests/Fixtures/cache/
