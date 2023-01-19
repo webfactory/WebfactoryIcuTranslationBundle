@@ -137,7 +137,7 @@ final class GracefulExceptionsDecoratorTest extends TestCase
     private function assertWillLogException(\Exception $exception)
     {
         $this->logger->expects($this->once())
-            ->method('error')
+            ->method('warning')
             ->with(
                 $this->anything(),
                 $this->containsIdentical($exception)

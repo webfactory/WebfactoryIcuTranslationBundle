@@ -41,7 +41,7 @@ final class GracefulExceptionsDecorator extends AbstractFormatterDecorator
         try {
             return parent::format($locale, $message, $parameters);
         } catch (\Exception $e) {
-            $this->logger->error(
+            $this->logger->warning(
                 'Formatting translation failed.',
                 [
                     'locale' => $locale,
