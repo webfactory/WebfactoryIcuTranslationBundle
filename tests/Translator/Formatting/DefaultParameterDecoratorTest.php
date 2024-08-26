@@ -13,12 +13,12 @@ class DefaultParameterDecoratorTest extends TestCase
      *
      * @var DefaultParameterDecorator
      */
-    protected $decorator = null;
+    protected $decorator;
 
     /**
      * @var FormatterInterface|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected $innerFormatter = null;
+    protected $innerFormatter;
 
     /**
      * Initializes the test environment.
@@ -172,8 +172,6 @@ class DefaultParameterDecoratorTest extends TestCase
      *
      * It is only asserted that the given parameters with the provided values exists,
      * it is not guaranteed that no other parameters are passed.
-     *
-     * @param array<string, mixed> $parameters
      */
     protected function assertExpectedParameters(array $parameterSubSet)
     {
@@ -182,12 +180,12 @@ class DefaultParameterDecoratorTest extends TestCase
                 $this->assertArrayHasKey(
                     $name,
                     $parameters,
-                    sprintf('Missing parameter. Available parameters: %s', implode(',', array_keys($parameters)))
+                    \sprintf('Missing parameter. Available parameters: %s', implode(',', array_keys($parameters)))
                 );
                 $this->assertEquals(
                     $parameters[$name],
                     $value,
-                    sprintf('Parameter "%s" does not have the expected value.', $name)
+                    \sprintf('Parameter "%s" does not have the expected value.', $name)
                 );
             }
 

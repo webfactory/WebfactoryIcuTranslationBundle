@@ -20,21 +20,21 @@ class FormatterDecoratorTest extends TestCase
      *
      * @var FormatterDecorator
      */
-    protected $decorator = null;
+    protected $decorator;
 
     /**
      * The simulated inner translator.
      *
      * @var MockObject
      */
-    protected $translator = null;
+    protected $translator;
 
     /**
      * The mocked formatter that is used in the tests.
      *
      * @var MockObject
      */
-    protected $formatter = null;
+    protected $formatter;
 
     /**
      * Initializes the test environment.

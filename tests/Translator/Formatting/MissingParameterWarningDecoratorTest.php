@@ -15,12 +15,12 @@ class MissingParameterWarningDecoratorTest extends TestCase
      *
      * @var MissingParameterWarningDecorator
      */
-    private $decorator = null;
+    private $decorator;
 
     /**
      * @var array<array<string=>mixed>>
      */
-    private $logEntries = null;
+    private $logEntries;
 
     /**
      * Initializes the test environment.

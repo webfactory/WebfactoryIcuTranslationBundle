@@ -26,14 +26,14 @@ class FormatterDecorator implements TranslatorInterface, LocaleAwareInterface
     public function __construct(TranslatorInterface $translator, FormatterInterface $formatter)
     {
         if (!$translator instanceof LocaleAwareInterface) {
-            throw new \InvalidArgumentException(sprintf('The translator passed to "%s()" must implement "%s".', __METHOD__, LocaleAwareInterface::class));
+            throw new \InvalidArgumentException(\sprintf('The translator passed to "%s()" must implement "%s".', __METHOD__, LocaleAwareInterface::class));
         }
 
         $this->translator = $translator;
         $this->formatter = $formatter;
     }
 
-    public function trans(string $id, array $parameters = [], string $domain = null, string $locale = null): string
+    public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         $message = $this->translator->trans($id, $parameters, $domain, $locale);
 
@@ -53,9 +53,9 @@ class FormatterDecorator implements TranslatorInterface, LocaleAwareInterface
     /**
      * Formats the message if possible and throws a normalized exception in case of error.
      *
-     * @throws \Webfactory\IcuTranslationBundle\Translator\FormattingException if formatting fails
+     * @throws FormattingException if formatting fails
      */
-    protected function handleFormatting(string $id, string $message, array $parameters = [], string $locale = null): string
+    protected function handleFormatting(string $id, string $message, array $parameters = [], ?string $locale = null): string
     {
         if (empty($message)) {
             // No formatting needed.
@@ -74,7 +74,7 @@ class FormatterDecorator implements TranslatorInterface, LocaleAwareInterface
     /**
      * Applies Intl formatting on the provided message.
      */
-    protected function format(string $message, array $parameters = [], string $locale = null): string
+    protected function format(string $message, array $parameters = [], ?string $locale = null): string
     {
         return $this->formatter->format($locale, $message, $parameters);
     }
@@ -85,7 +85,7 @@ class FormatterDecorator implements TranslatorInterface, LocaleAwareInterface
      * If a correct locale is provided that one is used.
      * Otherwise, the default locale is returned.
      */
-    protected function toLocale(string $locale = null): string
+    protected function toLocale(?string $locale = null): string
     {
         return $locale ?? $this->getLocale();
     }

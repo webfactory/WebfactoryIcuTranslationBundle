@@ -14,7 +14,7 @@ class MessageAnalyzer
      *
      * @var string
      */
-    private $message = null;
+    private $message;
 
     /**
      * @param string $message

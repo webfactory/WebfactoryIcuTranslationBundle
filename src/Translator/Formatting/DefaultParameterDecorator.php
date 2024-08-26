@@ -31,7 +31,7 @@ class DefaultParameterDecorator extends AbstractFormatterDecorator
     {
         $variables = (new MessageAnalyzer($message))->getParameters();
         $defaults = array_fill_keys($variables, null);
-        $parameters = $parameters + $defaults;
+        $parameters += $defaults;
 
         return parent::format($locale, $message, $parameters);
     }

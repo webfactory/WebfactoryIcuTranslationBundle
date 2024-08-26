@@ -13,16 +13,16 @@ class TwigParameterNormalizerTest extends TestCase
     /**
      * System under test.
      *
-     * @var \Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalizer
+     * @var TwigParameterNormalizer
      */
-    protected $formatter = null;
+    protected $formatter;
 
     /**
      * The mocked inner formatter.
      *
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $innerFormatter = null;
+    protected $innerFormatter;
 
     /**
      * Initializes the test environment.

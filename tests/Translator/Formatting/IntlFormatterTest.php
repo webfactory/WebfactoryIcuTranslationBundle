@@ -13,9 +13,9 @@ class IntlFormatterTest extends TestCase
     /**
      * System under test.
      *
-     * @var \Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter
+     * @var IntlFormatter
      */
-    protected $formatter = null;
+    protected $formatter;
 
     /**
      * Initializes the test environment.

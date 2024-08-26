@@ -13,16 +13,16 @@ class FormattingExceptionTest extends TestCase
     /**
      * System under test.
      *
-     * @var \Webfactory\IcuTranslationBundle\Translator\FormattingException
+     * @var FormattingException
      */
-    protected $exception = null;
+    protected $exception;
 
     /**
      * The inner exception.
      *
      * @var \Exception
      */
-    protected $innerException = null;
+    protected $innerException;
 
     /**
      * Initializes the test environment.

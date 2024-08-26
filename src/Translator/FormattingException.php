@@ -12,35 +12,35 @@ class FormattingException extends \Exception
      *
      * @var string
      */
-    protected $locale = null;
+    protected $locale;
 
     /**
      * The message ID of the affected translation.
      *
      * @var string
      */
-    protected $messageId = null;
+    protected $messageId;
 
     /**
      * The pattern of the affected translation.
      *
      * @var string
      */
-    protected $messagePattern = null;
+    protected $messagePattern;
 
     /**
      * The translation parameters.
      *
      * @var array(mixed)
      */
-    protected $parameters = null;
+    protected $parameters;
 
     /**
      * Wraps an exception that occurred during formatting and provided additional information.
      *
-     * @param string $locale
-     * @param string $messageId
-     * @param string $messagePattern
+     * @param string       $locale
+     * @param string       $messageId
+     * @param string       $messagePattern
      * @param array(mixed) $parameters
      */
     public function __construct($locale, $messageId, $messagePattern, array $parameters, \Exception $previous)
@@ -96,11 +96,11 @@ class FormattingException extends \Exception
     /**
      * Creates an error message.
      *
-     * @param string $locale         the used locale (for example "en")
-     * @param string $messageId      the translation message ID
-     * @param string $messagePattern the translation message pattern
+     * @param string       $locale         the used locale (for example "en")
+     * @param string       $messageId      the translation message ID
+     * @param string       $messagePattern the translation message pattern
      * @param array(mixed) $parameters
-     * @param string $error description of the error that occurred
+     * @param string       $error          description of the error that occurred
      *
      * @return string
      */
@@ -115,7 +115,7 @@ class FormattingException extends \Exception
                  .'%s'.\PHP_EOL
                  .'-> Error:'.\PHP_EOL
                  .'%s';
-        $message = sprintf($message, $locale, $messageId, $messagePattern, print_r($parameters, true), $error);
+        $message = \sprintf($message, $locale, $messageId, $messagePattern, print_r($parameters, true), $error);
 
         return $message;
     }
