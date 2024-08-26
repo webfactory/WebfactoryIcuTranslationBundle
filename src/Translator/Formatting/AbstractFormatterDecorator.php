@@ -10,14 +10,12 @@ abstract class AbstractFormatterDecorator implements FormatterInterface
     /**
      * The inner formatter.
      *
-     * @var \Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface
+     * @var FormatterInterface
      */
-    protected $innerFormatter = null;
+    protected $innerFormatter;
 
     /**
      * Creates a decorator for the provided formatter.
-     *
-     * @param \Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface $innerFormatter
      */
     public function __construct(FormatterInterface $innerFormatter)
     {

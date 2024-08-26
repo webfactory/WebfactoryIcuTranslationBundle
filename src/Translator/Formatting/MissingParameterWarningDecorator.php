@@ -22,11 +22,8 @@ class MissingParameterWarningDecorator extends AbstractFormatterDecorator
 
     /**
      * Creates a decorator for the provided formatter.
-     *
-     * @param \Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface $innerFormatter
-     * @param LoggerInterface                                                           $logger
      */
-    public function __construct(FormatterInterface $innerFormatter, LoggerInterface $logger = null)
+    public function __construct(FormatterInterface $innerFormatter, ?LoggerInterface $logger = null)
     {
         parent::__construct($innerFormatter);
         $this->logger = (null !== $logger) ? $logger : new NullLogger();
@@ -63,7 +60,7 @@ class MissingParameterWarningDecorator extends AbstractFormatterDecorator
             return;
         }
         $logMessage = 'The parameters [%s] might be missing in locale "%s" in the message "%s".';
-        $logMessage = sprintf($logMessage, implode(',', $missingParameters), $locale, $message);
+        $logMessage = \sprintf($logMessage, implode(',', $missingParameters), $locale, $message);
         $this->logger->warning(
             $logMessage,
             [

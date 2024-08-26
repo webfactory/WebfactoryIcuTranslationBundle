@@ -14,14 +14,14 @@ class AbstractFormatterDecoratorTest extends TestCase
      *
      * @var \Webfactory\IcuTranslationBundle\Translator\Formatting\AbstractFormatterDecorator
      */
-    protected $decorator = null;
+    protected $decorator;
 
     /**
      * The simulated inner formatter.
      *
      * @var \PHPUnit_Framework_MockObject_MockObject
      */
-    protected $innerFormatter = null;
+    protected $innerFormatter;
 
     /**
      * Initializes the test environment.

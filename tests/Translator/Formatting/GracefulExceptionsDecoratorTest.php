@@ -19,21 +19,21 @@ final class GracefulExceptionsDecoratorTest extends TestCase
      *
      * @var GracefulExceptionsDecorator
      */
-    protected $decorator = null;
+    protected $decorator;
 
     /**
      * Mocked inner formatter.
      *
      * @var MockObject|FormatterInterface
      */
-    protected $innerFormatter = null;
+    protected $innerFormatter;
 
     /**
      * Mocked injected logger.
      *
      * @var MockObject|LoggerInterface
      */
-    protected $logger = null;
+    protected $logger;
 
     /**
      * Initializes the test environment.

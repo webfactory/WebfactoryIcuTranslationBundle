@@ -62,7 +62,7 @@ class MessageParser extends AbstractParser
      *
      * @var \SplStack|null
      */
-    private $state = null;
+    private $state;
 
     /**
      * Parses the message and returns the tokens.
@@ -80,7 +80,7 @@ class MessageParser extends AbstractParser
      */
     public function parse($message, $context = null)
     {
-        if (false === strpos($message, '{')) {
+        if (!str_contains($message, '{')) {
             // Message does not contain any declarations, therefore, we can avoid
             // the parsing process.
             return [[MessageLexer::TOKEN_TEXT, $message]];
