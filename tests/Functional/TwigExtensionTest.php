@@ -15,11 +15,7 @@ class TwigExtensionTest extends KernelTestCase
     protected function setUp(): void
     {
         parent::setUp();
-
-        $kernel = static::bootKernel();
-        $container = $kernel->getContainer();
-
-        $this->twig = $container->get('twig');
+        $this->twig = self::getContainer()->get('twig');
     }
 
     /**

@@ -1,2 +1,3 @@
 framework:
     secret: dont-tell-mum
+    test: true
