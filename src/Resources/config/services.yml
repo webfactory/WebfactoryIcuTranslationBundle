@@ -9,17 +9,9 @@ services:
     Webfactory\IcuTranslationBundle\Twig\:
         resource: '../../Twig'
 
-    webfactory_icu_translation.formatter.intl_formatter:
-        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter
-        deprecated: ~
-
     Webfactory\IcuTranslationBundle\Translator\Formatting\DefaultParameterDecorator:
         arguments:
             - '@Webfactory\IcuTranslationBundle\Translator\Formatting\IntlFormatter'
-
-    webfactory_icu_translation.formatter.default_parameters:
-        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\DefaultParameterDecorator
-        deprecated: ~
 
     Webfactory\IcuTranslationBundle\Translator\Formatting\MissingParameterWarningDecorator:
         arguments:
@@ -28,17 +20,9 @@ services:
         tags:
             - { name: monolog.logger, channel: webfactory_icu_translation }
 
-    webfactory_icu_translation.formatter.missing_parameters:
-        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\MissingParameterWarningDecorator
-        deprecated: ~
-
     Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalizer:
         arguments:
             - '@Webfactory\IcuTranslationBundle\Translator\Formatting\MissingParameterWarningDecorator'
-
-    webfactory_icu_translation.formatter.twig_parameter_normalizer:
-        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\TwigParameterNormalizer
-        deprecated: ~
 
     Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator:
         class: Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator
@@ -47,10 +31,6 @@ services:
             - '@?logger'
         tags:
             - { name: monolog.logger, channel: webfactory_icu_translation }
-
-    webfactory_icu_translation.formatter.graceful_exceptions:
-        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator
-        deprecated: ~
 
     Webfactory\IcuTranslationBundle\Translator\FormatterDecorator:
         decorates: translator
@@ -65,7 +45,3 @@ services:
     # The top end of the Formatter stack set up by this bundle:
     Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface:
         alias: Webfactory\IcuTranslationBundle\Translator\Formatting\GracefulExceptionsDecorator
-
-    webfactory_icu_translation.formatter:
-        alias: Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface
-        deprecated: ~
