@@ -32,7 +32,7 @@ class IcuFormattingExtension extends AbstractExtension
         ];
     }
 
-    public function format(string $message = '', array $parameters = [], string $locale = null): string
+    public function format(string $message = '', array $parameters = [], ?string $locale = null): string
     {
         return $this->formatter->format($locale ?: $this->translator->getLocale(), $message, $parameters);
     }

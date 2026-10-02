@@ -21,7 +21,7 @@ final class GracefulExceptionsDecorator extends AbstractFormatterDecorator
      * @param \Webfactory\IcuTranslationBundle\Translator\Formatting\FormatterInterface $innerFormatter
      * @param LoggerInterface                                                           $logger
      */
-    public function __construct(FormatterInterface $innerFormatter, LoggerInterface $logger = null)
+    public function __construct(FormatterInterface $innerFormatter, ?LoggerInterface $logger = null)
     {
         parent::__construct($innerFormatter);
         $this->logger = (null !== $logger) ? $logger : new NullLogger();
